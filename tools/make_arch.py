@@ -89,7 +89,7 @@ def architecture():
     # RAG
     g.rect(280, 322, 640, 84, "orange")
     g.text(294, 348, "本地 RAG　corpus/index/rag.json", 16, C["orange"][0], True, "start", maxw=600)
-    g.text(600, 372, "中文字二元组 + 英文词 · BM25（k₁ = 1.5，b = 0.75）· 纯 Python", 13.5, SUB, maxw=610)
+    g.text(600, 372, "中文字二元组 + 英文词 · BM25（k1 = 1.5，b = 0.75）· 纯 Python", 13.5, SUB, maxw=610)
     g.text(600, 394, "按语料标签 -c、实验编号 --exp 过滤，返回片段与出处页码", 13.5, SUB, maxw=610)
     # Tools
     g.rect(280, 418, 640, 172, "green")
@@ -131,7 +131,7 @@ def rag():
         g.box(14 + i * (cw + 10), 44, cw, 40, "orange", c, [], 14)
     g.arrow(600, 86, 600, 118)
     # 六步
-    st = [("① 读取", ["pdf · docx · md", "txt · yaml", "教材保留页码范围"]), ("② 切片", ["教材按【小节】", "文献一条一片", "其余段落 ≤ 380 字"]),
+    st = [("① 读取", ["pdf · docx · md", "txt · yaml", "教材保留页码范围"]), ("② 切片", ["教材按【小节】", "文献一条一片", "其余段落 不超过 380 字"]),
           ("③ 分词", ["中文：字二元组", "英文：小写词", "无需词典与模型"]), ("④ 索引", ["rag.json", "N · avgdl · df", "片段 · 出处定位"]),
           ("⑤ 查询", ["同法分词", "-c 语料标签", "--exp 实验编号"]), ("⑥ 排序", ["BM25 打分", "取 top-k", "附出处定位"])]
     bw = 170
@@ -148,8 +148,8 @@ def rag():
             g.arrow(x + bw, 192, x + bw + gap, 192)
     # 公式
     g.rect(14, 284, 1172, 62, "gray", fill="#fff")
-    g.text(600, 310, "score(q, d) = Σ idf(t) · f(t,d)(k₁+1) / [ f(t,d) + k₁(1 − b + b·|d|/avgdl) ]", 16, INK, True, maxw=1150)
-    g.text(600, 334, "idf(t) = ln( 1 + (N − df + 0.5) / (df + 0.5) )　　k₁ = 1.5，b = 0.75", 14, SUB, maxw=1150)
+    g.text(600, 310, "score(q,d) = sum_t idf(t) * f(t,d) * (k1 + 1) / ( f(t,d) + k1 * (1 - b + b * |d| / avgdl) )", 16, INK, True, maxw=1150)
+    g.text(600, 334, "idf(t) = ln( 1 + (N - df + 0.5) / (df + 0.5) )　　k1 = 1.5，b = 0.75", 14, SUB, maxw=1150)
     g.arrow(600, 346, 600, 374)
     # 返回
     g.rect(14, 378, 1172, 62, "green")

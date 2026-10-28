@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -27,7 +28,7 @@ def self_test() -> bool:
     msgs = [{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}},
             {"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
             {"jsonrpc": "2.0", "id": 3, "method": "prompts/list"}]
-    p = subprocess.run([sys.executable, str(SERVER)], input="\n".join(map(json.dumps, msgs)) + "\n", capture_output=True, text=True, timeout=120)
+    p = subprocess.run([sys.executable, "-X", "utf8", str(SERVER)], input="\n".join(map(json.dumps, msgs)) + "\n", capture_output=True, text=True, timeout=120, encoding="utf8")
     out = [json.loads(x) for x in p.stdout.splitlines() if x.strip()]
     ok = len(out) == 3 and len(out[1]["result"]["tools"]) >= 10 and len(out[2]["result"]["prompts"]) >= 13
     print(("✓" if ok else "✗"), f"MCP 自检：{len(out[1]['result']['tools'])} 个工具，{len(out[2]['result']['prompts'])} 个 prompt（菜单 + skill）" if ok else "MCP 自检失败")
@@ -35,6 +36,7 @@ def self_test() -> bool:
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--write", type=Path)
     ap.add_argument("--skills", action="store_true")
@@ -43,6 +45,14 @@ def main():
 
     if sys.version_info < (3, 10):
         sys.exit("需要 Python ≥ 3.10")
+    if not a.no_pip and sys.prefix == sys.base_prefix:
+        # 在项目内的 .venv 中安装，避免系统 Python 拒绝 pip（macOS Homebrew 等）并使 MCP 配置指向固定解释器
+        venv = ROOT / ".venv"
+        if not venv.exists():
+            print("→ 创建虚拟环境 .venv")
+            subprocess.check_call([sys.executable, "-m", "venv", str(venv)])
+        py = venv / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+        sys.exit(subprocess.run([str(py), str(Path(__file__).resolve()), *sys.argv[1:]]).returncode)
     if not a.no_pip:
         print("→ 安装依赖")
         sh(sys.executable, "-m", "pip", "install", "-q", "-r", "requirements.txt")

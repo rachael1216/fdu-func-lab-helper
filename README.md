@@ -15,7 +15,7 @@
 
 <br>
 
-[简介](#1-简介) · [**安装**](#2-安装) · [使用](#3-使用) · [系统设计](#4-系统设计) · [RAG](#5-rag-课本对齐的本地检索) · [**参考资料库**](#7-参考资料库) · [示例](#8-示例) · [模板](#9-模板与格式规范)
+[简介](#1-简介) · [**安装**](#2-安装与接入) · [使用](#3-使用) · [系统设计](#4-系统设计) · [RAG](#5-rag-课本对齐的本地检索) · [**参考资料库**](#7-参考资料库) · [示例](#8-示例) · [模板](#9-模板与格式规范)
 
 [![license](https://img.shields.io/badge/license-MIT-0B5C8E)](LICENSE)
 [![python](https://img.shields.io/badge/python-%E2%89%A53.10-0B5C8E)](requirements.txt)
@@ -46,95 +46,169 @@
 
 分工原则：模型负责理解、组织与措辞；**数字、检验、引用、相似度、排版由工具产出**，模型转述结果并标注来源。
 
-## 2 安装
+## 2 安装与接入
 
-> **一条命令完成**：安装依赖、建立 RAG 索引、自检 MCP 服务，并打印可直接粘贴的客户端配置。
+全程三步：**① 准备环境 → ② 下载项目并运行安装脚本 → ③ 把服务接入客户端**。下面给出 macOS 与 Windows 的完整终端命令，逐行复制即可。使用 Linux 的同学请按所用发行版自行安装同样的组件。
 
-### 2.1 环境
+### 2.1 准备环境
 
-| 需要 | 说明 |
-|---|---|
-| Python ≥ 3.10 | `python --version` |
-| pandoc | 出 Word / PDF 时使用。`brew install pandoc`、`winget install JohnMacFarlane.Pandoc` 或 `pip install pypandoc_binary` |
-| XeLaTeX（含 ctex） | 仅出 PDF 时需要；也可把 `.tex` 上传 Overleaf，选 XeLaTeX |
-| MCP 客户端 | DeepSeek dsh、Claude Code，或任一支持 stdio MCP 的客户端 |
+需要的组件：Python ≥ 3.10、Git、pandoc（出 Word / PDF）、Node.js（使用 dsh 或 Claude Code 时）。出 PDF 另需 XeLaTeX（含 ctex），也可以把 `.tex` 上传 Overleaf 编译。
 
-### 2.2 获取并安装
+**macOS**（打开“终端”：Spotlight 搜索 *终端*）
 
 ```bash
+# 1) 安装 Homebrew（已安装可跳过）
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 2) 安装 Python、Git、pandoc、Node.js
+brew install python git pandoc node
+```
+
+**Windows**（开始菜单搜索 *PowerShell* 并打开）
+
+```powershell
+winget install --id Python.Python.3.12 -e
+winget install --id Git.Git -e
+winget install --id JohnMacFarlane.Pandoc -e
+winget install --id OpenJS.NodeJS.LTS -e
+setx PYTHONUTF8 1
+```
+
+安装结束后**关闭并重新打开终端**，检查版本（macOS 用 `python3`，Windows 用 `python`）：
+
+```bash
+python3 --version      # Windows: python --version
+git --version
+pandoc --version
+node -v
+```
+
+### 2.2 下载项目并运行安装脚本
+
+**macOS**
+
+```bash
+cd ~/Documents
+git clone https://github.com/rachael1216/fdu-func-lab-helper.git
+cd fdu-func-lab-helper
+python3 install.py
+```
+
+**Windows（PowerShell）**
+
+```powershell
+cd $HOME\Documents
 git clone https://github.com/rachael1216/fdu-func-lab-helper.git
 cd fdu-func-lab-helper
 python install.py
 ```
 
-`install.py` 依次完成：`pip install -r requirements.txt` → 建立索引 `corpus/index/rag.json` → 启动服务做一次握手自检 → 打印配置。成功时看到：
+没有安装 Git 时：在项目的 GitHub 页面点 **Code → Download ZIP**，解压后在终端 `cd` 进入该文件夹，再运行 `install.py`。
+
+`install.py` 依次完成：创建项目内的虚拟环境 `.venv` → 安装依赖 → 建立 RAG 索引 → 启动服务做一次握手自检 → 打印接入配置。成功时的输出：
 
 ```
+→ 创建虚拟环境 .venv
+→ 建立本地 RAG 索引
+✓ 索引 1032 个片段 → corpus/index/rag.json
 ✓ MCP 自检：13 个工具，13 个 prompt（菜单 + skill）
+
+在你的 MCP 客户端中加入以下服务（stdio）：
+{ "mcpServers": { "fdu-lab": { "command": "…/.venv/bin/python", "args": ["…/mcp_server/server.py"] } } }
+
+Claude Code：claude mcp add fdu-lab -- …/.venv/bin/python …/mcp_server/server.py
 ```
+
+最后两项已经带上你机器上的真实路径，下一步直接复制。
 
 ### 2.3 接入客户端
 
-服务以 stdio 方式启动，配置只有一段 JSON（路径由 `install.py` 按你的机器生成）：
+任选一种客户端。
 
-```json
-{
-  "mcpServers": {
-    "fdu-lab": {
-      "command": "python",
-      "args": ["/绝对路径/fdu-func-lab-helper/mcp_server/server.py"]
-    }
-  }
-}
+**A. Claude Code**
+
+```bash
+npm install -g @anthropic-ai/claude-code          # 安装客户端（Windows 同样在 PowerShell 中运行）
+cd fdu-func-lab-helper
+# 粘贴 install.py 打印的那一行，形如：
+claude mcp add fdu-lab -- /…/fdu-func-lab-helper/.venv/bin/python /…/fdu-func-lab-helper/mcp_server/server.py
+claude                                              # 在项目目录中启动
 ```
 
-| 客户端 | 做法 |
-|---|---|
-| **Claude Code** | `claude mcp add fdu-lab -- python /绝对路径/fdu-func-lab-helper/mcp_server/server.py` |
-| **DeepSeek dsh** | 在 dsh 的 MCP 服务器设置中添加同一段配置；在仓库目录启动 dsh 时还会自动发现 `.agents/skills`。dsh 网页：`npx @deepseek-ai/dsh web` → http://127.0.0.1:3080，Settings 中填入 API Key |
-| **其他客户端** | 粘贴上面的 JSON 到其 `mcpServers` 配置 |
-| **自动写入** | `python install.py --write ~/.claude.json` 把 `fdu-lab` 合并进指定的 JSON 配置文件 |
+**B. DeepSeek dsh**
+
+```bash
+cd fdu-func-lab-helper
+npx @deepseek-ai/dsh web
+```
+
+浏览器打开 http://127.0.0.1:3080，在 Settings → Models 填入 DeepSeek API Key；在 MCP 服务器设置中添加 `install.py` 打印的那段 JSON。在项目目录启动时，dsh 还会自动发现 `.agents/skills`。
+
+**C. 其他支持 MCP 的客户端**
+
+把 `install.py` 打印的 JSON 粘贴到该客户端的 `mcpServers` 配置中。也可以让脚本直接写入配置文件：
+
+```bash
+python3 install.py --write ~/.claude.json         # Windows: python install.py --write $HOME\.claude.json
+```
 
 ### 2.4 验证
 
 在客户端中依次确认：
 
-1. 工具列表里有 `rag_search`、`lab_calc`、`lab_dose`、`style_check`、`ref_check`、`build_report` 等 13 个工具；
-2. Prompt 列表里有 `menu` 与 12 个 `fdu-lab-*`；
-3. 对话中输入 **“菜单”**，应展示 12 项功能表；
-4. 输入“用 rag_search 查课本里半数致死量的术语”，应返回带页码的 `textbook` 片段。
+1. 工具列表中有 `rag_search`、`lab_calc`、`lab_dose`、`style_check`、`ref_check`、`build_report` 等 13 个工具；
+2. Prompt 列表中有 `menu` 与 12 个 `fdu-lab-*`；
+3. 对话中输入 **菜单**，展示 12 项功能表；
+4. 输入“用 rag_search 查课本里半数致死量的术语”，返回带页码的 `textbook` 片段。
 
-### 2.5 只安装 Skill（不用 MCP）
-
-```bash
-python install.py --skills        # 复制到 ~/.agents/skills 与 ~/.dsh/skills
-```
-
-在仓库目录里直接启动 dsh 时无需安装，项目内的 `.agents/skills` 会被自动发现。Skill 中的命令行写法（`python tools/…`）在无 MCP 时直接在终端运行。
-
-### 2.6 无客户端：网页粘贴
+### 2.5 更新与卸载
 
 ```bash
-python tools/make_prompt.py 2.7 --print       # 2.7 换成实验编号
+cd fdu-func-lab-helper
+git pull
+python3 install.py          # Windows: python install.py；重新安装依赖并重建索引
 ```
 
-把输出粘贴到 chat.deepseek.com，按提示作答。计算与排版命令在本机用 `tools/` 运行。
+卸载：删除项目文件夹，并在客户端中移除 `fdu-lab` 服务（Claude Code：`claude mcp remove fdu-lab`）。
+
+### 2.6 只安装 Skill（不用 MCP）
+
+```bash
+python3 install.py --skills        # 复制到 ~/.agents/skills 与 ~/.dsh/skills
+```
+
+Skill 中的命令行写法（`python tools/…`）在终端的项目目录下直接运行。
 
 ### 2.7 排错
 
 | 现象 | 处理 |
 |---|---|
-| 自检失败 | 运行 `python mcp_server/server.py < /dev/null` 查看报错；确认 Python ≥ 3.10 |
-| `rag_search` 无结果 | `python tools/rag.py build` 重建索引；`python tools/rag.py sources` 查看语料 |
-| 找不到 pandoc | 按 2.1 安装后重开终端；`python tools/build.py --doctor` 检查环境 |
-| PDF 缺中文 | 安装完整 TeX Live / MiKTeX（含 ctex），或用 Overleaf |
+| macOS 提示 `externally-managed-environment` | 直接运行 `python3 install.py`，脚本会在 `.venv` 中安装，无需手动 `pip` |
+| Windows 提示找不到 `python` | 重新打开 PowerShell；仍不行则在“应用执行别名”中关闭 Microsoft Store 的 python 别名 |
+| Windows 终端中文乱码 | 运行 `setx PYTHONUTF8 1` 后重开终端 |
+| 自检失败 | 在项目目录运行 `python3 mcp_server/server.py`，看是否有报错；确认 Python ≥ 3.10 |
+| `rag_search` 无结果 | `python3 tools/rag.py build` 重建索引；`python3 tools/rag.py sources` 查看语料 |
+| 找不到 pandoc | 按 2.1 安装后重开终端；`python3 tools/build.py --doctor` 检查环境 |
+| PDF 缺中文 | 安装 TeX Live / MiKTeX（含 ctex），或把 `.tex` 上传 Overleaf（选 XeLaTeX） |
 | 图中文字成方框 | 安装宋体或思源宋体 |
 | `refcheck` 联网失败 | 检查网络；加 `--offline` 对照登记表 |
 | Word 目录为空 | 右键目录 → 更新域 |
 
 ## 3 使用
 
-### 3.1 总菜单
+### 3.1 第一次使用
+
+```bash
+cd ~/Documents/fdu-func-lab-helper      # Windows: cd $HOME\Documents\fdu-func-lab-helper
+claude                                   # 或 npx @deepseek-ai/dsh web
+```
+
+1. 在客户端对话框输入 **菜单**，助手展示 12 项功能；
+2. 回复编号，或直接说“我要写实验 2.7 的报告”；
+3. 按提示提供原始记录与观察，助手会调用检索、计算、统计、作图等工具；
+4. 成稿在 `reports/<实验名>/` 下：`report.md`、`report.docx`（需要时还有 `.tex` 与 `.pdf`）。
+
+### 3.2 总菜单
 
 新会话先调用 `fdu_lab_menu`（或在 Prompt 列表选 `menu`）。直接说出需求也可，助手会路由到对应 Skill。
 
@@ -151,9 +225,9 @@ python tools/make_prompt.py 2.7 --print       # 2.7 换成实验编号
 | 9 | 检查整份报告 | report.md | `review` | 分级问题清单 |
 | 10 | 排版出稿 | report.md | `build_report` | docx / tex / pdf |
 | 11 | 只要模板 | – | `format` | 模板路径 |
-| 12 | 遇到问题 | 报错信息 | 第 2.7 节 | 处理步骤 |
+| 12 | 遇到问题 | 报错信息 | 第 2.7 节排错表 | 处理步骤 |
 
-### 3.2 一份报告的完整流程（菜单 1）
+### 3.3 一份报告的完整流程（菜单 1）
 
 对助手说：“我要写实验 2.7 家兔高钾血症的报告，按 fdu-lab-report 带我做。”
 
@@ -189,7 +263,7 @@ ai_statement: ""        # 按课程要求填写，非空则附在文末
 
 个人报告放在 `reports/`（已被 `.gitignore` 忽略）。
 
-### 3.3 直接使用命令行
+### 3.4 直接使用命令行
 
 ```bash
 python tools/rag.py search 半数致死量 改良寇氏法 --exp 8.1 -c expr          # 课本术语与页码

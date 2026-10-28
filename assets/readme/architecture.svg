@@ -56,7 +56,7 @@
 <text x="858.3333333333333" y="282.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">排版</text>
 <rect x="280" y="322" width="640" height="84" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
 <text x="294" y="348" font-size="16" fill="#B84A00" text-anchor="start" font-weight="700">本地 RAG　corpus/index/rag.json</text>
-<text x="600" y="372" font-size="13.5" fill="#3D3D3D" text-anchor="middle">中文字二元组 + 英文词 · BM25（k₁ = 1.5，b = 0.75）· 纯 Python</text>
+<text x="600" y="372" font-size="13.5" fill="#3D3D3D" text-anchor="middle">中文字二元组 + 英文词 · BM25（k1 = 1.5，b = 0.75）· 纯 Python</text>
 <text x="600" y="394" font-size="13.5" fill="#3D3D3D" text-anchor="middle">按语料标签 -c、实验编号 --exp 过滤，返回片段与出处页码</text>
 <rect x="280" y="418" width="640" height="172" rx="6" fill="#E2F3EC" stroke="#00704F" stroke-width="2.8"/>
 <text x="294" y="446" font-size="16" fill="#00704F" text-anchor="start" font-weight="700">Tools　10 个确定性工具</text>

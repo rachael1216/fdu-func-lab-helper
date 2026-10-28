@@ -32,7 +32,7 @@ CLI_NOTE = (
 
 # ------------------------------------------------------------------ 运行工具
 def run(script: str, args: list[str], timeout: int = 180) -> tuple[int, str]:
-    p = subprocess.run([sys.executable, "-I", str(ROOT / "tools" / script), *map(str, args)], cwd=ROOT,
+    p = subprocess.run([sys.executable, "-X", "utf8", str(ROOT / "tools" / script), *map(str, args)], cwd=ROOT,
                        capture_output=True, text=True, timeout=timeout, encoding="utf8", errors="replace")
     return p.returncode, (p.stdout + (("\n" + p.stderr) if p.stderr.strip() else "")).strip()
 
@@ -211,6 +211,8 @@ def handle(m: dict):
 
 
 def main():
+    sys.stdin.reconfigure(encoding="utf-8")
+    sys.stdout.reconfigure(encoding="utf-8")
     for line in sys.stdin:
         line = line.strip()
         if line:

@@ -29,7 +29,7 @@
 <text x="299.4" y="147" font-size="16" fill="#fff" text-anchor="middle" font-weight="700">② 切片</text>
 <text x="299.4" y="188" font-size="14" fill="#1A1A1A" text-anchor="middle">教材按【小节】</text>
 <text x="299.4" y="215" font-size="14" fill="#1A1A1A" text-anchor="middle">文献一条一片</text>
-<text x="299.4" y="242" font-size="14" fill="#1A1A1A" text-anchor="middle">其余段落 ≤ 380 字</text>
+<text x="299.4" y="242" font-size="14" fill="#1A1A1A" text-anchor="middle">其余段落 不超过 380 字</text>
 <line x1="384.4" y1="192" x2="414.79999999999995" y2="192" stroke="#1A1A1A" stroke-width="2.6" marker-end="url(#ar)"/>
 <rect x="414.8" y="122" width="170" height="140" rx="6" fill="#E4F0F8" stroke="#0B5C8E" stroke-width="2.8"/>
 <rect x="414.8" y="122" width="170" height="36" rx="6" fill="#0B5C8E"/>
@@ -63,8 +63,8 @@
 <text x="1101.0" y="215" font-size="14" fill="#1A1A1A" text-anchor="middle">取 top-k</text>
 <text x="1101.0" y="242" font-size="14" fill="#1A1A1A" text-anchor="middle">附出处定位</text>
 <rect x="14" y="284" width="1172" height="62" rx="6" fill="#fff" stroke="#4A4A4A" stroke-width="2.8"/>
-<text x="600" y="310" font-size="16" fill="#1A1A1A" text-anchor="middle" font-weight="700">score(q, d) = Σ idf(t) · f(t,d)(k₁+1) / [ f(t,d) + k₁(1 − b + b·|d|/avgdl) ]</text>
-<text x="600" y="334" font-size="14" fill="#3D3D3D" text-anchor="middle">idf(t) = ln( 1 + (N − df + 0.5) / (df + 0.5) )　　k₁ = 1.5，b = 0.75</text>
+<text x="600" y="310" font-size="16" fill="#1A1A1A" text-anchor="middle" font-weight="700">score(q,d) = sum_t idf(t) * f(t,d) * (k1 + 1) / ( f(t,d) + k1 * (1 - b + b * |d| / avgdl) )</text>
+<text x="600" y="334" font-size="14" fill="#3D3D3D" text-anchor="middle">idf(t) = ln( 1 + (N - df + 0.5) / (df + 0.5) )　　k1 = 1.5，b = 0.75</text>
 <line x1="600" y1="346" x2="600" y2="374" stroke="#1A1A1A" stroke-width="2.6" marker-end="url(#ar)"/>
 <rect x="14" y="378" width="1172" height="62" rx="6" fill="#E2F3EC" stroke="#00704F" stroke-width="2.8"/>
 <text x="600" y="404" font-size="16" fill="#00704F" text-anchor="middle" font-weight="700">⑦ 返回　[序号] (语料标签) 来源 · 出处定位 · 片段正文</text>
