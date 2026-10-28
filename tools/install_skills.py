@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""install_skills.py — 把 .agents/skills 下的 6 个 skill 安装到 DeepSeek Harness / 通用 agent 的全局目录。
+"""install_skills.py — 把 .agents/skills 下的全部 skill 安装到 DeepSeek Harness / 通用 agent 的全局目录。
 
   python tools/install_skills.py            # 安装到 ~/.dsh/skills 与 ~/.agents/skills
   python tools/install_skills.py --dest ~/.claude/skills

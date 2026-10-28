@@ -1,0 +1,207 @@
+# 重点文献登记表：只存书目信息与我们自己的要点概括，不含原文。
+# authors 只收录已核对的前几位作者；et_al: true 表示原文作者多于此处所列（格式化时补“等/et al.”）。
+# verified：该条目的 DOI 已用 Crossref 的 DOI 接口核对过题名、作者、刊名、卷期页码和年份。
+# 用 `python tools/refcheck.py --registry` 可重新核对；新增条目请先核对再提交。
+- id: eddleston2008
+  authors: [Eddleston M, Buckley N A, Eyer P]
+  et_al: true
+  title: Management of acute organophosphorus pesticide poisoning
+  journal: The Lancet
+  year: 2008
+  volume: "371"
+  issue: "9612"
+  pages: 597-607
+  doi: 10.1016/S0140-6736(07)61202-1
+  experiments: ["1.5"]
+  keywords: [有机磷, 胆碱酯酶, 阿托品, 肟类复能剂, 胆碱能危象]
+  key_points:
+    - 综述有机磷农药中毒的处理：乙酰胆碱酯酶被抑制后胆碱能神经递质蓄积，出现毒蕈碱样、烟碱样和中枢症状。
+    - 阿托品是抢救的基础药物；肟类复能剂的获益存在争议，需结合中毒的农药种类与就诊时间判断。
+    - 强调气道、呼吸与循环支持。
+  verified: {method: crossref, date: 2026-10-29}
+- id: eddleston2019
+  authors: [Eddleston M]
+  title: Novel clinical toxicology and pharmacology of organophosphorus insecticide self-poisoning
+  journal: Annual Review of Pharmacology and Toxicology
+  year: 2019
+  volume: "59"
+  pages: 341-360
+  doi: 10.1146/annurev-pharmtox-010818-021842
+  experiments: ["1.5"]
+  keywords: [有机磷, 自服中毒, 药理学, 临床毒理学]
+  key_points:
+    - 从临床毒理学与药理学角度综述有机磷杀虫剂自服中毒，涉及不同农药的毒性差异与治疗进展。
+  verified: {method: crossref, date: 2026-10-29}
+- id: eddleston2009
+  authors: [Eddleston M, Eyer P, Worek F]
+  et_al: true
+  title: Pralidoxime in acute organophosphorus insecticide poisoning—a randomised controlled trial
+  journal: PLoS Medicine
+  year: 2009
+  volume: "6"
+  issue: "6"
+  pages: e1000104
+  doi: 10.1371/journal.pmed.1000104
+  experiments: ["1.5"]
+  keywords: [氯解磷定, 碘解磷定, 随机对照试验, 复能剂]
+  key_points:
+    - 随机对照试验，比较 pralidoxime 与安慰剂在急性有机磷杀虫剂中毒患者中的作用；结论与结果请以原文为准。
+  verified: {method: crossref, date: 2026-10-29}
+- id: ellman1961
+  authors: [Ellman G L, Courtney K D, Andres V Jr]
+  et_al: true
+  title: A new and rapid colorimetric determination of acetylcholinesterase activity
+  journal: Biochemical Pharmacology
+  year: 1961
+  volume: "7"
+  issue: "2"
+  pages: 88-95
+  doi: 10.1016/0006-2952(61)90145-9
+  experiments: ["1.5"]
+  keywords: [Ellman, 胆碱酯酶活性, DTNB, 比色法]
+  key_points:
+    - 经典的比色法测定乙酰胆碱酯酶活性：底物水解产生的硫代胆碱与 DTNB 反应显色，在约 412 nm 测吸光度。
+  verified: {method: crossref, date: 2026-10-29}
+- id: briggs1925
+  authors: [Briggs G E, Haldane J B S]
+  title: A note on the kinetics of enzyme action
+  journal: Biochemical Journal
+  year: 1925
+  volume: "19"
+  issue: "2"
+  pages: 338-339
+  doi: 10.1042/bj0190338
+  experiments: ["1.5"]
+  keywords: [酶动力学, 稳态假设, 米氏方程]
+  key_points:
+    - 提出酶促反应的稳态处理，是米氏方程推导的常用依据。
+  verified: {method: crossref, date: 2026-10-29}
+- id: schild1947
+  authors: [Schild H O]
+  title: pA, a new scale for the measurement of drug antagonism
+  journal: British Journal of Pharmacology and Chemotherapy
+  year: 1947
+  volume: "2"
+  issue: "3"
+  pages: 189-206
+  doi: 10.1111/j.1476-5381.1947.tb00336.x
+  experiments: ["1.5", "5.2"]
+  keywords: [pA2, 拮抗参数, 竞争性拮抗]
+  key_points:
+    - 提出以 pA 表示拮抗药强度的方法。
+  verified: {method: crossref, date: 2026-10-29}
+- id: arunlakshana1959
+  authors: [Arunlakshana O, Schild H O]
+  title: Some quantitative uses of drug antagonists
+  journal: British Journal of Pharmacology and Chemotherapy
+  year: 1959
+  volume: "14"
+  issue: "1"
+  pages: 48-58
+  doi: 10.1111/j.1476-5381.1959.tb00928.x
+  experiments: ["5.2", "1.5"]
+  keywords: [Schild 作图, 剂量比, pA2, 竞争性拮抗]
+  key_points:
+    - 给出由剂量比估计 pA2 与判断竞争性拮抗的定量方法（Schild 作图）。
+  verified: {method: crossref, date: 2026-10-29}
+- id: weisberg2008
+  authors: [Weisberg L S]
+  title: Management of severe hyperkalemia
+  journal: Critical Care Medicine
+  year: 2008
+  volume: "36"
+  issue: "12"
+  pages: 3246-3251
+  doi: 10.1097/CCM.0b013e31818f222b
+  experiments: ["2.7"]
+  keywords: [高钾血症, 葡萄糖酸钙, 胰岛素, 心电图, 抢救]
+  key_points:
+    - 严重高钾血症的处理按三个方向：钙剂稳定心肌细胞膜、促使钾转入细胞内（胰岛素加葡萄糖、β2 受体激动药、碳酸氢钠）、促进钾排出（利尿、树脂、透析）。
+  verified: {method: crossref, date: 2026-10-29}
+- id: levi1999
+  authors: [Levi M, ten Cate H]
+  title: Disseminated intravascular coagulation
+  journal: New England Journal of Medicine
+  year: 1999
+  volume: "341"
+  issue: "8"
+  pages: 586-592
+  doi: 10.1056/NEJM199908193410807
+  experiments: ["4.3"]
+  keywords: [弥散性血管内凝血, 组织因子, 凝血酶生成, 纤溶]
+  key_points:
+    - 综述 DIC 的发病机制：组织因子介导的凝血酶生成过多、生理性抗凝通路受损、纤溶被抑制，导致微血栓形成与继发出血。
+  verified: {method: crossref, date: 2026-10-29}
+- id: taylor2001
+  authors: [Taylor F B Jr, Toh C H, Hoots W K]
+  et_al: true
+  title: Towards definition, clinical and laboratory criteria, and a scoring system for disseminated intravascular coagulation
+  journal: Thrombosis and Haemostasis
+  year: 2001
+  volume: "86"
+  issue: "11"
+  pages: 1327-1330
+  doi: 10.1055/s-0037-1616068
+  experiments: ["4.3"]
+  keywords: [DIC, ISTH, 评分系统, 血小板, 纤维蛋白原]
+  key_points:
+    - 国际血栓与止血学会（ISTH）提出显性 DIC 的定义与积分系统，依据血小板计数、纤维蛋白相关标志物、凝血酶原时间和纤维蛋白原等。
+  verified: {method: crossref, date: 2026-10-29}
+- id: semenza2011
+  authors: [Semenza G L]
+  title: Oxygen sensing, homeostasis, and disease
+  journal: New England Journal of Medicine
+  year: 2011
+  volume: "365"
+  issue: "6"
+  pages: 537-547
+  doi: 10.1056/NEJMra1011165
+  experiments: ["3.2"]
+  keywords: [缺氧, 低氧诱导因子, HIF-1, 氧稳态]
+  key_points:
+    - 综述机体感知氧并维持氧稳态的机制，重点是低氧诱导因子 HIF-1 及其在生理与疾病中的作用。
+  verified: {method: crossref, date: 2026-10-29}
+- id: lei2018
+  authors: [Lei M, Wu L, Terrar D A]
+  et_al: true
+  title: Modernized classification of cardiac antiarrhythmic drugs
+  journal: Circulation
+  year: 2018
+  volume: "138"
+  issue: "17"
+  pages: 1879-1896
+  doi: 10.1161/CIRCULATIONAHA.118.035455
+  experiments: ["2.4", "2.4s"]
+  keywords: [抗心律失常药, Vaughan Williams 分类, 利多卡因, 钠通道]
+  key_points:
+    - 在 Vaughan Williams 分类基础上，纳入离子通道、转运体与细胞内信号等靶点，提出更新的抗心律失常药分类。
+  verified: {method: crossref, date: 2026-10-29}
+- id: sanders2012
+  authors: [Sanders K M, Koh S D, Ro S]
+  et_al: true
+  title: Regulation of gastrointestinal motility—insights from smooth muscle biology
+  journal: Nature Reviews Gastroenterology & Hepatology
+  year: 2012
+  volume: "9"
+  issue: "11"
+  pages: 633-645
+  doi: 10.1038/nrgastro.2012.168
+  experiments: ["5.2"]
+  keywords: [消化道平滑肌, 慢波, Cajal 间质细胞, 胃肠动力]
+  key_points:
+    - 综述胃肠运动的调节：平滑肌细胞、Cajal 间质细胞与 PDGFRα 阳性细胞构成的电耦联结构，以及神经与体液因素的调制。
+  verified: {method: crossref, date: 2026-10-29}
+- id: lorke1983
+  authors: [Lorke D]
+  title: A new approach to practical acute toxicity testing
+  journal: Archives of Toxicology
+  year: 1983
+  volume: "54"
+  issue: "4"
+  pages: 275-287
+  doi: 10.1007/BF01234480
+  experiments: ["8.1"]
+  keywords: [急性毒性, LD50, 动物数, 逐步给药]
+  key_points:
+    - 提出以较少动物估计急性毒性（LD50 范围）的分阶段方法，可与教材的改良寇氏法对照阅读。
+  verified: {method: crossref, date: 2026-10-29}

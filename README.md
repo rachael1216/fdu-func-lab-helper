@@ -1,141 +1,143 @@
 <div align="center">
 
-<img src="assets/readme/banner.png" alt="功能学实验报告助手" width="100%">
-
 # FDU Func Lab Helper
 
-**复旦《功能学科综合实验》报告助手**　·　6 个 Skill　·　Word/LaTeX 精美模板　·　33 张实验知识卡　·　可靠的计算工具
+**面向《功能学科综合实验》的实验报告写作助手：课本检索 + 写作 Skill + 可核对的计算与文献工具**
 
-[![CI](https://img.shields.io/badge/CI-tests%20%2B%20card%20check-2DD4BF?style=flat-square)](.github/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-1B3FB0?style=flat-square)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-6-5AA7FF?style=flat-square)](.agents/skills)
-[![Cards](https://img.shields.io/badge/knowledge%20cards-33%20(AI%20draft)-FF6B6B?style=flat-square)](knowledge/cards)
-[![Made for](https://img.shields.io/badge/made%20for-medical%20students-081650?style=flat-square)](#)
+[English](README.en.md) · **中文**
 
-[快速开始](docs/01-快速开始.md) · [设计思路](docs/02-设计思路.md) · [FAQ](docs/03-FAQ.md) · [学术诚信](docs/04-学术诚信与隐私.md) · [贡献](CONTRIBUTING.md)
+**刘瑞琦 (Rachael Liu)**<sup>1</sup> · <a href="mailto:24301050114@m.fudan.edu.cn">24301050114@m.fudan.edu.cn</a>
+
+<sup>1</sup> 复旦大学上海医学院，24 级临床医学五年制
+
+[![license](https://img.shields.io/badge/license-MIT-5F7568)](LICENSE)
+[![python](https://img.shields.io/badge/python-3.10%2B-5F7568)](requirements.txt)
+[![skills](https://img.shields.io/badge/skills-11-5F7568)](.agents/skills)
+[![status](https://img.shields.io/badge/cards%20%26%20expressions-AI%20draft-lightgrey)](knowledge)
+
+<img src="assets/readme/architecture.svg" alt="RAG + Skill 架构" width="100%">
 
 </div>
 
----
+## 摘要
 
-## ✨ 它能做什么
+撰写功能学实验报告时，常见的问题有三类：用语偏离教材、数据与统计处理不规范、参考文献无法核实。
+本项目把解决办法拆成三层：**检索层**以教材、讲义、课本表述整理和重点文献为语料，保证措辞与教材一致并能回到出处；
+**工具层**用确定性代码完成计算、统计、作图、语言检查和文献核对；**Skill 层**把上述步骤编排成一条写作流水线，由 AI 担任写作教练而非代笔。
+项目不含服务器，在学生自己的 DeepSeek Harness（dsh）或网页对话中即可使用；同时提供 Word 与 LaTeX 通用模板（单一极简封面、页眉、三线表、GB/T 7714）。
+**原始数据与观察必须来自学生本人的实验；项目不用于规避 AI 检测，AI 使用情况应按课程要求声明。**
 
-| | |
+## 它做什么
+
+| 需求 | 对应部分 |
 |---|---|
-| 🧭 **写作教练 Skill** | 采集记录 → 查知识卡 → 算数据 → 写分析 → 自查 → 一键出文件。教你写，不替你编。 |
-| 🎨 **带封面的模板** | Word 与 LaTeX 各一套，8 个系统主题封面（心血管/神经/呼吸/药理/血液/消化/泌尿/通用）。 |
-| 🧮 **不会算错的工具** | `labcalc.py`：剂量、稀释、MAP、LD50（改良寇氏法）、治疗指数、AChE 活性、Fisher 检验……单元测试对照教材例题。 |
-| 📚 **实验知识卡** | 33 个实验的机制链、预期现象、常见偏差、临床联系，讨论部分有据可依。 |
-| 🔍 **教材本地索引** | 用你自己的教材 PDF 在本机建索引，按实验编号取原文与页码（教材不随仓库分发）。 |
-| 🤝 **零服务器** | 每位同学用自己的 DeepSeek 账号，数据留在本机。 |
+| 用语贴近课本 | `tools/rag.py` 检索教材/表述整理；`tools/stylecheck.py` 检查术语覆盖、模板腔、与课本的相似度 |
+| 课本之外的重点文献 | `knowledge/literature/`：14 篇已用 Crossref 核对书目的文献及要点 |
+| 文献不出错 | `tools/refcheck.py`：核对 DOI、题名、第一作者、年份、卷页；`fmt` 由 DOI 生成 GB/T 7714 条目 |
+| 数据处理 | `tools/labcalc.py`（剂量、LD50、治疗指数、MAP、AChE 活力等）；`tools/labstats.py`（t 检验、方差分析、秩和、相关、回归） |
+| 作图 | `tools/labplot.py`：折线、柱状+散点、量效、拟合；规范见 `docs/FORMAT.md` |
+| 分析思路 | `fdu-lab-analysis`：观察 → 预期 → 机制 → 偏差假设 → 局限 → 临床联系 |
+| 模板 | Word 与 LaTeX 通用模板，含写作内容、格式要求与字体 |
+| 各实验的专业表述 | `knowledge/expressions/`：7 个实验的术语、句式与页码 |
 
-## 🖼️ 成品长什么样
+## 快速开始
 
-<div align="center">
-<img src="assets/readme/word-preview.png" alt="Word 报告示例：封面与正文" width="88%">
-<br><sub>示例为虚构数据，仅演示排版（<a href="examples/sample-report/report.md">源文件</a>）</sub>
-</div>
-
-### 封面主题
-
-<table>
-<tr>
-<td align="center"><img src="assets/covers/cover_cardio.jpg" width="230"><br><sub>cardio 心血管</sub></td>
-<td align="center"><img src="assets/covers/cover_neuro.jpg" width="230"><br><sub>neuro 神经</sub></td>
-<td align="center"><img src="assets/covers/cover_resp.jpg" width="230"><br><sub>resp 呼吸</sub></td>
-<td align="center"><img src="assets/covers/cover_pharm.jpg" width="230"><br><sub>pharm 药理</sub></td>
-</tr>
-<tr>
-<td align="center"><img src="assets/covers/cover_blood.jpg" width="230"><br><sub>blood 血液</sub></td>
-<td align="center"><img src="assets/covers/cover_gi.jpg" width="230"><br><sub>gi 消化</sub></td>
-<td align="center"><img src="assets/covers/cover_renal.jpg" width="230"><br><sub>renal 泌尿</sub></td>
-<td align="center"><img src="assets/covers/cover_general.jpg" width="230"><br><sub>general 通用</sub></td>
-</tr>
-</table>
-
-## 🚀 三种用法，选一种
-
-```mermaid
-flowchart LR
-  A["A · 网页粘贴<br/>chat.deepseek.com<br/>零安装"] --> B["B · dsh 本地网页 + Skills<br/>自动计算 · 自动出文件<br/>（推荐）"] --> C["C · 只要模板<br/>Word / LaTeX<br/>不用 AI 也行"]
-  style A fill:#EAF0FF,stroke:#1B3FB0
-  style B fill:#1B3FB0,stroke:#081650,color:#fff
-  style C fill:#E6FBF7,stroke:#149C8E
-```
-
-**方案 B（推荐）三步走**
+需要：Python ≥ 3.10、pandoc；出 PDF 另需 XeLaTeX（TeX Live / MiKTeX，含 ctex）。
 
 ```bash
-git clone https://github.com/rachael1216/fdu-func-lab-helper.git && cd fdu-func-lab-helper
-pip install -r requirements.txt && python tools/build.py --doctor   # 检查环境
-npx @deepseek-ai/dsh web                                             # 浏览器打开 http://127.0.0.1:3080
+git clone https://github.com/rachael1216/fdu-func-lab-helper.git
+cd fdu-func-lab-helper
+pip install -r requirements.txt
+python tools/build.py --doctor                  # 检查环境
+python tools/build.py examples/sample-report/report.md --to all   # 试生成示例
 ```
 
-在 *Settings → Models* 填入你的 DeepSeek API Key，然后对它说：
+在 dsh 中使用（详见 [docs/GUIDE.md](docs/GUIDE.md)）：
 
-> 我要写家兔高钾血症（实验 2.7）的报告，请用 fdu-lab-report 带我做。
-
-完整图文步骤（含 Node / API Key / pandoc 安装）：**[docs/01-快速开始.md](docs/01-快速开始.md)**
-
-> 💡 **dsh** 在此指 DeepSeek 的本地 agent 运行环境（DeepSeek Harness）。skill 的加载方式依据公开说明编写，尚未在所有环境验证；遇到问题请先用方案 A 并提 Issue。
-
-## 🧠 分析部分怎么解决？
-
-AI 最容易在“讨论”里空话或编造。我们分三层：
-
-```mermaid
-flowchart TB
-  D["你的原始记录与观察"] --> L1["① 能算的交给代码<br/>labcalc.py"]
-  D --> L2["② 机制放进知识卡<br/>机制链 · 预期 · 常见偏差"]
-  L1 --> L3
-  L2 --> L3["③ 论证协议<br/>观察(事实) → 对照预期 → 机制解释<br/>→ 偏差=假设(给验证办法) → 局限 → 临床联系"]
-  L3 --> R["自查 skill：数字一致 · 图表编号 · 假设不当事实"]
+```bash
+npx @deepseek-ai/dsh web      # 在仓库目录运行，浏览器打开 http://127.0.0.1:3080
 ```
 
-详见 **[设计思路](docs/02-设计思路.md)**（Agent / Skill / RAG 的取舍、为什么不用服务器）。
+然后对它说：“我要写实验 2.7 家兔高钾血症的报告，按 fdu-lab-report 的流程带我做。”
+不想装 dsh：把 `prompts/` 里的提示词粘贴到 chat.deepseek.com；只要模板：直接用 `templates/` 下的 Word / tex。
 
-## 🧩 Skills
+## 示例
 
-| Skill | 作用 |
+<div align="center"><img src="assets/readme/preview.png" alt="示例报告：封面与正文" width="92%"><br><sub>示例报告（虚构数据，仅演示版式）：封面、页眉、三线表、参考文献</sub></div>
+
+```bash
+python tools/rag.py search 高钾血症 T波 --exp 2.7 -c expr        # 取课本术语与句式
+python tools/labstats.py ttest --a 5.1 4.8 5.5 --b 6.2 6.0 6.8   # t(4) = -3.82, P = 0.020
+python tools/labplot.py bar data.csv --x 组别 --y 数值 --points -o fig1.png
+python tools/stylecheck.py reports/高钾血症/report.md --exp 2.7
+python tools/refcheck.py reports/高钾血症/report.md
+```
+
+## 工作原理
+
+1. **检索**：片段按教材【章节】、知识卡标题、文献条目切分，建立中文字二元组 + 英文词的 BM25 索引（纯 Python，无服务器、无嵌入模型）。结果带 `textbook / expr / card / literature / 本地目录名` 标签。
+2. **语言**：`stylecheck` 逐句与教材片段比对：相似度 ≥ 0.60 提示“过于接近原文”，< 0.15 提示“缺少课本依据”；并列出口语、模板腔及其改法。它只给提示，不改文字。
+3. **统计与作图**：全部由代码完成；n = 1 不检验，n < 3 拒绝检验，小样本提示正态性检验无检验力。
+4. **文献**：`refcheck` 到 Crossref 取权威书目逐项对比；中文文献、图书标“人工核对”。核对通过只说明文献存在且书目正确，不说明它支持你的论点。
+5. **出稿**：Markdown（YAML 头）→ pandoc → docx / tex / pdf；封面、目录（罗马页码）、正文（阿拉伯页码）、页眉由脚本处理。
+
+设计取舍（为何是 skill + 轻量 RAG 而非 agent 或向量库）见 [DESIGN.md](DESIGN.md)。
+
+## 设置
+
+| 项 | 位置 |
 |---|---|
-| `fdu-lab-report` | 总流程：采集 → 计算 → 分析 → 自查 → 生成 |
-| `fdu-lab-intake` | 对话式采集原始记录与“与讲义不同之处” |
-| `fdu-lab-data` | 调用 `labcalc.py`，禁止心算 |
-| `fdu-lab-analysis` | 结果与讨论的论证协议 |
-| `fdu-lab-review` | 报告自查清单 |
-| `fdu-lab-kb` | 查知识卡与本地教材索引 |
+| 封面线稿 | YAML 头 `animal: rabbit | mouse`（`tools/make_cover.py` 生成） |
+| 语料 | `kb/`（教材，本机生成）、`corpus/local/<目录>/`（自放 pdf/docx/md/txt）；改后 `python tools/rag.py build` |
+| 避免用语 | `knowledge/style/avoid.yaml` |
+| 相似度阈值 | `stylecheck.py --high 0.60 --low 0.15` |
+| 联网核对 | 可选环境变量 `CROSSREF_MAILTO` |
 
-## 🗂️ 仓库结构
+教材：`python tools/kb.py build <你的教材.pdf>` 在本机生成 `kb/`（**教材不随仓库分发**，`kb/` 已被 gitignore）。
+
+## 已知局限
+
+- 知识卡（33）与课本表述整理（7 个实验）由 AI 起草，**未经教师审校**；与教材冲突时以教材和老师为准。`（待核）` 标记的条目尚无教材依据。
+- 课本表述整理只含术语、改写后的句式与页码，不含教材原文。
+- dsh 的使用步骤依据其公开文档整理，**作者尚未在 dsh 上完整运行验证**。
+- LaTeX 版本在没有 ctex 的环境中只用替身类做过编译冒烟测试；真实 ctex 环境的结果以 CI 和你的本机为准。
+- 文献登记表目前 14 篇，偏有机磷、高钾血症、DIC、缺氧、药理定量方法；其他实验需要自行补充（见 `corpus/README.md`）。
+- 检索为词法匹配，不理解同义改写；查不到时换关键词。
+
+## 目录结构
 
 ```
-.agents/skills/     6 个 skill（dsh 与其他 agent 自动发现）
-knowledge/cards/    实验知识卡（AI 起草，欢迎审校）
-templates/          Word 母版与填写模板 · LaTeX 类与模板
-assets/covers/      8 个主题封面
-tools/              build.py 一键排版 · labcalc.py 计算 · kb.py 教材索引 · make_prompt.py
-examples/           虚构示例报告
-docs/               快速开始 · 设计思路 · FAQ · 学术诚信
+.agents/skills/    11 个 skill（总调度 + 采集/检索/计算/统计/作图/论证/语言/文献/自查/出稿）
+tools/             rag · stylecheck · refcheck · labcalc · labstats · labplot · build · kb · make_cover …
+knowledge/         cards（知识卡）· expressions（课本表述）· literature（文献）· style（避免用语）
+templates/         word/（通用模板+样式母版）· latex/（fdureport.cls、通用 tex）· report-skeleton.md
+corpus/            local/（自放语料，gitignore）
+docs/              GUIDE.md（使用指南）· FORMAT.md（格式规范）
+examples/          sample-report/（虚构示例）
+tests/             单元测试与 LaTeX 替身类
 ```
 
-## ⚠️ 请注意
+## 联系方式
 
-- **学术诚信**：这是写作教练，不是代笔。数据与观察必须是你自己的；请按课程要求声明 AI 使用。示例报告为虚构，**勿抄**。
-- **知识卡是 AI 起草、未经教师审校**（`review_status: draft-ai`），请以教材与老师为准，发现错误欢迎 PR。
-- **教材不在仓库**（版权）。可用自己的 PDF 在本机建索引：`python tools/kb.py build 教材.pdf`。
-- LaTeX 版需 XeLaTeX + ctex（TeX Live / MiKTeX / Overleaf）。
-- 本项目为同学自发的非官方工具，与学校及课程组无隶属关系。
+刘瑞琦 · 复旦大学上海医学院 · 24301050114@m.fudan.edu.cn。问题与改进建议欢迎提 Issue。
 
-## 🛣️ 路线图
+## 引用
 
-- [ ] 教师/高年级审校知识卡
-- [ ] 本地小界面（一键填表生成）
-- [ ] 图表 skill：CSV → 规范曲线/柱状图
-- [ ] 更多实验的完整卡片
+```bibtex
+@software{liu2026fdufunclabhelper,
+  author  = {Liu, Ruiqi},
+  title   = {FDU Func Lab Helper: a RAG and skill toolkit for writing functional-science laboratory reports},
+  year    = {2026},
+  url     = {https://github.com/rachael1216/fdu-func-lab-helper},
+  license = {MIT}
+}
+```
+机器可读版本见 [CITATION.cff](CITATION.cff)。
 
-## 🤝 贡献
+## 许可
 
-最需要的是**审校知识卡**，见 [CONTRIBUTING](CONTRIBUTING.md)。
+MIT，见 [LICENSE](LICENSE)。第三方组件与数据来源见 [THIRD_PARTY.md](THIRD_PARTY.md)。
 
-## 📄 License
+## 致谢
 
-MIT © rachael1216
+感谢《功能学科实验教程》（严钰锋、马淑兰 主编，2020）提供的课程内容；感谢 Crossref 提供开放的书目接口；感谢 pandoc、python-docx、SciPy、matplotlib 等开源项目。

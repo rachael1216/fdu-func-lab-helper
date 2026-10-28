@@ -21,8 +21,8 @@ class BuildTests(unittest.TestCase):
             names = z.namelist()
             self.assertTrue(any(n.startswith("word/media/") for n in names))
             xml = z.read("word/document.xml").decode("utf8")
-            self.assertIn("LABORATORY REPORT", xml)
-            self.assertIn("示例同学", xml)
+            self.assertIn("复旦大学上海医学院", xml)
+            self.assertIn("upperRoman", xml)
             hdr = "".join(z.read(n).decode("utf8") for n in names if n.startswith("word/header"))
             self.assertNotIn("{{HEADER}}", hdr)
 
@@ -33,7 +33,8 @@ class BuildTests(unittest.TestCase):
             self.assertIn("\\fducover", t)
             self.assertIn("\\textsuperscript{+}", t)
             self.assertTrue((Path(td) / "fdureport.cls").exists())
-            self.assertTrue((Path(td) / "cover.jpg").exists())
+            self.assertTrue((Path(td) / "cover.pdf").exists())
+            self.assertTrue((Path(td) / "icon.png").exists())
 
 
 if __name__ == "__main__":

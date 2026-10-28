@@ -1,52 +1,65 @@
 \documentclass{fdureport}
-\usepackage{unicode-math}
-\usepackage{longtable,booktabs,calc}
+\usepackage{longtable,booktabs,calc,etoolbox}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\usepackage{etoolbox}
 \setlength{\emergencystretch}{3em}
-\setcounter{secnumdepth}{0}
 \AtBeginEnvironment{quote}{\begin{hintbox}}\AtEndEnvironment{quote}{\end{hintbox}}
 \begin{document}
-\def\fduimage{cover.jpg}\def\fducourse{功能学科综合实验}\def\fdutitle{实验题目（如：家兔高钾血症实验报告）}\def\fduexp{}\def\fduclass{年级专业}\def\fduname{姓名}\def\fduid{学号}\def\fdugroup{第
-\_ 组}\def\fdudate{2025.\_\_.\_\_}\def\fduteacher{}\fducover
-\fduheader{功能学科综合实验\quad 学号\quad 姓名}
-\begin{center}{\heiti\Large\bfseries\color{ink} 实验题目（如：家兔高钾血症实验报告）}\\[2pt]{\small\kaishu\color{greyx} 年级专业\quad 姓名\quad 学号\quad 实验日期：2025.\_\_.\_\_}\end{center}
-\vspace{-0.3em}{\color{gray!40}\hrule}\vspace{0.6em}
-\begin{quote}
-灰色引用块是\textbf{写作提示}，写完后请删除。结构参考课程常见要求，具体以任课老师当年的要求为准。
-\end{quote}
-
-\hypertarget{ux4e00ux5b9eux9a8cux76eeux7684}{%
-\section{一、实验目的}\label{ux4e00ux5b9eux9a8cux76eeux7684}}
+\def\fduimage{cover.pdf}\def\fducourse{功能学科综合实验}\def\fdutitle{实验题目（如：家兔高钾血症）}\def\fduexp{}\def\fduclass{年级专业}\def\fduname{姓名}\def\fduid{学号}\def\fdugroup{}\def\fduteacher{}\def\fdudate{2026.\_\_.\_\_}\fducover
+\fduheader{icon.png}{功能学科综合实验实验报告}{学号}
+\fdufront
+\hypertarget{ux6458ux8981}{%
+\section*{摘要}\label{ux6458ux8981}}
+\addcontentsline{toc}{section}{摘要}
 
 \begin{quote}
-1--3
-条，用动词开头（观察、理解、掌握）。写``这次实验要回答什么问题''，不是抄教材。
+灰色引用块是\textbf{写作提示}，写完请删除。摘要 200--300
+字，依次写：目的、对象与方法、主要结果（带关键数字）、结论。不写参考文献编号以外的引用。
 \end{quote}
 
-\hypertarget{ux4e8cux5b9eux9a8cux539fux7406}{%
-\section{二、实验原理}\label{ux4e8cux5b9eux9a8cux539fux7406}}
+\textbf{关键词：}关键词一；关键词二；关键词三
+
+\hypertarget{ux5f15ux8a00}{%
+\section{引言}\label{ux5f15ux8a00}}
 
 \begin{quote}
-用自己的话写机制链：刺激 → 受体/通道 → 细胞/器官反应 →
-可观测指标。必要时画一张示意图。
+1--2
+段。说明实验涉及的生理/病理/药理问题，给出本实验要回答的问题，最后一句写实验目的。背景句要有教材或文献依据。
 \end{quote}
 
-\hypertarget{ux4e09ux5b9eux9a8cux5bf9ux8c61ux4e0eux65b9ux6cd5}{%
-\section{三、实验对象与方法}\label{ux4e09ux5b9eux9a8cux5bf9ux8c61ux4e0eux65b9ux6cd5}}
+\hypertarget{ux6750ux6599ux4e0eux65b9ux6cd5}{%
+\section{材料与方法}\label{ux6750ux6599ux4e0eux65b9ux6cd5}}
+
+\hypertarget{ux5b9eux9a8cux5bf9ux8c61ux4e0eux836fux54c1}{%
+\subsection{实验对象与药品}\label{ux5b9eux9a8cux5bf9ux8c61ux4e0eux836fux54c1}}
 
 \begin{quote}
-动物（种类、体重、数量、麻醉方式与剂量）、药品（名称、浓度、给药途径）、仪器、关键操作步骤。\textbf{与实际做的不一致处要如实写}。
+动物种类、性别、体重（kg）、数量；药品名称、浓度、剂量（mg/kg）、给药途径与体积；仪器与型号。\textbf{与实际所做不一致处如实写出。}
 \end{quote}
 
-\hypertarget{ux56dbux5b9eux9a8cux7ed3ux679c}{%
-\section{四、实验结果}\label{ux56dbux5b9eux9a8cux7ed3ux679c}}
+\hypertarget{ux5b9eux9a8cux6b65ux9aa4}{%
+\subsection{实验步骤}\label{ux5b9eux9a8cux6b65ux9aa4}}
 
 \begin{quote}
-先文字概述，再放表和图。原始数据放表，趋势放图；每张图表有编号和标题，正文要引用。
+按时间顺序，用过去时、被动或第一人称复数描述：麻醉、固定、手术、仪器连接、记录对照、给药、观察。每个处理点写明时刻。
 \end{quote}
 
-\textbf{表 1　（表题）}
+\hypertarget{ux89c2ux5bdfux6307ux6807ux4e0eux6570ux636eux5904ux7406}{%
+\subsection{观察指标与数据处理}\label{ux89c2ux5bdfux6307ux6807ux4e0eux6570ux636eux5904ux7406}}
+
+\begin{quote}
+指标定义、判定标准（如瞳孔直径、+/−
+分级）、计算公式、统计方法（均值±标准差；检验方法与显著性水平）。
+\end{quote}
+
+\hypertarget{ux7ed3ux679c}{%
+\section{结果}\label{ux7ed3ux679c}}
+
+\begin{quote}
+先文字概括，再放表图；表图要自明，正文必须引用（``如表 1
+所示''）。数据与方法一一对应，不在此处作解释。
+\end{quote}
+
+\textbf{表 1　（表题写在表上）}
 
 \begin{longtable}[]{@{}lccc@{}}
 \toprule\noalign{}
@@ -59,27 +72,28 @@
 给药后 & & & \\
 \end{longtable}
 
-\hypertarget{ux4e94ux5206ux6790ux4e0eux8ba8ux8bba}{%
-\section{五、分析与讨论}\label{ux4e94ux5206ux6790ux4e0eux8ba8ux8bba}}
+\hypertarget{ux8ba8ux8bba}{%
+\section{讨论}\label{ux8ba8ux8bba}}
 
 \begin{quote}
-建议结构：① 观察到了什么 → ② 与预期是否一致 → ③ 机制解释 → ④
-与预期不一致的现象及可能原因（作为假设，不要当结论）→ ⑤
-局限（样本量、操作误差）→ ⑥ 临床联系。
+建议顺序：①本实验的主要发现；②机制解释（沿``原因---环节---表现''）；③与预期不一致处的可能原因（写成假设并说明如何验证）；④局限（样本量、操作、个体差异）；⑤与临床的联系。
 \end{quote}
 
-\hypertarget{ux516dux7ed3ux8bba}{%
-\section{六、结论}\label{ux516dux7ed3ux8bba}}
+\hypertarget{ux7ed3ux8bba}{%
+\section{结论}\label{ux7ed3ux8bba}}
 
 \begin{quote}
-2--3 句，每句对应一个实验目的。
+2--3 句，与引言中的目的一一对应；不引入新的数据。
 \end{quote}
 
 \hypertarget{ux53c2ux8003ux6587ux732e}{%
-\section{参考文献}\label{ux53c2ux8003ux6587ux732e}}
+\section*{参考文献}\label{ux53c2ux8003ux6587ux732e}}
+\addcontentsline{toc}{section}{参考文献}
 
 \begin{quote}
-按课程要求的格式；教材：严钰锋，马淑兰
-主编．功能学科实验教程［M］．2020．只写你真正读过的文献。
+按 GB/T 7714---2015 顺序编码制，正文用上标 {[}1{]}
+标注。只列真正读过的文献，并用 \texttt{python\ tools/refcheck.py} 核对。
 \end{quote}
+
+{[}1{]} 严钰锋，马淑兰．功能学科实验教程{[}M{]}．2020．
 \end{document}

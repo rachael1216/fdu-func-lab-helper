@@ -15,3 +15,6 @@ node_modules/
 # 例外：示例与模板产物可提交
 !examples/sample-report/*.pdf
 prompts/out/
+corpus/local/*
+!corpus/local/.gitkeep
+corpus/index/

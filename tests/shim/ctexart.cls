@@ -3,5 +3,5 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}\ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{fontspec}
-\setmainfont{Noto Serif CJK TC}\setsansfont{Noto Sans CJK TC}
+\setmainfont{Noto Serif CJK SC}\setsansfont{Noto Sans CJK SC}
 \newcommand{\heiti}{\sffamily}\newcommand{\kaishu}{\itshape}

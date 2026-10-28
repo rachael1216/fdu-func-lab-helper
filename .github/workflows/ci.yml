@@ -10,6 +10,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m unittest discover tests
       - run: python tools/card_index.py --check
+      - run: python tools/refcheck.py --offline examples/sample-report/report.md
   build:
     runs-on: ubuntu-latest
     steps:

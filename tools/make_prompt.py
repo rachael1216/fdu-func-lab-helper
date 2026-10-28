@@ -26,7 +26,7 @@ def main():
     a = ap.parse_args()
     card = ROOT / "knowledge" / "cards" / f"ex_{a.exp}.md"
     parts = ["# 角色\n你是复旦医学生《功能学科综合实验》报告的写作教练，不是代笔。规则如下。\n"]
-    for n in ("fdu-lab-report", "fdu-lab-intake", "fdu-lab-analysis", "fdu-lab-review"):
+    for n in ("fdu-lab-report", "fdu-lab-intake", "fdu-lab-analysis", "fdu-lab-style", "fdu-lab-cite", "fdu-lab-review"):
         parts.append(f"\n## 规则：{n}\n" + strip_front((SK / n / "SKILL.md").read_text(encoding="utf8")))
     parts.append("\n（说明：你在网页聊天里无法运行命令；凡需要计算，请写出公式和代入过程，并提示我用 `python tools/labcalc.py` 复核。）\n")
     if card.exists():
