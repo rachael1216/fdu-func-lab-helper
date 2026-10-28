@@ -1,0 +1,17 @@
+# 学生个人内容与教材索引（含版权/隐私）
+kb/
+reports/
+*.pdf
+!assets/**/*.pdf
+# 构建中间文件
+*.aux
+*.log
+*.out
+*.toc
+__pycache__/
+.venv/
+.DS_Store
+node_modules/
+# 例外：示例与模板产物可提交
+!examples/sample-report/*.pdf
+prompts/out/

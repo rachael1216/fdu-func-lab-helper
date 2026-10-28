@@ -1,0 +1,14 @@
+\documentclass{fdureport}
+\usepackage{longtable,booktabs,calc}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{etoolbox}
+\setlength{\emergencystretch}{3em}
+\setcounter{secnumdepth}{0}
+\AtBeginEnvironment{quote}{\begin{hintbox}}\AtEndEnvironment{quote}{\end{hintbox}}
+\begin{document}
+$if(nocover)$$else$\def\fduimage{$coverimage$}\def\fducourse{$course$}\def\fdutitle{$title$}\def\fduexp{$exp_no$}\def\fduclass{$class$}\def\fduname{$student$}\def\fduid{$student_id$}\def\fdugroup{$group$}\def\fdudate{$date$}\def\fduteacher{$teacher$}\fducover$endif$
+\fduheader{$course$\quad $student_id$\quad $student$}
+\begin{center}{\heiti\Large\bfseries\color{ink} $title$}\\[2pt]{\small\kaishu\color{greyx} $class$\quad $student$\quad $student_id$\quad 实验日期：$date$}\end{center}
+\vspace{-0.3em}{\color{gray!40}\hrule}\vspace{0.6em}
+$body$
+\end{document}
