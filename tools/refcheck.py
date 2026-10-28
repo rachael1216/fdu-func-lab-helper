@@ -143,7 +143,7 @@ def split_name(a: str) -> dict:
     """“ten Cate H”“Buckley N A” → 姓与缩写：末尾连续的 1–2 位大写词是缩写，其余为姓。"""
     toks = a.split()
     k = len(toks)
-    while k > 1 and re.fullmatch(r"[A-Z]{1,2}", toks[k - 1]):
+    while k > 1 and re.fullmatch(r"[A-Z]{1,2}|Jr", toks[k - 1]):
         k -= 1
     return {"family": " ".join(toks[:k]), "given": " ".join(toks[k:])}
 
@@ -157,7 +157,7 @@ def registry_to_item(r: dict) -> dict:
 def format_gbt(item: dict, et_al_hint: bool = False) -> str:
     def name(a):
         fam, giv = a.get("family", ""), a.get("given", "")
-        ini = " ".join(w[0] for w in re.split(r"[\s\-.]+", giv) if w)
+        ini = " ".join(w if w == "Jr" else w[0] for w in re.split(r"[\s\-.]+", giv) if w)
         return f"{fam.upper()} {ini}".strip()
     au = item.get("author", [])
     names = ", ".join(name(a) for a in au[:3]) + (", et al" if len(au) > 3 or et_al_hint else "")
