@@ -37,12 +37,12 @@ python tools/build.py --doctor
 ✅ 成功标志：`--doctor` 末尾显示“环境 OK”。有 ✗ 就按提示补。
 
 ### B3 放入你的资料（强烈建议）
-1. 把你自己的《功能学科实验教程》PDF 放在仓库目录，运行 `python tools/kb.py build 功能学科实验教程.pdf`（需要 `pip install pymupdf`）。
+1. 课本已在 `reference/textbook/`，无需操作。如要换成自己的版本：`python tools/kb.py build 你的教材.pdf`（需要 `pip install pymupdf`）。
 2. 其他同类教材或讲义放进 `corpus/local/<目录名>/`（见 `corpus/README.md`）。
 3. `python tools/rag.py build`，再 `python tools/rag.py sources`。
 
 ✅ 成功标志：`sources` 列出 `textbook`、`expr`、`card`、`literature`（以及你放的目录）。
-教材是有版权的，`kb/` 和 `corpus/local/` 都不会被提交。
+`corpus/local/`（你自放的资料）不会被提交。
 
 ### B4 启动 dsh
 在**仓库目录**里运行：
@@ -52,7 +52,7 @@ npx @deepseek-ai/dsh web
 浏览器打开 http://127.0.0.1:3080，在 Settings → Models 里填入 API Key。
 dsh 会从项目的 `.agents/skills`（以及 `.dsh/skills`、`~/.dsh/skills`、`~/.agents/skills`）发现 skill。
 
-✅ 成功标志：对话里问“你有哪些 fdu-lab 开头的 skill？”，它能列出 `fdu-lab-report` 等 11 个。
+✅ 成功标志：对话里问“你有哪些 fdu-lab 开头的 skill？”，它能列出 `fdu-lab-report` 等 12 个。
 列不出来：确认是在仓库目录里启动的；或运行 `python tools/install_skills.py` 装到全局目录，重启 dsh。
 
 ### B5 写一份报告（完整流程）

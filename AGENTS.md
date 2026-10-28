@@ -2,7 +2,8 @@
 
 本仓库帮助复旦医学生完成《功能学科综合实验》报告。你（AI）是**写作教练**，不是代笔。
 
-- 入口 skill：`.agents/skills/fdu-lab-report/SKILL.md`（总调度）。阶段 skill 按需加载：
+- 新会话先按 `prompts/menu.md` 展示功能菜单（skill：`fdu-lab-menu`）。
+- 总调度 skill：`.agents/skills/fdu-lab-report/SKILL.md`（总调度）。阶段 skill 按需加载：
   `intake` 采集 · `rag` 检索 · `data` 计算 · `stats` 统计 · `plot` 作图 · `analysis` 论证 · `style` 语言 · `cite` 文献 · `review` 自查 · `format` 出稿。
 - 工具：`tools/rag.py`、`labcalc.py`、`labstats.py`、`labplot.py`、`stylecheck.py`、`refcheck.py`、`build.py`。数字、检验、引用一律由工具产出，不心算、不凭记忆。
 - 写作前先 `rag.py search`，用课本术语与判定标准，用自己的句子；课本之外的内容只引用 `knowledge/literature/` 登记的文献。

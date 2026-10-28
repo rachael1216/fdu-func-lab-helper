@@ -5,7 +5,7 @@
 把教材、讲义和重点文献切成片段建索引，写作时先检索、再据片段措辞，并标明出处。
 
 语料（每片段带来源标签）：
-  textbook    kb/ex_*.md, kb/tech_*.md      教材（由 tools/kb.py 在本机从你自己的 PDF 生成，不入库）
+  textbook    reference/textbook/ex_*.md      教材（由 tools/kb.py 在本机从你自己的 PDF 生成，不入库）
   card        knowledge/cards/*.md           实验知识卡（AI 起草，未审校）
   expr        knowledge/expressions/*.md     各实验“课本表述”整理（术语、句式、页码）
   literature  knowledge/literature/*.yaml    重点文献登记（已核对书目 + 要点概括）
@@ -151,7 +151,7 @@ def chunks_local(f: Path, tag: str):
 # ------------------------------------------------------------------ 建库
 def build():
     docs: list[dict] = []
-    for f in sorted((ROOT / "kb").glob("*.md")):
+    for f in sorted((ROOT / "reference" / "textbook").glob("*.md")):
         docs += list(chunks_textbook(f))
     for f in sorted((ROOT / "knowledge" / "cards").glob("*.md")):
         docs += list(chunks_markdown(f, "card"))

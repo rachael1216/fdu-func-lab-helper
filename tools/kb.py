@@ -10,7 +10,7 @@
 
 用法
 ----
-  python tools/kb.py build  功能学科实验教程.pdf      # 建索引 -> kb/（已在 .gitignore）
+  python tools/kb.py build  功能学科实验教程.pdf      # 建索引 -> reference/textbook/
   python tools/kb.py list                              # 列出所有实验
   python tools/kb.py show 2.7                          # 打印实验 2.7 教材原文
   python tools/kb.py show 2.7 --section 思考题         # 只看某个栏目
@@ -32,7 +32,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-KB_DIR = ROOT / "kb"
+KB_DIR = ROOT / "reference" / "textbook"
 BOOK = "《功能学科实验教程》（严钰锋，马淑兰 主编，2020）"
 
 CN_NUM = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9, "十": 10}

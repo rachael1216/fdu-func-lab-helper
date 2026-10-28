@@ -126,7 +126,7 @@ def run_pandoc(args):
         print(r.stderr.strip(), file=sys.stderr)
 
 
-def build_docx(meta: dict, body: str, out: Path, cover: bool = True):
+def build_docx(meta: dict, body: str, out: Path, cover: bool = True, src: Path | None = None):
     from docx import Document
     sys.path.insert(0, str(ROOT / "tools"))
     import docx_cover  # type: ignore
@@ -137,7 +137,7 @@ def build_docx(meta: dict, body: str, out: Path, cover: bool = True):
         md.write_text(body + ai_block(meta), encoding="utf8")
         tmp = Path(td) / "body.docx"
         run_pandoc(["-f", "markdown+smart-smart", "-t", "docx", f"--reference-doc={REF_DOCX}", "--toc", "--toc-depth=2",
-                    "--number-sections", "-M", "toc-title=目 录", "--resource-path", f"{out.parent}:{ROOT}",
+                    "--number-sections", "-M", "toc-title=目 录", "--resource-path", f"{src or out.parent}:{out.parent}:{ROOT}",
                     "-o", str(tmp), str(md)])
         doc = Document(str(tmp))
     docx_cover.style_tables(doc)
@@ -158,15 +158,18 @@ SUB = dict(zip("₀₁₂₃₄₅₆₇₈₉₊₋", "0123456789+-"))
 def tex_safe(body: str) -> str:
     """把 Unicode 上下标（Ca²⁺、H₂O）换成 \\textsuperscript/\\textsubscript，避免字体缺字。"""
     def conv(chars, table, cmd):
-        return "\\" + cmd + "{" + "".join(table[c] for c in chars) + "}"
+        t = "".join(table[c] for c in chars)
+        return f"^{t}^" if cmd == "textsuperscript" else f"~{t}~"
     body = re.sub("[" + "".join(SUP) + "]+", lambda m: conv(m.group(0), SUP, "textsuperscript"), body)
     body = re.sub("[" + "".join(SUB) + "]+", lambda m: conv(m.group(0), SUB, "textsubscript"), body)
     return body
 
 
-def build_tex(meta: dict, body: str, out: Path, cover: bool = True):
+def build_tex(meta: dict, body: str, out: Path, cover: bool = True, src: Path | None = None):
     import yaml
     out.parent.mkdir(parents=True, exist_ok=True)
+    if src and (src / "figures").is_dir() and (src / "figures").resolve() != (out.parent / "figures").resolve():
+        shutil.copytree(src / "figures", out.parent / "figures", dirs_exist_ok=True)
     cls = ROOT / "templates" / "latex" / "fdureport.cls"
     for src, name in ((asset(meta["animal"], "pdf"), "cover.pdf"), (asset(meta["animal"], "icon"), "icon.png"), (cls, "fdureport.cls")):
         dst = out.parent / name
@@ -181,7 +184,7 @@ def build_tex(meta: dict, body: str, out: Path, cover: bool = True):
         md = Path(td) / "body.md"
         md.write_text(tex_safe(body + ai_block(meta)), encoding="utf8")
         run_pandoc(["-f", "markdown+smart-smart", "-t", "latex", "--template", str(TEX_TEMPLATE), "--metadata-file", str(mf),
-                    "--resource-path", f"{out.parent}:{ROOT}", "-o", str(out), str(md)])
+                    "--resource-path", f"{src or out.parent}:{out.parent}:{ROOT}", "-o", str(out), str(md)])
     return out
 
 
@@ -223,9 +226,9 @@ def main():
     stem = a.md.stem
     made = []
     if a.to in ("docx", "all"):
-        made.append(build_docx(meta, body, outdir / f"{stem}.docx", not a.no_cover))
+        made.append(build_docx(meta, body, outdir / f"{stem}.docx", not a.no_cover, a.md.parent))
     if a.to in ("tex", "pdf", "all"):
-        tex = build_tex(meta, body, outdir / f"{stem}.tex", not a.no_cover)
+        tex = build_tex(meta, body, outdir / f"{stem}.tex", not a.no_cover, a.md.parent)
         made.append(tex)
         if a.to in ("pdf", "all"):
             made.append(build_pdf(tex))

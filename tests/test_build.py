@@ -31,7 +31,7 @@ class BuildTests(unittest.TestCase):
             subprocess.run([sys.executable, str(ROOT / "tools" / "build.py"), str(MD), "--to", "tex", "-o", td], check=True)
             t = (Path(td) / "report.tex").read_text(encoding="utf8")
             self.assertIn("\\fducover", t)
-            self.assertIn("\\textsuperscript{+}", t)
+            self.assertIn("\\textsubscript{2}", t)
             self.assertTrue((Path(td) / "fdureport.cls").exists())
             self.assertTrue((Path(td) / "cover.pdf").exists())
             self.assertTrue((Path(td) / "icon.png").exists())

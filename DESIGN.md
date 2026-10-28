@@ -48,7 +48,7 @@ Markdown + YAML → pandoc → docx（reference.docx 样式母版 + python-docx 
 封面单一极简（线稿兔/鼠、学号、日期）；目录罗马页码，正文阿拉伯页码；页眉左课程右学号。规范见 `docs/FORMAT.md`。
 
 ## 8. 隐私与版权
-- 教材不入库；`kb/`、`corpus/local/`、`corpus/index/`、`reports/`、`prompts/out/` 均 gitignore。
+- 课本放在 `reference/textbook/`（由仓库作者决定入库；公开分发前需确认版权许可）；`corpus/local/`、`corpus/index/`、`reports/`、`prompts/out/` 均 gitignore。
 - 仓库不含任何同学的姓名、学号或报告内容；示例为虚构数据。
 - API Key 只填在 dsh 设置里，不写入仓库。
 

@@ -10,7 +10,7 @@ description: 检索课本、讲义、实验知识卡、课本表述整理和重�
 ## 语料（每条结果带来源标签）
 | 标签 | 内容 | 说明 |
 |---|---|---|
-| `textbook` | 本机 `kb/` 教材分段 | 学生用自己的教材 PDF 生成，不入库 |
+| `textbook` | `reference/textbook/` 教材分章文本 | 已入库；`kb.py build` 可用自己的 PDF 重建 |
 | `expr` | `knowledge/expressions/ex_*.md` | 各实验课本术语、句式、页码（AI 整理，待核） |
 | `card` | `knowledge/cards/ex_*.md` | 机制链、预期现象、偏差（AI 起草，待核） |
 | `literature` | `knowledge/literature/references.yaml` | 已核对书目的重点文献 + 要点 |

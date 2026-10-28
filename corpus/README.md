@@ -15,7 +15,7 @@ corpus/
 支持 `.pdf`、`.docx`、`.md`、`.txt`。放好后运行：
 
 ```bash
-python tools/kb.py build 功能学科实验教程.pdf    # 教材：按实验编号切分，写入 kb/
+python tools/kb.py build 功能学科实验教程.pdf    # 教材：按实验编号切分，写入 reference/textbook/
 python tools/rag.py build                         # 建索引（教材 + 知识卡 + 表述库 + 文献登记 + corpus/local）
 python tools/rag.py sources                       # 看看收进了哪些资料
 ```

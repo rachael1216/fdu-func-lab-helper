@@ -12,7 +12,7 @@
 
 [![license](https://img.shields.io/badge/license-MIT-5F7568)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-5F7568)](requirements.txt)
-[![skills](https://img.shields.io/badge/skills-11-5F7568)](.agents/skills)
+[![skills](https://img.shields.io/badge/skills-12-5F7568)](.agents/skills)
 
 <img src="assets/readme/architecture.svg" alt="RAG + skill architecture" width="100%">
 
@@ -62,11 +62,11 @@ Retrieval is BM25 over CJK character bigrams plus Latin words (pure Python). `st
 
 ## Settings
 
-Cover animal (`animal: rabbit|mouse` in the YAML header), corpora (`kb/`, `corpus/local/`), avoided phrases (`knowledge/style/avoid.yaml`), similarity thresholds (`stylecheck.py --high/--low`).
+Cover animal (`animal: rabbit|mouse` in the YAML header), corpora (`reference/`, `corpus/local/`), avoided phrases (`knowledge/style/avoid.yaml`), similarity thresholds (`stylecheck.py --high/--low`).
 
 ## Known limits
 
-Cards and wording notes are AI drafts and unreviewed by instructors; the textbook is not distributed; dsh steps follow public documentation and have not been fully run by the author; the LaTeX path was smoke-tested with a stand-in class only; the literature registry covers 14 papers.
+Cards and wording notes are AI drafts and unreviewed by instructors; the textbook is included in `reference/textbook/` at the repo owner's discretion (check licensing before redistributing); dsh steps follow public documentation and have not been fully run by the author; the LaTeX path was smoke-tested with a stand-in class only; the literature registry covers 14 papers.
 
 ## Repository layout
 

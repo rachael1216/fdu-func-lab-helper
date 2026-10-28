@@ -1,8 +1,8 @@
 # 学生个人内容与教材索引（含版权/隐私）
-kb/
 reports/
 *.pdf
 !assets/**/*.pdf
+!reference/**/*.pdf
 # 构建中间文件
 *.aux
 *.log
