@@ -99,7 +99,7 @@ for i, (t, s) in enumerate(ks):
     chip(X0 + 12 + i * (kw + 8), 650, kw, 54, t, s, "#fff", SAND)
 rect(X0 + 12, 716, WD - 24, 40, "#fff", SAND, 7, 1, 'stroke-dasharray="5 4"')
 text(X0 + WD / 2, 733, "corpus/index/rag.json　中文字二元组 + 英文词 · BM25 · 纯 Python（无服务器、无嵌入模型）", 11.5, SAND, 700)
-text(X0 + WD / 2, 749, "标签：textbook / lecture / card / expr / literature / 本地目录名", 10.5, GREY)
+text(X0 + WD / 2, 749, "标签：textbook / lecture / card / expr / literature / 本地目录名　·　rag.py export → 可选稠密检索 local-rag-cpp", 10.5, GREY)
 # ---- 5 output
 layer(24, 798, 960, 80, "产出", "OUTPUT · 与外部", ROSE_L, ROSE)
 chip(X0 + 12, 820, 170, 48, "report.md", "YAML 头 + 正文", "#fff", ROSE)
@@ -131,3 +131,59 @@ a('</svg>')
 out = ROOT / "assets/readme/architecture.svg"
 out.write_text("\n".join(o), encoding="utf8")
 print("✓", out)
+
+
+# ================= RAG pipeline diagram =================
+o.clear()
+W2, H2 = 1240, 570
+a(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W2} {H2}" font-family="\'Noto Sans CJK SC\',\'PingFang SC\',\'Microsoft YaHei\',sans-serif">')
+a(f'''<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="{SAGE_D}"/></marker>
+<filter id="sh" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.12"/></filter>
+<linearGradient id="hd" x1="0" x2="1"><stop offset="0" stop-color="{SAGE_D}"/><stop offset="1" stop-color="{SAGE}"/></linearGradient>
+</defs>''')
+rect(0, 0, W2, H2, "#FFFFFF", "#FFFFFF", 0, 0)
+rect(0, 0, W2, 54, "url(#hd)", "none", 0, 0)
+text(24, 34, "RAG 检索管线 · tools/rag.py", 20, "#fff", 700, "start")
+text(W2 - 24, 34, "词法检索（BM25）· 纯 Python · 每个结果带出处定位", 12.5, "#DCE6DF", 400, "end")
+# sources column
+srcs = [("textbook", "教材 PDF/分章文本"), ("lecture", "讲义"), ("corpus/local", "其他教材·文献全文"), ("card", "知识卡"), ("expr", "课本表述"), ("literature", "重点文献登记")]
+text(110, 84, "语料", 12.5, SAND, 700)
+for i, (t, sub) in enumerate(srcs):
+    chip(20, 96 + i * 54, 180, 48, t, sub, SAND_L, SAND)
+# stages
+st = [("① 读取", ["pdf/docx/md/txt/yaml", "教材含页码范围"]), ("② 切片", ["教材按【章节】", "md 按“## ”", "文献 1 条 1 片", "其余段落 ≤380 字"]),
+      ("③ 分词", ["中文：字二元组", "英文：小写词", "（无需词典/模型）"]), ("④ 建索引", ["corpus/index/rag.json", "N · 平均长度 · df", "docs{corpus,source,", "exp,locator,text,tok}"]),
+      ("⑤ 查询", ["同样分词", "过滤：-c 语料标签", "　　　--exp 实验编号"]), ("⑥ 排序", ["BM25  k1=1.5  b=0.75", "idf=ln(1+(N−df+.5)/(df+.5))", "取 top-k"])]
+x = 236
+for i, (t, ls) in enumerate(st):
+    rect(x, 110, 148, 196, BLUE_L, BLUE, 10, 1.2, 'filter="url(#sh)"')
+    text(x + 74, 136, t, 14, BLUE, 700)
+    for j, l in enumerate(ls):
+        text(x + 74, 168 + j * 22, l, 11, INK if j == 0 else GREY)
+    if i < 5:
+        arrow(x + 148, 208, x + 166, 208)
+    x += 166
+arrow(200, 208, 236, 208)
+# output
+rect(236, 330, 960, 64, SAGE_L, SAGE, 10, 1.2)
+text(716, 356, "⑦ 返回：[序号] (语料标签) 来源 · 出处定位（如 实验3.1【原理】 p.124-125）· 片段  → 引用页码取自这里，不凭记忆", 12.5, SAGE_D, 700)
+text(716, 378, "--full 返回整段；--json 供脚本使用；找不到时明确提示“没有检索到”，不补全", 11, GREY)
+arrow(1110, 306, 1110, 330)
+# consumers
+text(716, 424, "消费者", 12.5, ROSE, 700)
+cons = [("fdu-lab-rag", "三步协议：expr → textbook → literature\n课本外内容找不到写“待核”"), ("stylecheck.py", "句中二元组被某课本片段包含的比例\n≥0.60 过近 · &lt;0.15 缺依据"),
+        ("refcheck.py --offline", "对照 literature 登记表\n无需联网即可查书目"), ("rag.py export", "导出带“第N章”标题的文本\n→ 可选稠密检索 local-rag-cpp")]
+for i, (t, sub) in enumerate(cons):
+    xx = 236 + i * 242
+    rect(xx, 440, 228, 86, "#fff", ROSE, 9, 1.2, 'filter="url(#sh)"')
+    text(xx + 114, 464, t, 12.5, ROSE, 700)
+    for j, l in enumerate(sub.split("\n")):
+        text(xx + 114, 486 + j * 17, l, 10.5, GREY)
+    arrow(xx + 114, 394, xx + 114, 440, dash=True)
+text(110, 446, "为什么是词法检索？", 12, SAGE_D, 700)
+for j, l in enumerate(["术语类查询（“高钾血症”“复能剂”）", "词法匹配更稳、可复现、零依赖；", "代价：不懂同义改写 →", "语料里带术语表与关键词补偿"]):
+    text(110, 466 + j * 17, l, 10.5, GREY)
+a('</svg>')
+(ROOT / "assets/readme/rag-pipeline.svg").write_text("\n".join(o), encoding="utf8")
+print("✓ rag-pipeline.svg")

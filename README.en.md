@@ -46,6 +46,10 @@ python tools/build.py examples/sample-report/report.md --to all
 npx @deepseek-ai/dsh web     # then follow docs/GUIDE.md
 ```
 
+## Related project
+
+[**local-rag-cpp**](https://github.com/rachael1216/local-rag-cpp) (C++ / llama.cpp, local dense-vector question answering) complements this lexical retriever: use `python tools/rag.py export` to dump the corpus as chapter-headed plain text for it (not yet tested end to end). Architecture details: [DESIGN.md](DESIGN.md).
+
 ## Examples
 
 See the Chinese README for screenshots. Typical commands:

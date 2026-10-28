@@ -10,7 +10,7 @@
 
 <sup>1</sup> 复旦大学上海医学院，24 级临床医学五年制
 
-[使用指南](docs/GUIDE.md) · [设计说明](DESIGN.md) · [参考资料库](reference/README.md) · [格式规范](docs/FORMAT.md) · [**模板**](#模板) · [English](README.en.md)
+[使用指南](docs/GUIDE.md) · [设计说明](DESIGN.md) · [RAG](#rag-是怎么工作的) · [参考资料库](reference/README.md) · [格式规范](docs/FORMAT.md) · [**模板**](#模板) · [English](README.en.md)
 
 [![license](https://img.shields.io/badge/license-MIT-5F7568)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-5F7568)](requirements.txt)
@@ -91,27 +91,37 @@ python tools/refcheck.py reports/某实验/report.md
 
 ## 架构
 
-**入口**：网页粘贴 / dsh 本地网页 / 仅模板。`fdu-lab-menu` 读取 `prompts/menu.md` 展示 12 项菜单并路由。
+整体为五层、单向依赖（上图）：**入口 → Skill 编排 → 工具 → 知识库 → 产出**，右侧为贯穿全局的治理护栏。完整规格（接口、数据格式、失败模式与对策）见 [DESIGN.md](DESIGN.md)。
 
-**Skill 层（12 个）**：总调度 `fdu-lab-report` 把流水线分为五组——
-①准备（`intake` `rag`）②计算（`data` `stats` `plot`）③写作（`analysis` `style`）④核验（`cite` `review`）⑤出稿（`format`）。每个 skill 只做一件事，写明触发条件、命令与边界。
+| 层 | 组成 | 要点 |
+|---|---|---|
+| 入口 | 网页粘贴 / dsh 本地网页 / 仅模板；总菜单 `prompts/menu.md` | 新会话先展示 12 项菜单；按成本分级（L0 纯工具 → L1 检索 → L2 起草） |
+| Skill（12） | `menu` `report` · `intake` `rag` · `data` `stats` `plot` · `analysis` `style` · `cite` `review` · `format` | 每个 skill 只做一件事，写明触发条件、命令、边界；总调度守硬规则 |
+| 工具（8） | `rag` `labcalc` `labstats` `labplot` `stylecheck` `refcheck` `build` `kb` | 命令行、可复现、可单测；**数字、检验、引用、相似度、排版由工具产出** |
+| 知识 | `reference/`（课本、讲义、文献目录）· `knowledge/`（知识卡、课本表述、文献登记）· `corpus/local/` | 每个片段带来源标签与出处定位 |
+| 产出 | `report.md` → Word / LaTeX / PDF；通用模板；示例 | 封面单一极简，目录罗马页码，正文阿拉伯页码 |
 
-**工具层**：`rag` `labcalc` `labstats` `labplot` `stylecheck` `refcheck` `build` `kb`，全部命令行、可单测。
+### RAG 是怎么工作的
 
-**知识层**：五类语料，每片段带来源标签——
+为什么要 RAG：报告的**措辞**（术语、机制表述、判定标准）要贴近课本，而不是模型的“通用医学腔”；引用的页码要**可回到出处**，而不是凭记忆。
 
-| 标签 | 位置 | 内容 | 状态 |
-|---|---|---|---|
-| `textbook` | `reference/textbook/` | 《功能学科实验教程》PDF + 分章文本（含页码） | 已入库 |
-| `lecture` | `reference/lecture/` | 讲义、实验指导 | 自行放入 |
-| 本地目录名 | `corpus/local/<目录>/` | 其他同类中文教材、文献全文 | 自行放入（gitignore） |
-| `card` | `knowledge/cards/` | 33 个实验的机制链、预期现象、偏差 | **AI 草稿** |
-| `expr` | `knowledge/expressions/` | 7 个实验 + 通用的术语、句式、页码 | **AI 整理，待核** |
-| `literature` | `knowledge/literature/` | 14 篇重点文献，书目经 Crossref 核对 | 书目已核，要点为自述 |
+<div align="center"><img src="assets/readme/rag-pipeline.svg" alt="RAG 管线：读取→切片→分词→建索引→查询→排序→返回出处，消费者为 skill、stylecheck、refcheck、export" width="100%"></div>
 
-检索：中文字二元组 + 英文词的 BM25，纯 Python。取舍理由（为何不是 agent 服务或向量库）见 [DESIGN.md](DESIGN.md)。
+- **语料**：课本全书（已入库）、讲义、其他同类中文教材（自行放入 `corpus/local/`）、实验知识卡、各实验“课本表述整理”、重点文献登记。文献等**课本之外的重点内容优先加入**，课本没有而报告需要的内容先查文献，再查不到就写“待核”。
+- **检索**：中文字二元组 + 英文词的 BM25（`k1=1.5, b=0.75`），纯 Python，无服务器、无嵌入模型；可按语料标签（`-c`）和实验编号（`--exp`）过滤。
+- **用法**：写作前先取该实验的术语表与句式（`expr`），再看课本原文（`textbook`），用**课本的术语和判定标准**、**自己的句子**表述，页码取自检索结果。
+- **回头检查**：`stylecheck` 用同一语料逐句比对——相似度 ≥0.60 提示“过于接近原文”，<0.15 提示“缺少课本依据”。
 
-**分析问题的三道防线**：①计算、统计、作图全部走代码；②机制句来自课本或登记文献，找不到依据写“待核”；③论证协议区分事实与假设。
+```bash
+python tools/rag.py search 肺牵张反射 迷走神经 --exp 3.1 -c textbook --full
+python tools/rag.py search 复能剂 -c literature -k 3
+```
+
+**分析问题的三道防线**：①计算、统计、作图全部走代码；②机制句来自课本或登记文献，找不到依据写“待核”；③论证协议区分事实与假设（观察 → 预期 → 机制 → 偏差作假设 → 局限 → 临床联系）。
+
+### 相关项目：local-rag-cpp
+
+作者的另一个项目 [**local-rag-cpp**](https://github.com/rachael1216/local-rag-cpp)（C++ / llama.cpp 的本地问答，稠密向量检索）与本项目互补：本项目用词法检索保证**术语精确、带页码出处、与 skill/工具联动**；local-rag-cpp 擅长**同义改写与整句自然语言提问**。`python tools/rag.py export` 可把语料导出为带“第N章”标题的纯文本，供其离线检索试验（尚未端到端联调，视为可选扩展）。
 
 ## 设置
 

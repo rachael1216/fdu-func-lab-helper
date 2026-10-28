@@ -217,6 +217,9 @@ def main():
     sp = ap.add_subparsers(dest="cmd", required=True)
     sp.add_parser("build")
     sp.add_parser("sources")
+    e = sp.add_parser("export", help="导出为带“第N章”标题的纯文本，可交给 local-rag-cpp 做稠密向量检索")
+    e.add_argument("-c", "--corpus", help="逗号分隔的语料标签，默认全部")
+    e.add_argument("-o", "--out", default=str(ROOT / "corpus" / "index" / "corpus.txt"))
     s = sp.add_parser("search")
     s.add_argument("query", nargs="+")
     s.add_argument("-k", type=int, default=5)
@@ -228,6 +231,21 @@ def main():
     if a.cmd == "build":
         return build()
     idx = load()
+    if a.cmd == "export":
+        want = set(a.corpus.split(",")) if a.corpus else None
+        groups: dict = {}
+        for d in idx["docs"]:
+            if want and d["corpus"] not in want:
+                continue
+            groups.setdefault((d["corpus"], d["source"]), []).append(d)
+        lines = []
+        for n, ((cp, src), ds) in enumerate(groups.items(), 1):
+            lines.append(f"第{n}章 [{cp}] {src}\n")
+            lines += [f"{d['text'].strip()}\n（出处：{d['locator']}）\n" for d in ds]
+        Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+        Path(a.out).write_text("\n".join(lines), encoding="utf8")
+        print(f"✓ {a.out}（{len(groups)} 章，{sum(len(v) for v in groups.values())} 段）")
+        return
     if a.cmd == "sources":
         c = Counter((d["corpus"], d["source"]) for d in idx["docs"])
         for (cp, src), v in sorted(c.items()):
