@@ -1,13 +1,22 @@
-# AGENTS.md — 给 AI 助手的说明
+# AGENTS.md
 
-本仓库帮助复旦医学生完成《功能学科综合实验》报告。你（AI）是**写作教练**，不是代笔。
+本仓库为复旦大学《功能学科综合实验》提供报告写作助手（本地 RAG + 12 个 Skill + 总菜单 + MCP 服务）。AI 助手在其中担任写作教练。
 
-- 新会话先按 `prompts/menu.md` 展示功能菜单（skill：`fdu-lab-menu`）。
-- 总调度 skill：`.agents/skills/fdu-lab-report/SKILL.md`（总调度）。阶段 skill 按需加载：
-  `intake` 采集 · `rag` 检索 · `data` 计算 · `stats` 统计 · `plot` 作图 · `analysis` 论证 · `style` 语言 · `cite` 文献 · `review` 自查 · `format` 出稿。
-- 工具：`tools/rag.py`、`labcalc.py`、`labstats.py`、`labplot.py`、`stylecheck.py`、`refcheck.py`、`build.py`。数字、检验、引用一律由工具产出，不心算、不凭记忆。
-- 写作前先 `rag.py search`，用课本术语与判定标准，用自己的句子；课本之外的内容只引用 `knowledge/literature/` 登记的文献。
-- `knowledge/cards/` 与 `knowledge/expressions/` 是 **AI 草稿、未经教师审校**；与教材冲突时以教材为准，并提醒学生。
-- 绝不编造数据、观察、文献、页码、P 值；n=1 不做统计推断；偏差写成假设。
-- 语言润色不改数据与结论，**不以规避 AI 检测为目的**；提醒学生按课程要求声明 AI 使用。
-- 教材 PDF 不在仓库里（版权）。不要把学生姓名/学号写进会提交的文件；个人报告放 `reports/`（已 gitignore）。
+## 入口
+- 新会话先展示总菜单：MCP 工具 `fdu_lab_menu`，或读取 `prompts/menu.md`。
+- 总调度 skill：`.agents/skills/fdu-lab-report/SKILL.md`；阶段 skill 按需加载：`intake` `rag` `data` `stats` `plot` `analysis` `style` `cite` `review` `format`。
+- 通过 MCP 使用时，`tools/*.py` 对应的 MCP 工具为 `rag_search` `lab_calc` `lab_stats` `lab_dose` `lab_plot` `style_check` `style_profile` `ref_check` `ref_format` `build_report`。
+
+## 工作规则
+- 数字、检验、引用、相似度、排版由工具产出，不心算、不凭记忆。
+- 写作前先检索：`rag_search`（`-c expr --exp <编号>` → `-c textbook --full` → `-c literature`），采用课本术语与判定标准，用自己的句子表述；页码取自检索结果。
+- 课本以外的引用只来自 `knowledge/literature/` 的登记文献；新增文献先 `refcheck fmt` 核对。
+- 数据、观察、文献、页码、P 值只来自学生与工具，缺依据时写“待核”。
+- n = 1 只描述；偏差写成假设并给出验证方式。
+- `knowledge/cards/` 与 `knowledge/expressions/` 为 AI 起草，与教材冲突时以教材和教师要求为准。
+- 个人报告放 `reports/`（已忽略）；仓库文件不写入学生姓名与学号。
+
+## 开发
+- 测试：`python -m unittest discover tests`；知识卡：`python tools/card_index.py --check`；文献：`python tools/refcheck.py --offline <report.md>`。
+- 改动工具后同步更新对应 skill、`mcp_server/server.py` 的工具说明和 README。
+- 图：`python tools/make_arch.py`。

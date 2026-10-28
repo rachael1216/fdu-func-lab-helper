@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """labplot.py — 按报告作图规范，从 CSV 画图（matplotlib）。
 
-规范（详见 docs/FORMAT.md §5）：坐标轴写“量（单位）”；刻度朝内；去掉上、右边框；字号 ≥ 8 pt；
+规范（详见 templates/FORMAT.md §5）：坐标轴写“量（单位）”；刻度朝内；去掉上、右边框；字号 ≥ 8 pt；
 误差线说明写在图注；色盲友好配色 + 不同标记/线型（黑白打印仍可区分）；图题写在图下（放进 Word/LaTeX 的题注，不画在图里）；
 默认 12 × 8 cm、300 dpi，可存 png / pdf / svg。
 

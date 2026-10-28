@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{fdureport}[2026/10/29 FDU functional-lab report class]
-% 版式规范见 docs/FORMAT.md：A4，正文宋体小四（12pt），1.5 倍行距，黑体分级标题，三线表，页眉左课程右学号。
+% 版式规范见 templates/FORMAT.md：A4，正文宋体小四（12pt），1.5 倍行距，黑体分级标题，三线表，页眉左课程右学号。
 \LoadClass[a4paper,12pt]{ctexart}
 \RequirePackage[top=2.54cm,bottom=2.54cm,left=3cm,right=3cm,headheight=15pt,footskip=1.1cm]{geometry}
 \RequirePackage{graphicx,xcolor,booktabs,array,longtable,fancyhdr,titlesec,tcolorbox,hyperref,enumitem,setspace,caption,amsmath,fontspec}

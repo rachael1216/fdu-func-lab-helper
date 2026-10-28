@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
-title: "FDU Func Lab Helper: a RAG and skill toolkit for writing functional-science laboratory reports"
+title: "FDU Func Lab Helper: 复旦大学《功能学科综合实验》实验报告写作助手"
 type: software
 authors:
   - family-names: Liu
     given-names: Ruiqi
     email: 24301050114@m.fudan.edu.cn
-    affiliation: "Fudan University Shanghai Medical College"
+    affiliation: "Huashan Clinical Medical College, Fudan University"
 repository-code: "https://github.com/rachael1216/fdu-func-lab-helper"
 license: MIT
 date-released: 2026-10-29

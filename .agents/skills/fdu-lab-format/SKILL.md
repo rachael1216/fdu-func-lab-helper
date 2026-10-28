@@ -5,7 +5,7 @@ description: 把 Markdown 报告生成带封面、目录、页眉的 Word/LaTeX/
 
 # 排版与出稿
 
-规范全文见 `docs/FORMAT.md`（A4；页边距 2.54/3.0 cm；正文宋体/Times New Roman 小四、1.5 倍行距、首行缩进 2 字；标题黑体 16/14/12；三线表；GB/T 7714）。
+规范全文见 `templates/FORMAT.md`（A4；页边距 2.54/3.0 cm；正文宋体/Times New Roman 小四、1.5 倍行距、首行缩进 2 字；标题黑体 16/14/12；三线表；GB/T 7714）。
 
 ## 流程
 1. 报告写成 `reports/<名>/report.md`，骨架 `templates/report-skeleton.md`（含各节写作提示）。YAML 头：title、course、exp_no、class、student、student_id、group、date、teacher、animal（rabbit/mouse）、ai_statement。

@@ -51,7 +51,7 @@ def find_pandoc() -> str:
         return pypandoc.get_pandoc_path()
     except Exception:  # noqa: BLE001
         sys.exit("找不到 pandoc。安装方法：Windows `winget install JohnMacFarlane.Pandoc`；macOS `brew install pandoc`；"
-                 "或 `pip install pypandoc_binary`。详见 docs/GUIDE.md")
+                 "或 `pip install pypandoc_binary`。详见 README.md")
 
 
 def doctor():

@@ -1,215 +1,124 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 926" font-family="'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif">
-<defs>
-<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3F5548"/></marker>
-<filter id="sh" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#000" flood-opacity="0.12"/></filter>
-<linearGradient id="hd" x1="0" x2="1"><stop offset="0" stop-color="#3F5548"/><stop offset="1" stop-color="#5F7568"/></linearGradient>
-</defs>
-<rect x="0" y="0" width="1240" height="926" rx="0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0" />
-<rect x="0" y="0" width="1240" height="54" rx="0" fill="url(#hd)" stroke="none" stroke-width="0" />
-<text x="24" y="34" font-size="20" fill="#fff" font-weight="700" text-anchor="start" >FDU Func Lab Helper · 工程架构</text>
-<text x="1216" y="34" font-size="12.5" fill="#DCE6DF" font-weight="400" text-anchor="end" >RAG + Skill + Tools · 无服务器 · 数据留在本机</text>
-<rect x="24" y="70" width="960" height="92" rx="12" fill="#FBFCFB" stroke="#3F5548" stroke-width="1.2" />
-<rect x="24" y="70" width="26" height="92" rx="12" fill="#3F5548"/>
-<rect x="38" y="70" width="12" height="92" fill="#3F5548"/>
-<text transform="translate(42,116.0) rotate(-90)" font-size="12" fill="#fff" font-weight="700" text-anchor="middle" letter-spacing="2">入口</text>
-<text x="64" y="90" font-size="12.5" fill="#3F5548" font-weight="700" text-anchor="start" >ENTRY · 学生如何使用</text>
-<rect x="84" y="96" width="150" height="54" rx="7" fill="#fff" stroke="#3F5548" stroke-width="1.1" filter="url(#sh)"/>
-<text x="159.0" y="116" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >学生</text>
-<text x="159.0" y="133" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >原始记录 · 观察</text>
-<rect x="252" y="96" width="150" height="54" rx="7" fill="#fff" stroke="#3F5548" stroke-width="1.1" filter="url(#sh)"/>
-<text x="327.0" y="116" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >A 网页粘贴</text>
-<text x="327.0" y="133" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >chat.deepseek.com</text>
-<rect x="420" y="96" width="150" height="54" rx="7" fill="#E8EEE9" stroke="#3F5548" stroke-width="1.1" filter="url(#sh)"/>
-<text x="495.0" y="116" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >B dsh 本地网页</text>
-<text x="495.0" y="133" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >推荐 · 自动发现 skill</text>
-<rect x="588" y="96" width="150" height="54" rx="7" fill="#fff" stroke="#3F5548" stroke-width="1.1" filter="url(#sh)"/>
-<text x="663.0" y="116" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >C 仅用模板</text>
-<text x="663.0" y="133" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >Word / LaTeX</text>
-<rect x="756" y="96" width="188" height="54" rx="7" fill="#FFF6D6" stroke="#A67C52" stroke-width="1.1" filter="url(#sh)"/>
-<text x="850.0" y="116" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >总菜单提示词</text>
-<text x="850.0" y="133" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >prompts/menu.md · AGENTS.md</text>
-<rect x="24" y="188" width="960" height="232" rx="12" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.2" />
-<rect x="24" y="188" width="26" height="232" rx="12" fill="#4A6A8A"/>
-<rect x="38" y="188" width="12" height="232" fill="#4A6A8A"/>
-<text transform="translate(42,304.0) rotate(-90)" font-size="12" fill="#fff" font-weight="700" text-anchor="middle" letter-spacing="2">SKILL 层</text>
-<text x="64" y="208" font-size="12.5" fill="#4A6A8A" font-weight="700" text-anchor="start" >ORCHESTRATION · .agents/skills（12 个，每个只做一件事）</text>
-<rect x="76" y="216" width="876" height="32" rx="7" fill="#4A6A8A" stroke="#4A6A8A" stroke-width="1.2" />
-<text x="514.0" y="237" font-size="12.5" fill="#fff" font-weight="700" text-anchor="middle" >fdu-lab-menu → fdu-lab-report　总调度：选路径 · 守硬规则（不编造 · n=1 不推断 · 偏差写成假设）</text>
-<rect x="76" y="262" width="167.2" height="144" rx="8" fill="#fff" stroke="#4A6A8A" stroke-width="1" />
-<text x="159.6" y="280" font-size="11.5" fill="#4A6A8A" font-weight="700" text-anchor="middle" >① 准备</text>
-<rect x="80.0" y="292" width="76.6" height="50" rx="7" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.1" filter="url(#sh)"/>
-<text x="118.3" y="312" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >intake</text>
-<text x="118.3" y="329" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >采集</text>
-<rect x="162.6" y="292" width="76.6" height="50" rx="7" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.1" filter="url(#sh)"/>
-<text x="200.89999999999998" y="312" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >rag</text>
-<text x="200.89999999999998" y="329" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >检索</text>
-<text x="159.6" y="372" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >课本措辞</text>
-<text x="159.6" y="390" font-size="10" fill="#1F2933" font-weight="400" text-anchor="middle" ></text>
-<rect x="253.2" y="262" width="250.79999999999998" height="144" rx="8" fill="#fff" stroke="#4A6A8A" stroke-width="1" />
-<text x="378.59999999999997" y="280" font-size="11.5" fill="#4A6A8A" font-weight="700" text-anchor="middle" >② 计算</text>
-<rect x="257.2" y="292" width="76.93333333333332" height="50" rx="7" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.1" filter="url(#sh)"/>
-<text x="295.66666666666663" y="312" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >data</text>
-<text x="295.66666666666663" y="329" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >公式</text>
-<rect x="340.1333333333333" y="292" width="76.93333333333332" height="50" rx="7" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.1" filter="url(#sh)"/>
-<text x="378.59999999999997" y="312" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >stats</text>
-<text x="378.59999999999997" y="329" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >统计</text>
-<rect x="423.0666666666666" y="292" width="76.93333333333332" height="50" rx="7" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.1" filter="url(#sh)"/>
-<text x="461.53333333333325" y="312" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >plot</text>
-<text x="461.53333333333325" y="329" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >作图</text>
-<text x="378.59999999999997" y="372" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >确定性</text>
-<text x="378.59999999999997" y="390" font-size="10" fill="#1F2933" font-weight="400" text-anchor="middle" ></text>
-<rect x="514.0" y="262" width="167.2" height="144" rx="8" fill="#fff" stroke="#4A6A8A" stroke-width="1" />
-<text x="597.6" y="280" font-size="11.5" fill="#4A6A8A" font-weight="700" text-anchor="middle" >③ 写作</text>
-<rect x="518.0" y="292" width="76.6" height="50" rx="7" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.1" filter="url(#sh)"/>
-<text x="556.3" y="312" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >analysis</text>
-<text x="556.3" y="329" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >论证</text>
-<rect x="600.6" y="292" width="76.6" height="50" rx="7" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.1" filter="url(#sh)"/>
-<text x="638.9" y="312" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >style</text>
-<text x="638.9" y="329" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >语言</text>
-<text x="597.6" y="372" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >有据</text>
-<text x="597.6" y="390" font-size="10" fill="#1F2933" font-weight="400" text-anchor="middle" ></text>
-<rect x="691.2" y="262" width="167.2" height="144" rx="8" fill="#fff" stroke="#4A6A8A" stroke-width="1" />
-<text x="774.8000000000001" y="280" font-size="11.5" fill="#4A6A8A" font-weight="700" text-anchor="middle" >④ 核验</text>
-<rect x="695.2" y="292" width="76.6" height="50" rx="7" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.1" filter="url(#sh)"/>
-<text x="733.5" y="312" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >cite</text>
-<text x="733.5" y="329" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >文献</text>
-<rect x="777.8000000000001" y="292" width="76.6" height="50" rx="7" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.1" filter="url(#sh)"/>
-<text x="816.1" y="312" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >review</text>
-<text x="816.1" y="329" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >自查</text>
-<text x="774.8000000000001" y="372" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >防编造</text>
-<text x="774.8000000000001" y="390" font-size="10" fill="#1F2933" font-weight="400" text-anchor="middle" ></text>
-<rect x="868.4000000000001" y="262" width="83.6" height="144" rx="8" fill="#fff" stroke="#4A6A8A" stroke-width="1" />
-<text x="910.2" y="280" font-size="11.5" fill="#4A6A8A" font-weight="700" text-anchor="middle" >⑤ 出稿</text>
-<rect x="872.4000000000001" y="292" width="75.6" height="50" rx="7" fill="#E6EDF4" stroke="#4A6A8A" stroke-width="1.1" filter="url(#sh)"/>
-<text x="910.2" y="312" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >format</text>
-<text x="910.2" y="329" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >排版</text>
-<text x="910.2" y="372" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >docx/tex/pdf</text>
-<text x="910.2" y="390" font-size="10" fill="#1F2933" font-weight="400" text-anchor="middle" ></text>
-<rect x="24" y="446" width="960" height="176" rx="12" fill="#E8EEE9" stroke="#5F7568" stroke-width="1.2" />
-<rect x="24" y="446" width="26" height="176" rx="12" fill="#5F7568"/>
-<rect x="38" y="446" width="12" height="176" fill="#5F7568"/>
-<text transform="translate(42,534.0) rotate(-90)" font-size="12" fill="#fff" font-weight="700" text-anchor="middle" letter-spacing="2">工具层</text>
-<text x="64" y="466" font-size="12.5" fill="#5F7568" font-weight="700" text-anchor="start" >TOOLS · tools/*.py（确定性代码，可测试可复现）</text>
-<rect x="76.0" y="470" width="168.8" height="46" rx="7" fill="#fff" stroke="#5F7568" stroke-width="1.1" filter="url(#sh)"/>
-<text x="160.4" y="490" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >rag.py</text>
-<text x="160.4" y="507" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >BM25 检索</text>
-<rect x="252.8" y="470" width="168.8" height="46" rx="7" fill="#fff" stroke="#5F7568" stroke-width="1.1" filter="url(#sh)"/>
-<text x="337.20000000000005" y="490" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >labcalc.py</text>
-<text x="337.20000000000005" y="507" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >剂量·LD50·MAP</text>
-<rect x="429.6" y="470" width="168.8" height="46" rx="7" fill="#fff" stroke="#5F7568" stroke-width="1.1" filter="url(#sh)"/>
-<text x="514.0" y="490" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >labstats.py</text>
-<text x="514.0" y="507" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >t·ANOVA·回归</text>
-<rect x="606.4000000000001" y="470" width="168.8" height="46" rx="7" fill="#fff" stroke="#5F7568" stroke-width="1.1" filter="url(#sh)"/>
-<text x="690.8000000000001" y="490" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >labdose.py</text>
-<text x="690.8000000000001" y="507" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >LD50·Probit·稳健性</text>
-<rect x="783.2" y="470" width="168.8" height="46" rx="7" fill="#fff" stroke="#5F7568" stroke-width="1.1" filter="url(#sh)"/>
-<text x="867.6" y="490" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >labplot.py</text>
-<text x="867.6" y="507" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >规范作图</text>
-<rect x="76.0" y="522" width="168.8" height="46" rx="7" fill="#fff" stroke="#5F7568" stroke-width="1.1" filter="url(#sh)"/>
-<text x="160.4" y="542" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >stylecheck.py</text>
-<text x="160.4" y="559" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >术语·相似度</text>
-<rect x="252.8" y="522" width="168.8" height="46" rx="7" fill="#fff" stroke="#5F7568" stroke-width="1.1" filter="url(#sh)"/>
-<text x="337.20000000000005" y="542" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >styleprofile.py</text>
-<text x="337.20000000000005" y="559" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >课本文风画像</text>
-<rect x="429.6" y="522" width="168.8" height="46" rx="7" fill="#fff" stroke="#5F7568" stroke-width="1.1" filter="url(#sh)"/>
-<text x="514.0" y="542" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >refcheck.py</text>
-<text x="514.0" y="559" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >Crossref 核对</text>
-<rect x="606.4000000000001" y="522" width="168.8" height="46" rx="7" fill="#fff" stroke="#5F7568" stroke-width="1.1" filter="url(#sh)"/>
-<text x="690.8000000000001" y="542" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >build.py</text>
-<text x="690.8000000000001" y="559" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >docx/tex/pdf</text>
-<rect x="783.2" y="522" width="168.8" height="46" rx="7" fill="#fff" stroke="#5F7568" stroke-width="1.1" filter="url(#sh)"/>
-<text x="867.6" y="542" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >kb.py</text>
-<text x="867.6" y="559" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >教材切分</text>
-<text x="514.0" y="582" font-size="11.5" fill="#3F5548" font-weight="600" text-anchor="middle" >模型负责理解与组织；数字、检验、引用、相似度、排版全部由工具产出并可复核</text>
-<text x="514.0" y="602" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >单元测试：labcalc · labstats · labplot · refcheck(mock) · rag/stylecheck · build（30 项）</text>
-<rect x="24" y="648" width="960" height="150" rx="12" fill="#F5EDE3" stroke="#A67C52" stroke-width="1.2" />
-<rect x="24" y="648" width="26" height="150" rx="12" fill="#A67C52"/>
-<rect x="38" y="648" width="12" height="150" fill="#A67C52"/>
-<text transform="translate(42,723.0) rotate(-90)" font-size="12" fill="#fff" font-weight="700" text-anchor="middle" letter-spacing="2">知识层</text>
-<text x="64" y="668" font-size="12.5" fill="#A67C52" font-weight="700" text-anchor="start" >KNOWLEDGE · reference/ + knowledge/（RAG 语料，每片段带来源标签）</text>
-<rect x="76.0" y="676" width="139.33333333333334" height="54" rx="7" fill="#fff" stroke="#A67C52" stroke-width="1.1" filter="url(#sh)"/>
-<text x="145.66666666666669" y="696" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >textbook</text>
-<text x="145.66666666666669" y="713" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >教材 PDF + 分章文本</text>
-<rect x="223.33333333333334" y="676" width="139.33333333333334" height="54" rx="7" fill="#fff" stroke="#A67C52" stroke-width="1.1" filter="url(#sh)"/>
-<text x="293.0" y="696" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >lecture</text>
-<text x="293.0" y="713" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >讲义 / 实验指导</text>
-<rect x="370.6666666666667" y="676" width="139.33333333333334" height="54" rx="7" fill="#fff" stroke="#A67C52" stroke-width="1.1" filter="url(#sh)"/>
-<text x="440.33333333333337" y="696" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >corpus/local</text>
-<text x="440.33333333333337" y="713" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >其他中文教材</text>
-<rect x="518.0" y="676" width="139.33333333333334" height="54" rx="7" fill="#fff" stroke="#A67C52" stroke-width="1.1" filter="url(#sh)"/>
-<text x="587.6666666666666" y="696" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >card</text>
-<text x="587.6666666666666" y="713" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >知识卡 33 · AI 草稿</text>
-<rect x="665.3333333333334" y="676" width="139.33333333333334" height="54" rx="7" fill="#fff" stroke="#A67C52" stroke-width="1.1" filter="url(#sh)"/>
-<text x="735.0" y="696" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >expr</text>
-<text x="735.0" y="713" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >课本表述 · 术语句式</text>
-<rect x="812.6666666666667" y="676" width="139.33333333333334" height="54" rx="7" fill="#fff" stroke="#A67C52" stroke-width="1.1" filter="url(#sh)"/>
-<text x="882.3333333333334" y="696" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >literature</text>
-<text x="882.3333333333334" y="713" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >14 篇 · DOI 已核对</text>
-<rect x="76" y="742" width="876" height="40" rx="7" fill="#fff" stroke="#A67C52" stroke-width="1" stroke-dasharray="5 4"/>
-<text x="514.0" y="759" font-size="11.5" fill="#A67C52" font-weight="700" text-anchor="middle" >corpus/index/rag.json　中文字二元组 + 英文词 · BM25 · 纯 Python（无服务器、无嵌入模型）</text>
-<text x="514.0" y="775" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >标签：textbook / lecture / card / expr / literature / 本地目录名　·　rag.py export → 可选稠密检索 local-rag-cpp</text>
-<rect x="24" y="824" width="960" height="80" rx="12" fill="#F6E9E9" stroke="#9A5B5B" stroke-width="1.2" />
-<rect x="24" y="824" width="26" height="80" rx="12" fill="#9A5B5B"/>
-<rect x="38" y="824" width="12" height="80" fill="#9A5B5B"/>
-<text transform="translate(42,864.0) rotate(-90)" font-size="12" fill="#fff" font-weight="700" text-anchor="middle" letter-spacing="2">产出</text>
-<text x="64" y="844" font-size="12.5" fill="#9A5B5B" font-weight="700" text-anchor="start" >OUTPUT · 与外部</text>
-<rect x="76" y="846" width="170" height="48" rx="7" fill="#fff" stroke="#9A5B5B" stroke-width="1.1" filter="url(#sh)"/>
-<text x="161.0" y="866" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >report.md</text>
-<text x="161.0" y="883" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >YAML 头 + 正文</text>
-<rect x="260" y="846" width="170" height="48" rx="7" fill="#fff" stroke="#9A5B5B" stroke-width="1.1" filter="url(#sh)"/>
-<text x="345.0" y="866" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >Word / PDF / tex</text>
-<text x="345.0" y="883" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >封面·目录·页眉</text>
-<rect x="444" y="846" width="170" height="48" rx="7" fill="#fff" stroke="#9A5B5B" stroke-width="1.1" filter="url(#sh)"/>
-<text x="529.0" y="866" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >templates/</text>
-<text x="529.0" y="883" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >通用模板·格式规范</text>
-<rect x="628" y="846" width="150" height="48" rx="7" fill="#fff" stroke="#9A5B5B" stroke-width="1.1" filter="url(#sh)"/>
-<text x="703.0" y="866" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >Crossref API</text>
-<text x="703.0" y="883" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >外部 · 联网核对</text>
-<rect x="792" y="846" width="152" height="48" rx="7" fill="#fff" stroke="#9A5B5B" stroke-width="1.1" filter="url(#sh)"/>
-<text x="868.0" y="866" font-size="12.5" fill="#1F2933" font-weight="700" text-anchor="middle" >examples/</text>
-<text x="868.0" y="883" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >LD50 能力示例</text>
-<line x1="500" y1="162" x2="500" y2="188" stroke="#3F5548" stroke-width="1.6"  marker-end="url(#ar)"/>
-<line x1="300" y1="420" x2="300" y2="446" stroke="#3F5548" stroke-width="1.6"  marker-end="url(#ar)"/>
-<text x="308" y="437.0" font-size="10.5" fill="#3F5548" font-weight="600" text-anchor="start" >调用 CLI</text>
-<line x1="700" y1="446" x2="700" y2="420" stroke="#3F5548" stroke-width="1.6"  marker-end="url(#ar)"/>
-<text x="708" y="437.0" font-size="10.5" fill="#3F5548" font-weight="600" text-anchor="start" >返回结果</text>
-<line x1="500" y1="622" x2="500" y2="648" stroke="#3F5548" stroke-width="1.6"  marker-end="url(#ar)"/>
-<text x="508" y="639.0" font-size="10.5" fill="#3F5548" font-weight="600" text-anchor="start" >检索</text>
-<line x1="500" y1="798" x2="500" y2="824" stroke="#3F5548" stroke-width="1.6"  marker-end="url(#ar)"/>
-<text x="508" y="815.0" font-size="10.5" fill="#3F5548" font-weight="600" text-anchor="start" >渲染 / 核对</text>
-<rect x="1004" y="70" width="212" height="834" rx="12" fill="#FBF7F7" stroke="#9A5B5B" stroke-width="1.2" />
-<text x="1110" y="96" font-size="14" fill="#9A5B5B" font-weight="700" text-anchor="middle" >治理护栏</text>
-<text x="1110" y="114" font-size="10" fill="#5B6670" font-weight="400" text-anchor="middle" >GUARDRAILS</text>
-<rect x="1016" y="140" width="188" height="84" rx="8" fill="#fff" stroke="#9A5B5B" stroke-width="1" />
-<text x="1110" y="162" font-size="12.5" fill="#9A5B5B" font-weight="700" text-anchor="middle" >不编造</text>
-<text x="1110" y="184" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >数据·观察·文献·页码·P 值</text>
-<text x="1110" y="200" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >找不到依据写“待核”</text>
-<rect x="1016" y="234" width="188" height="84" rx="8" fill="#fff" stroke="#9A5B5B" stroke-width="1" />
-<text x="1110" y="256" font-size="12.5" fill="#9A5B5B" font-weight="700" text-anchor="middle" >n = 1 不推断</text>
-<text x="1110" y="278" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >单只动物只描述</text>
-<text x="1110" y="294" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >n &lt; 3 工具拒绝检验</text>
-<rect x="1016" y="328" width="188" height="84" rx="8" fill="#fff" stroke="#9A5B5B" stroke-width="1" />
-<text x="1110" y="350" font-size="12.5" fill="#9A5B5B" font-weight="700" text-anchor="middle" >偏差=假设</text>
-<text x="1110" y="372" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >与预期不符写成可能原因</text>
-<text x="1110" y="388" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >并给出验证方式</text>
-<rect x="1016" y="422" width="188" height="84" rx="8" fill="#fff" stroke="#9A5B5B" stroke-width="1" />
-<text x="1110" y="444" font-size="12.5" fill="#9A5B5B" font-weight="700" text-anchor="middle" >文献必核</text>
-<text x="1110" y="466" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >refcheck 逐项对 Crossref</text>
-<text x="1110" y="482" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >通过≠支持论点，需自己读</text>
-<rect x="1016" y="516" width="188" height="84" rx="8" fill="#fff" stroke="#9A5B5B" stroke-width="1" />
-<text x="1110" y="538" font-size="12.5" fill="#9A5B5B" font-weight="700" text-anchor="middle" >语言≠规避</text>
-<text x="1110" y="560" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >润色不改数据与结论</text>
-<text x="1110" y="576" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >不以绕过 AI 检测为目的</text>
-<rect x="1016" y="610" width="188" height="84" rx="8" fill="#fff" stroke="#9A5B5B" stroke-width="1" />
-<text x="1110" y="632" font-size="12.5" fill="#9A5B5B" font-weight="700" text-anchor="middle" >AI 声明</text>
-<text x="1110" y="654" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >ai_statement 按课程要求</text>
-<text x="1110" y="670" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >如实填写</text>
-<rect x="1016" y="704" width="188" height="84" rx="8" fill="#fff" stroke="#9A5B5B" stroke-width="1" />
-<text x="1110" y="726" font-size="12.5" fill="#9A5B5B" font-weight="700" text-anchor="middle" >草稿标记</text>
-<text x="1110" y="748" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >卡片/表述为 AI 起草</text>
-<text x="1110" y="764" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >冲突时以教材与老师为准</text>
-<rect x="1016" y="798" width="188" height="84" rx="8" fill="#fff" stroke="#9A5B5B" stroke-width="1" />
-<text x="1110" y="820" font-size="12.5" fill="#9A5B5B" font-weight="700" text-anchor="middle" >隐私</text>
-<text x="1110" y="842" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >reports/ 与 corpus/local/</text>
-<text x="1110" y="858" font-size="10.5" fill="#5B6670" font-weight="400" text-anchor="middle" >不入库；Key 只填 dsh</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 58 1200 610" font-family="'Noto Sans CJK SC','Source Han Sans SC','PingFang SC','Microsoft YaHei',Arial,sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1A1A1A"/></marker></defs>
+<rect width="1200" height="668" fill="#fff"/>
+<rect x="24" y="74" width="190" height="120" rx="6" fill="#EFEFEF" stroke="#4A4A4A" stroke-width="2.8"/>
+<text x="119.0" y="118.44" font-size="17" fill="#4A4A4A" text-anchor="middle" font-weight="700">学生</text>
+<text x="119.0" y="143.44" font-size="14" fill="#3D3D3D" text-anchor="middle">原始记录 · 观察</text>
+<text x="119.0" y="164.44" font-size="14" fill="#3D3D3D" text-anchor="middle">数据留在本机</text>
+<rect x="24" y="226" width="190" height="288" rx="6" fill="#EFEFEF" stroke="#4A4A4A" stroke-width="2.8"/>
+<text x="119.0" y="322.94" font-size="17" fill="#4A4A4A" text-anchor="middle" font-weight="700">MCP 客户端</text>
+<text x="119.0" y="347.94" font-size="14" fill="#3D3D3D" text-anchor="middle">DeepSeek · dsh</text>
+<text x="119.0" y="368.94" font-size="14" fill="#3D3D3D" text-anchor="middle">Claude Code</text>
+<text x="119.0" y="389.94" font-size="14" fill="#3D3D3D" text-anchor="middle">其他 stdio 客户端</text>
+<text x="119.0" y="410.94" font-size="14" fill="#3D3D3D" text-anchor="middle">选菜单编号</text>
+<text x="119.0" y="431.94" font-size="14" fill="#3D3D3D" text-anchor="middle">按 skill 流程写作</text>
+<line x1="119" y1="194" x2="119" y2="226" stroke="#1A1A1A" stroke-width="2.6" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<rect x="260" y="74" width="680" height="530" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8" stroke-dasharray="9 6"/>
+<text x="600" y="104" font-size="17" fill="#0B5C8E" text-anchor="middle" font-weight="700">fdu-lab MCP 服务　mcp_server/server.py</text>
+<text x="600" y="124" font-size="13.5" fill="#3D3D3D" text-anchor="middle">stdio · JSON-RPC · prompts / tools / resources</text>
+<rect x="280" y="138" width="640" height="172" rx="6" fill="#E4F0F8" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="294" y="166" font-size="16" fill="#0B5C8E" text-anchor="start" font-weight="700">Prompts　菜单 + 12 个 Skill</text>
+<rect x="294.0" y="178" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="341.6666666666667" y="198.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">menu</text>
+<text x="341.6666666666667" y="222.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">菜单</text>
+<rect x="397.3333333333333" y="178" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="445.0" y="198.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">report</text>
+<text x="445.0" y="222.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">总调度</text>
+<rect x="500.66666666666663" y="178" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="548.3333333333333" y="198.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">intake</text>
+<text x="548.3333333333333" y="222.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">采集</text>
+<rect x="604.0" y="178" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="651.6666666666666" y="198.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">rag</text>
+<text x="651.6666666666666" y="222.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">检索</text>
+<rect x="707.3333333333333" y="178" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="754.9999999999999" y="198.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">data</text>
+<text x="754.9999999999999" y="222.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">计算</text>
+<rect x="810.6666666666666" y="178" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="858.3333333333333" y="198.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">stats</text>
+<text x="858.3333333333333" y="222.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">统计</text>
+<rect x="294.0" y="238" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="341.6666666666667" y="258.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">plot</text>
+<text x="341.6666666666667" y="282.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">作图</text>
+<rect x="397.3333333333333" y="238" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="445.0" y="258.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">analysis</text>
+<text x="445.0" y="282.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">论证</text>
+<rect x="500.66666666666663" y="238" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="548.3333333333333" y="258.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">style</text>
+<text x="548.3333333333333" y="282.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">语言</text>
+<rect x="604.0" y="238" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="651.6666666666666" y="258.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">cite</text>
+<text x="651.6666666666666" y="282.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">文献</text>
+<rect x="707.3333333333333" y="238" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="754.9999999999999" y="258.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">review</text>
+<text x="754.9999999999999" y="282.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">自查</text>
+<rect x="810.6666666666666" y="238" width="95.33333333333333" height="52" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8"/>
+<text x="858.3333333333333" y="258.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">format</text>
+<text x="858.3333333333333" y="282.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">排版</text>
+<rect x="280" y="322" width="640" height="84" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
+<text x="294" y="348" font-size="16" fill="#B84A00" text-anchor="start" font-weight="700">本地 RAG　corpus/index/rag.json</text>
+<text x="600" y="372" font-size="13.5" fill="#3D3D3D" text-anchor="middle">中文字二元组 + 英文词 · BM25（k₁ = 1.5，b = 0.75）· 纯 Python</text>
+<text x="600" y="394" font-size="13.5" fill="#3D3D3D" text-anchor="middle">按语料标签 -c、实验编号 --exp 过滤，返回片段与出处页码</text>
+<rect x="280" y="418" width="640" height="172" rx="6" fill="#E2F3EC" stroke="#00704F" stroke-width="2.8"/>
+<text x="294" y="446" font-size="16" fill="#00704F" text-anchor="start" font-weight="700">Tools　10 个确定性工具</text>
+<rect x="294.0" y="458" width="116.0" height="52" rx="6" fill="#fff" stroke="#00704F" stroke-width="2.8"/>
+<text x="352.0" y="478.73" font-size="14" fill="#00704F" text-anchor="middle" font-weight="700">rag</text>
+<text x="352.0" y="502.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">BM25 检索</text>
+<rect x="418.0" y="458" width="116.0" height="52" rx="6" fill="#fff" stroke="#00704F" stroke-width="2.8"/>
+<text x="476.0" y="478.73" font-size="14" fill="#00704F" text-anchor="middle" font-weight="700">labcalc</text>
+<text x="476.0" y="502.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">剂量·LD50</text>
+<rect x="542.0" y="458" width="116.0" height="52" rx="6" fill="#fff" stroke="#00704F" stroke-width="2.8"/>
+<text x="600.0" y="478.73" font-size="14" fill="#00704F" text-anchor="middle" font-weight="700">labstats</text>
+<text x="600.0" y="502.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">检验</text>
+<rect x="666.0" y="458" width="116.0" height="52" rx="6" fill="#fff" stroke="#00704F" stroke-width="2.8"/>
+<text x="724.0" y="478.73" font-size="14" fill="#00704F" text-anchor="middle" font-weight="700">labdose</text>
+<text x="724.0" y="502.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">质反应</text>
+<rect x="790.0" y="458" width="116.0" height="52" rx="6" fill="#fff" stroke="#00704F" stroke-width="2.8"/>
+<text x="848.0" y="478.73" font-size="14" fill="#00704F" text-anchor="middle" font-weight="700">labplot</text>
+<text x="848.0" y="502.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">规范作图</text>
+<rect x="294.0" y="518" width="116.0" height="52" rx="6" fill="#fff" stroke="#00704F" stroke-width="2.8"/>
+<text x="352.0" y="538.73" font-size="14" fill="#00704F" text-anchor="middle" font-weight="700">stylecheck</text>
+<text x="352.0" y="562.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">术语·相似度</text>
+<rect x="418.0" y="518" width="116.0" height="52" rx="6" fill="#fff" stroke="#00704F" stroke-width="2.8"/>
+<text x="476.0" y="538.73" font-size="14" fill="#00704F" text-anchor="middle" font-weight="700">styleprofile</text>
+<text x="476.0" y="562.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">文风画像</text>
+<rect x="542.0" y="518" width="116.0" height="52" rx="6" fill="#fff" stroke="#00704F" stroke-width="2.8"/>
+<text x="600.0" y="538.73" font-size="14" fill="#00704F" text-anchor="middle" font-weight="700">refcheck</text>
+<text x="600.0" y="562.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">文献核对</text>
+<rect x="666.0" y="518" width="116.0" height="52" rx="6" fill="#fff" stroke="#00704F" stroke-width="2.8"/>
+<text x="724.0" y="538.73" font-size="14" fill="#00704F" text-anchor="middle" font-weight="700">build</text>
+<text x="724.0" y="562.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">排版出稿</text>
+<rect x="790.0" y="518" width="116.0" height="52" rx="6" fill="#fff" stroke="#00704F" stroke-width="2.8"/>
+<text x="848.0" y="538.73" font-size="14" fill="#00704F" text-anchor="middle" font-weight="700">kb</text>
+<text x="848.0" y="562.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">教材切分</text>
+<line x1="214" y1="370" x2="260" y2="370" stroke="#1A1A1A" stroke-width="2.6" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<text x="237" y="356" font-size="12.5" fill="#3D3D3D" text-anchor="middle" font-weight="700">MCP</text>
+<rect x="980" y="138" width="196" height="326" rx="6" fill="#fff" stroke="#B84A00" stroke-width="2.8"/>
+<text x="1078" y="166" font-size="17" fill="#B84A00" text-anchor="middle" font-weight="700">知识库</text>
+<text x="1078" y="185" font-size="12.5" fill="#3D3D3D" text-anchor="middle">reference/ · knowledge/</text>
+<rect x="990" y="198" width="176" height="46" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
+<text x="1078.0" y="215.73" font-size="14" fill="#B84A00" text-anchor="middle" font-weight="700">textbook</text>
+<text x="1078.0" y="239.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">教材全书 · 分章</text>
+<rect x="990" y="250" width="176" height="46" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
+<text x="1078.0" y="267.73" font-size="14" fill="#B84A00" text-anchor="middle" font-weight="700">lecture</text>
+<text x="1078.0" y="291.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">讲义 · 实验指导</text>
+<rect x="990" y="302" width="176" height="46" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
+<text x="1078.0" y="319.73" font-size="14" fill="#B84A00" text-anchor="middle" font-weight="700">corpus/local</text>
+<text x="1078.0" y="343.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">其他中文教材</text>
+<rect x="990" y="354" width="176" height="46" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
+<text x="1078.0" y="371.73" font-size="14" fill="#B84A00" text-anchor="middle" font-weight="700">card · expr</text>
+<text x="1078.0" y="395.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">知识卡 · 课本表述</text>
+<rect x="990" y="406" width="176" height="46" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
+<text x="1078.0" y="423.73" font-size="14" fill="#B84A00" text-anchor="middle" font-weight="700">literature</text>
+<text x="1078.0" y="447.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">14 篇 · DOI 已核</text>
+<line x1="940" y1="364" x2="980" y2="364" stroke="#1A1A1A" stroke-width="2.6" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<text x="960" y="350" font-size="12.5" fill="#3D3D3D" text-anchor="middle" font-weight="700">检索</text>
+<rect x="980" y="478" width="196" height="126" rx="6" fill="#EFEFEF" stroke="#4A4A4A" stroke-width="2.8"/>
+<text x="1078.0" y="514.94" font-size="17" fill="#4A4A4A" text-anchor="middle" font-weight="700">产出</text>
+<text x="1078.0" y="539.94" font-size="14" fill="#3D3D3D" text-anchor="middle">report.md</text>
+<text x="1078.0" y="560.94" font-size="14" fill="#3D3D3D" text-anchor="middle">Word · PDF · tex</text>
+<text x="1078.0" y="581.94" font-size="14" fill="#3D3D3D" text-anchor="middle">templates/ · examples/</text>
+<line x1="940" y1="534" x2="980" y2="534" stroke="#1A1A1A" stroke-width="2.6" marker-end="url(#ar)"/>
+<text x="960" y="520" font-size="12.5" fill="#3D3D3D" text-anchor="middle" font-weight="700">生成</text>
+<rect x="24" y="620" width="1152" height="36" rx="6" fill="#fff" stroke="#4A4A4A" stroke-width="2.8"/>
+<text x="600" y="644" font-size="14" fill="#1A1A1A" text-anchor="middle" font-weight="700">治理护栏：不编造数据与文献　·　n = 1 不推断　·　偏差写成假设　·　文献必核　·　AI 声明　·　数据不出本机</text>
 </svg>

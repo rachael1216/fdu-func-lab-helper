@@ -105,7 +105,7 @@ def main():
     s.top_margin, s.bottom_margin = Cm(2.54), Cm(2.54)
     s.header_distance, s.footer_distance = Cm(1.3), Cm(1.3)
 
-    # ---- 文本样式（规范见 docs/FORMAT.md）
+    # ---- 文本样式（规范见 templates/FORMAT.md）
     fmt(doc.styles["Normal"], 12, line=1.5, after=0)
     for n in ("Body Text", "First Paragraph"):
         fmt(get_style(doc, n), 12, line=1.5, after=0, indent_first=24)

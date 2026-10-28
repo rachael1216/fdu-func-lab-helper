@@ -139,8 +139,17 @@ def load_registry():
     return {r["doi"].lower(): r for r in (yaml.safe_load(REGISTRY.read_text(encoding="utf8")) or []) if r.get("doi")}
 
 
+def split_name(a: str) -> dict:
+    """“ten Cate H”“Buckley N A” → 姓与缩写：末尾连续的 1–2 位大写词是缩写，其余为姓。"""
+    toks = a.split()
+    k = len(toks)
+    while k > 1 and re.fullmatch(r"[A-Z]{1,2}", toks[k - 1]):
+        k -= 1
+    return {"family": " ".join(toks[:k]), "given": " ".join(toks[k:])}
+
+
 def registry_to_item(r: dict) -> dict:
-    return {"title": [r["title"]], "author": [{"family": a.split()[0]} for a in r["authors"]], "volume": r.get("volume", ""),
+    return {"title": [r["title"]], "author": [split_name(a) for a in r["authors"]], "volume": r.get("volume", ""),
             "page": r.get("pages", ""), "issued": {"date-parts": [[int(r["year"])]]}}
 
 
