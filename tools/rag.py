@@ -6,10 +6,10 @@
 
 语料（每片段带来源标签）：
   textbook    reference/textbook/ex_*.md      教材（由 tools/kb.py 在本机从你自己的 PDF 生成，不入库）
-  card        knowledge/cards/*.md           实验知识卡（AI 起草，未审校）
-  expr        knowledge/expressions/*.md     各实验“课本表述”整理（术语、句式、页码）
-  literature  knowledge/literature/*.yaml    重点文献登记（已核对书目 + 要点概括）
-  <子目录名>  corpus/local/<子目录>/…        你自己放的讲义、其他教材、文献全文（pdf/docx/md/txt）
+  card        reference/cards/*.md           实验知识卡（AI 起草，未审校）
+  expr        reference/expressions/*.md     各实验“课本表述”整理（术语、句式、页码）
+  literature  reference/literature/*.yaml    重点文献登记（已核对书目 + 要点概括）
+  <子目录名>  reference/local/<子目录>/…        你自己放的讲义、其他教材、文献全文（pdf/docx/md/txt）
 
 用法：
   python tools/rag.py build
@@ -33,8 +33,9 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-INDEX = ROOT / "corpus" / "index" / "rag.json"
-LOCAL = ROOT / "corpus" / "local"
+INDEX = ROOT / "reference" / "index" / "rag.json"
+LOCAL = ROOT / "reference" / "local"
+LECTURE = ROOT / "reference" / "lecture"
 CHUNK = 380
 
 _CJK = re.compile(r"[一-鿿]+")
@@ -153,18 +154,19 @@ def build():
     docs: list[dict] = []
     for f in sorted((ROOT / "reference" / "textbook").glob("*.md")):
         docs += list(chunks_textbook(f))
-    for f in sorted((ROOT / "knowledge" / "cards").glob("*.md")):
+    for f in sorted((ROOT / "reference" / "cards").glob("*.md")):
         docs += list(chunks_markdown(f, "card"))
-    for f in sorted((ROOT / "knowledge" / "expressions").glob("*.md")):
+    for f in sorted((ROOT / "reference" / "expressions").glob("*.md")):
         docs += list(chunks_markdown(f, "expr"))
-    for f in sorted((ROOT / "knowledge" / "literature").glob("*.yaml")):
+    for f in sorted((ROOT / "reference" / "literature").glob("*.yaml")):
         docs += list(chunks_literature(f))
-    if LOCAL.exists():
-        for f in sorted(LOCAL.rglob("*")):
-            if f.is_file() and f.suffix.lower() in (".pdf", ".docx", ".md", ".txt") and f.name.lower() != "readme.md":
-                rel = f.relative_to(LOCAL).parts
-                tag = rel[0] if len(rel) > 1 else "local"
-                docs += list(chunks_local(f, tag))
+    for base, default in ((LECTURE, "lecture"), (LOCAL, "local")):
+        if base.exists():
+            for f in sorted(base.rglob("*")):
+                if f.is_file() and f.suffix.lower() in (".pdf", ".docx", ".md", ".txt") and f.name.lower() != "readme.md":
+                    rel = f.relative_to(base).parts
+                    tag = rel[0] if len(rel) > 1 and base is LOCAL else default
+                    docs += list(chunks_local(f, tag))
     for i, d in enumerate(docs):
         d["id"] = i
         d["tok"] = Counter(tokens(d["text"]))
@@ -219,7 +221,7 @@ def main():
     sp.add_parser("sources")
     e = sp.add_parser("export", help="导出为带“第N章”标题的纯文本，可交给 local-rag-cpp 做稠密向量检索")
     e.add_argument("-c", "--corpus", help="逗号分隔的语料标签，默认全部")
-    e.add_argument("-o", "--out", default=str(ROOT / "corpus" / "index" / "corpus.txt"))
+    e.add_argument("-o", "--out", default=str(ROOT / "reference" / "index" / "corpus.txt"))
     s = sp.add_parser("search")
     s.add_argument("query", nargs="+")
     s.add_argument("-k", type=int, default=5)

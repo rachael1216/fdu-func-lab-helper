@@ -2,7 +2,7 @@
 """styleprofile.py — 从课本学习文风（“学术 humanizer”的数据部分，中文）。
 
 做两件事：
-  build    读 reference/textbook/ 的实验正文，统计课本的文风画像 → knowledge/style/profile.json
+  build    读 reference/textbook/ 的实验正文，统计课本的文风画像 → reference/style/profile.json
              句长分布、逗号密度、连接词频率、常见句首、课本高频搭配（跨多个实验出现的 3–6 字短语）
   compare  把你的报告与画像对照，指出：句子过长/过碎、连接词过多、模板腔以外的“与课本不同”的写法，
              并按实验给出可直接采用的课本搭配
@@ -24,7 +24,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "reference" / "textbook"
-OUT = ROOT / "knowledge" / "style" / "profile.json"
+OUT = ROOT / "reference" / "style" / "profile.json"
 CONN = ["因此", "所以", "从而", "但是", "但", "而", "同时", "然后", "首先", "其次", "最后", "此外", "另外", "并且", "并", "以及", "可能", "提示", "说明", "表明", "显示", "导致", "引起", "使"]
 EDGE = set("的了在与及和对将可以并而为是中之其所被把这该各个")
 CJK = re.compile(r"[一-鿿]+")

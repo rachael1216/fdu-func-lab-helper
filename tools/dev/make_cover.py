@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""make_cover.py — 生成封面线稿插图（默认：家兔）。输出 assets/cover/rabbit.png / rabbit.pdf / rabbit_icon.png。
+"""make_cover.py — 生成封面线稿插图（默认：家兔）。输出 templates/cover/rabbit.png / rabbit.pdf / rabbit_icon.png。
 
-  python tools/make_cover.py            # 重新生成
-  python tools/make_cover.py --animal mouse
+  python tools/dev/make_cover.py            # 重新生成
+  python tools/dev/make_cover.py --animal mouse
 
 封面刻意保持极简：线稿 + 学号 + 日期，不含校徽。想换成别的动物，改这里的画法即可。
 """
@@ -15,7 +15,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Ellipse, FancyBboxPatch
 
-OUT = Path(__file__).resolve().parent.parent / "assets" / "cover"
+OUT = Path(__file__).resolve().parent.parent.parent / "templates" / "cover"
 FILL, EDGE, INNER = "#E8EEE9", "#5F7568", "#C9D6CD"
 
 

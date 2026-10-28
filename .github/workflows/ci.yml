@@ -7,9 +7,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
-      - run: pip install -r requirements.txt
+      - run: pip install -r tools/requirements.txt
       - run: python -m unittest discover tests
       - run: python tools/card_index.py --check
+      - run: node --check tools/fdu-lab.js
       - run: python tools/refcheck.py --offline examples/sample-report/report.md
   build:
     runs-on: ubuntu-latest
@@ -20,7 +21,7 @@ jobs:
       - run: |
           sudo apt-get update
           sudo apt-get install -y pandoc texlive-xetex texlive-lang-chinese texlive-latex-extra texlive-fonts-recommended fonts-noto-cjk
-          pip install -r requirements.txt
+          pip install -r tools/requirements.txt
       - run: python tools/build.py examples/sample-report/report.md --to all -o out
       - uses: actions/upload-artifact@v4
         with: { name: sample-report, path: out }

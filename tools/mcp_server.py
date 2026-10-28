@@ -6,7 +6,7 @@
   Tools     本地 RAG 检索、计算、统计、质反应分析、作图、语言检查、文献核对、排版（tools/call）
   Resources 菜单、格式规范、文献目录、各 skill 原文（resources/read）
 
-运行：python mcp_server/server.py     （由 MCP 客户端以 stdio 方式启动，工作目录无关）
+运行：python tools/mcp_server.py     （由 MCP 客户端以 stdio 方式启动，工作目录无关）
 """
 from __future__ import annotations
 
@@ -38,7 +38,7 @@ def run(script: str, args: list[str], timeout: int = 180) -> tuple[int, str]:
 
 
 def ensure_index() -> None:
-    if not (ROOT / "corpus" / "index" / "rag.json").exists():
+    if not (ROOT / "reference" / "index" / "rag.json").exists():
         run("rag.py", ["build"], 600)
 
 
@@ -123,7 +123,7 @@ def t_build(a):
 
 
 TOOLS = {
-    "fdu_lab_menu": ("展示 12 项功能总菜单（新会话先调用它）。", obj({}), lambda a: (0, (ROOT / "prompts" / "menu.md").read_text(encoding="utf8"))),
+    "fdu_lab_menu": ("展示 12 项功能总菜单（新会话先调用它）。", obj({}), lambda a: (0, (SKILLS / "fdu-lab-menu" / "menu.md").read_text(encoding="utf8"))),
     "fdu_lab_skill": ("读取一个 skill 的完整指令；不给 name 则列出全部 skill。", obj({"name": S}),
                       lambda a: (0, skill_text(a["name"]) if a.get("name") else "\n".join(f"- {n}：{skill_desc(n)}" for n in skill_names()))),
     "rag_search": ("检索课本、讲义、课本表述、知识卡与重点文献（BM25，返回片段与出处页码）。corpus 可选 textbook/lecture/expr/card/literature；exp 为实验编号如 2.7。",
@@ -143,7 +143,7 @@ TOOLS = {
 }
 
 RESOURCES = {
-    "fdu-lab://menu": ("总菜单", ROOT / "prompts" / "menu.md"),
+    "fdu-lab://menu": ("总菜单", SKILLS / "fdu-lab-menu" / "menu.md"),
     "fdu-lab://format": ("格式规范", ROOT / "templates" / "FORMAT.md"),
     "fdu-lab://references": ("重点文献目录", ROOT / "reference" / "literature" / "README.md"),
 }
@@ -189,7 +189,7 @@ def handle(m: dict):
             reply(i, {"prompts": ps})
         elif method == "prompts/get":
             name = p.get("name")
-            body = (ROOT / "prompts" / "menu.md").read_text(encoding="utf8") if name == "menu" else skill_text(name)
+            body = (SKILLS / "fdu-lab-menu" / "menu.md").read_text(encoding="utf8") if name == "menu" else skill_text(name)
             reply(i, {"description": name, "messages": [{"role": "user", "content": {"type": "text", "text": CLI_NOTE + body}}]})
         elif method == "resources/list":
             rs = [{"uri": u, "name": n, "mimeType": "text/markdown"} for u, (n, _) in RESOURCES.items()]

@@ -28,7 +28,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-REGISTRY = ROOT / "knowledge" / "literature" / "references.yaml"
+REGISTRY = ROOT / "reference" / "literature" / "references.yaml"
 API = "https://api.crossref.org/works"
 DOI_RE = re.compile(r"10\.\d{4,9}/[^\s\"<>]+", re.I)
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""install.py — 一键安装 fdu-lab（MCP 服务 + 12 个 skill + 本地 RAG 索引）。
+"""install.py — 安装 fdu-lab（MCP 服务 + 12 个 skill + 本地 RAG 索引）。
 
-  python install.py                         安装依赖、建索引、自检，并打印 MCP 配置
-  python install.py --write ~/.claude.json  把 fdu-lab 写入指定的 MCP 配置文件（JSON，合并 mcpServers）
-  python install.py --skills                另把 12 个 skill 复制到 ~/.agents/skills 与 ~/.dsh/skills
-  python install.py --no-pip                跳过 pip install
+  python tools/install.py                         安装依赖、建索引、自检，并打印 MCP 配置
+  python tools/install.py --write ~/.claude.json  把 fdu-lab 写入指定的 MCP 配置文件（JSON，合并 mcpServers）
+  python tools/install.py --skills                另把 12 个 skill 复制到 ~/.agents/skills 与 ~/.dsh/skills
+  python tools/install.py --no-pip                跳过 pip install
 """
 from __future__ import annotations
 
@@ -16,8 +16,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
-SERVER = ROOT / "mcp_server" / "server.py"
+ROOT = Path(__file__).resolve().parent.parent
+SERVER = ROOT / "tools" / "mcp_server.py"
 
 
 def sh(*cmd, quiet=False):
@@ -55,7 +55,7 @@ def main():
         sys.exit(subprocess.run([str(py), str(Path(__file__).resolve()), *sys.argv[1:]]).returncode)
     if not a.no_pip:
         print("→ 安装依赖")
-        sh(sys.executable, "-m", "pip", "install", "-q", "-r", "requirements.txt")
+        sh(sys.executable, "-m", "pip", "install", "-q", "-r", "tools/requirements.txt")
     print("→ 建立本地 RAG 索引")
     sh(sys.executable, "tools/rag.py", "build")
     ok = self_test()
@@ -73,7 +73,7 @@ def main():
                     d.mkdir(parents=True, exist_ok=True)
                     shutil.copytree(s, d / s.name, dirs_exist_ok=True)
             print("✓ skill →", d)
-    print("\n在你的 MCP 客户端中加入以下服务（stdio）：")
+    print("\n请在 MCP 客户端的 mcpServers 中加入以下服务：")
     print(json.dumps({"mcpServers": {"fdu-lab": entry}}, ensure_ascii=False, indent=2))
     print(f"\nClaude Code：claude mcp add fdu-lab -- {sys.executable} {SERVER}")
     sys.exit(0 if ok else 1)

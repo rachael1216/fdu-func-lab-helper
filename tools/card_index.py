@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""card_index.py — 校验实验知识卡片并生成 knowledge/index.yaml（贡献卡片后运行）。
+"""card_index.py — 校验实验知识卡片并生成 reference/cards/index.yaml（贡献卡片后运行）。
 
   python tools/card_index.py            # 校验 + 重新生成索引
   python tools/card_index.py --check    # 只校验（CI 用）
@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CARDS = ROOT / "knowledge" / "cards"
+CARDS = ROOT / "reference" / "cards"
 REQUIRED_KEYS = ["id", "title", "system", "animal", "depth", "textbook_pages", "review_status"]
 REQUIRED_H2 = {
     "full": ["一句话", "记录单", "常见", "讨论建议结构", "参考来源"],
@@ -63,8 +63,8 @@ def main():
         out += [f'  - id: "{r["id"]}"', f'    title: {r["title"]}', f'    system: {r["system"]}',
                 f'    animal: {r["animal"]}', f'    depth: {r["depth"]}', f'    card: cards/ex_{r["id"]}.md',
                 f'    textbook_pages: "{r["textbook_pages"]}"']
-    (ROOT / "knowledge" / "index.yaml").write_text("\n".join(out) + "\n", encoding="utf8")
-    print("→ knowledge/index.yaml")
+    (ROOT / "reference" / "cards" / "index.yaml").write_text("\n".join(out) + "\n", encoding="utf8")
+    print("→ reference/cards/index.yaml")
 
 
 if __name__ == "__main__":

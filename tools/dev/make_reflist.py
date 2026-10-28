@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
-"""make_reflist.py — 由 knowledge/literature/references.yaml 生成 reference/literature/README.md（文献目录，GB/T 7714）。"""
+"""make_reflist.py — 由 reference/literature/references.yaml 生成 reference/literature/README.md（文献目录，GB/T 7714）。"""
 from pathlib import Path
 import re
 import sys
 import yaml
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 import refcheck  # type: ignore
 
 
 def main():
-    items = yaml.safe_load((ROOT / "knowledge/literature/references.yaml").read_text(encoding="utf8"))
+    items = yaml.safe_load((ROOT / "reference/literature/references.yaml").read_text(encoding="utf8"))
     exps = {}
     for it in items:
         for e in it.get("experiments", []):
             exps.setdefault(e, []).append(it)
     out = ["# 重点文献目录", "", "课本之外、优先加入 RAG 的文献。书目均已用 Crossref 核对（见 `verified`）；要点为自述概括，不含原文。",
-           "用法：`python tools/rag.py search 关键词 -c literature`。全文 PDF 请自行下载后放入 `corpus/local/literature/`。", ""]
+           "用法：`python tools/rag.py search 关键词 -c literature`。全文 PDF 请自行下载后放入 `reference/local/literature/`。", ""]
     out += ["| 编号 | 文献（GB/T 7714） | 相关实验 | 关键词 |", "|---|---|---|---|"]
     for it in items:
         au = [refcheck.split_name(a) for a in it["authors"]]

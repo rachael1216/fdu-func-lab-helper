@@ -14,7 +14,7 @@ description: 中文学术 humanizer：从课本文风学习，对报告做术语
 | ① 画像 | 对照课本文风：句长分布、逗号密度、连接词频率、句首多样性、课本高频搭配 | `python tools/styleprofile.py compare reports/<名>/report.md --exp <编号>` | 与课本的差距清单 + 该实验可采用的课本搭配 |
 | ② 改写 | 按下方规则改“表达”，不动数据与结论；必要时先 `fdu-lab-rag` 取课本术语与句式 | 模型 + `rag.py` | 改写稿 |
 | ③ 验证 | 术语覆盖、口语/模板腔、与课本相似度、格式 | `python tools/stylecheck.py reports/<名>/report.md --exp <编号>` | 无红色提示 |
-画像来自 `reference/textbook/` 的【目的】【原理】【思考题】等说明性段落（`styleprofile.py build` 生成 `knowledge/style/profile.json`），即“从课本的文风里学习”；只学**怎么说**，不抄**说了什么**。
+画像来自 `reference/textbook/` 的【目的】【原理】【思考题】等说明性段落（`styleprofile.py build` 生成 `reference/style/profile.json`），即“从课本的文风里学习”；只学**怎么说**，不抄**说了什么**。
 
 ## 改写规则
 - **术语**：用课本术语，不用同义替换（“胆碱酯酶”不写“乙酰胆碱分解酶”）。

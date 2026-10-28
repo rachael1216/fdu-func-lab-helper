@@ -4,8 +4,8 @@
   python tools/stylecheck.py reports/高钾血症/report.md --exp 2.7
 
 输出四类提示：
-  1. 规范术语：该实验的课本术语（knowledge/expressions/ex_<编号>.md「术语」栏）哪些用了、哪些还没用
-  2. 口语 / 模板腔：命中 knowledge/style/avoid.yaml 的词句，附改法
+  1. 规范术语：该实验的课本术语（reference/expressions/ex_<编号>.md「术语」栏）哪些用了、哪些还没用
+  2. 口语 / 模板腔：命中 reference/style/avoid.yaml 的词句，附改法
   3. 与课本的相似度：逐句比对课本片段 ——
        ≥ 0.60  过于接近原文：请改写，或加引号并标注出处（避免抄袭）
        0.15–0.60  措辞贴近课本，较理想
@@ -51,7 +51,7 @@ def bigrams(s: str) -> set[str]:
 
 
 def load_terms(exp: str) -> list[str]:
-    f = ROOT / "knowledge" / "expressions" / f"ex_{exp}.md"
+    f = ROOT / "reference" / "expressions" / f"ex_{exp}.md"
     if not f.exists():
         return []
     m = re.search(r"(?ms)^## 术语\s*\n(.*?)(?=^## |\Z)", f.read_text(encoding="utf8"))
@@ -89,11 +89,11 @@ def main():
             if miss:
                 print("    尚未出现（若与你的内容相关，建议采用课本说法）：" + "、".join(miss))
         else:
-            print(f"[1] 没有找到 knowledge/expressions/ex_{a.exp}.md 的术语栏，跳过。")
+            print(f"[1] 没有找到 reference/expressions/ex_{a.exp}.md 的术语栏，跳过。")
     print()
 
     # 2 口语 / 模板腔
-    lex = yaml.safe_load((ROOT / "knowledge" / "style" / "avoid.yaml").read_text(encoding="utf8"))
+    lex = yaml.safe_load((ROOT / "reference" / "style" / "avoid.yaml").read_text(encoding="utf8"))
     print("[2] 口语与模板腔")
     hits = 0
     for ln, line in enumerate(strip_md(raw).splitlines(), 1):

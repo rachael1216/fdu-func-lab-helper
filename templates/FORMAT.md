@@ -1,6 +1,6 @@
 # 报告格式规范
 
-本规范是 Word 与 LaTeX 两套通用模板的共同依据。若任课教师当年另有要求，**以教师要求为准**，再改 `tools/make_reference_docx.py`（Word）或 `templates/latex/fdureport.cls`（LaTeX）中的对应数值即可。
+本规范是 Word 与 LaTeX 两套通用模板的共同依据。若任课教师当年另有要求，**以教师要求为准**，再改 `tools/dev/make_reference_docx.py`（Word）或 `templates/latex/fdureport.cls`（LaTeX）中的对应数值即可。
 
 ## 1. 结构
 

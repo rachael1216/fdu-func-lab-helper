@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""make_arch.py — 生成 README 用的两张工程图（SVG）：assets/readme/architecture.svg、rag-pipeline.svg。
+"""make_arch.py — 生成 README 用的两张工程图（SVG）：.github/img/architecture.svg、rag-pipeline.svg。
 
 配色取学术图常用的色盲友好色（Okabe–Ito）：蓝＝Skill/服务，绿＝工具，橙＝知识库，灰＝外部。
 所有文字按字宽估算并断言不超出方框。
@@ -9,7 +9,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 FONT = "'Noto Sans CJK SC','Source Han Sans SC','PingFang SC','Microsoft YaHei',Arial,sans-serif"
 INK = "#1A1A1A"
 SUB = "#3D3D3D"
@@ -24,6 +24,28 @@ SW = 2.8  # 描边
 
 def tw(s: str, size: float, bold=False) -> float:
     return sum(size * (1.0 if re.match(r"[　-鿿＀-￯【】（）·“”—…]", ch) else 0.58 if ch != " " else 0.3) for ch in s) * (1.06 if bold else 1)
+
+
+def formula_png():
+    """用 matplotlib mathtext（STIX 字体）排版 BM25 公式，返回 (base64, 宽, 高)。"""
+    import base64
+    import io
+
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    matplotlib.rcParams["mathtext.fontset"] = "stix"
+    tex = (r"$\mathrm{score}(q,d)=\sum_{t\in q}\mathrm{idf}(t)\cdot\dfrac{f(t,d)\,(k_1+1)}{f(t,d)+k_1\,(1-b+b\,|d|/\mathrm{avgdl})}$"
+           r"$\qquad\mathrm{idf}(t)=\ln\!\left(1+\dfrac{N-\mathrm{df}(t)+0.5}{\mathrm{df}(t)+0.5}\right)$")
+    fig = plt.figure(figsize=(1, 1))
+    fig.text(0, 0, tex, fontsize=17)
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", dpi=300, bbox_inches="tight", pad_inches=0.04, transparent=True)
+    plt.close(fig)
+    from PIL import Image
+    buf.seek(0)
+    w, h = Image.open(buf).size
+    return base64.b64encode(buf.getvalue()).decode(), w, h
 
 
 class Svg:
@@ -62,7 +84,7 @@ class Svg:
 
     def save(self, name):
         self.o.append("</svg>")
-        p = ROOT / "assets" / "readme" / name
+        p = ROOT / ".github" / "img" / name
         p.write_text("\n".join(self.o), encoding="utf8")
         print("✓", p)
 
@@ -76,7 +98,7 @@ def architecture():
     g.arrow(119, 194, 119, 226, both=True)
     # 中：MCP 服务
     g.rect(260, 74, 680, 530, "blue", dash=True, fill="#fff")
-    g.text(600, 104, "fdu-lab MCP 服务　mcp_server/server.py", 17, C["blue"][0], True, maxw=650)
+    g.text(600, 104, "fdu-lab MCP 服务　tools/mcp_server.py", 17, C["blue"][0], True, maxw=650)
     g.text(600, 124, "stdio · JSON-RPC · prompts / tools / resources", 13.5, SUB, maxw=650)
     # Prompts
     g.rect(280, 138, 640, 172, "blue")
@@ -88,7 +110,7 @@ def architecture():
         g.box(294 + (i % 6) * (cw + 8), 178 + (i // 6) * 60, cw, 52, "blue", n, [r], 14, 12.5, fill="#fff")
     # RAG
     g.rect(280, 322, 640, 84, "orange")
-    g.text(294, 348, "本地 RAG　corpus/index/rag.json", 16, C["orange"][0], True, "start", maxw=600)
+    g.text(294, 348, "本地 RAG　reference/index/rag.json", 16, C["orange"][0], True, "start", maxw=600)
     g.text(600, 372, "中文字二元组 + 英文词 · BM25（k1 = 1.5，b = 0.75）· 纯 Python", 13.5, SUB, maxw=610)
     g.text(600, 394, "按语料标签 -c、实验编号 --exp 过滤，返回片段与出处页码", 13.5, SUB, maxw=610)
     # Tools
@@ -104,8 +126,8 @@ def architecture():
     # 右：知识库与产出
     g.rect(980, 138, 196, 326, "orange", fill="#fff")
     g.text(1078, 166, "知识库", 17, C["orange"][0], True, maxw=180)
-    g.text(1078, 185, "reference/ · knowledge/", 12.5, SUB, maxw=180)
-    kb = [("textbook", "教材全书 · 分章"), ("lecture", "讲义 · 实验指导"), ("corpus/local", "其他中文教材"), ("card · expr", "知识卡 · 课本表述"), ("literature", "14 篇 · DOI 已核")]
+    g.text(1078, 185, "reference/", 12.5, SUB, maxw=180)
+    kb = [("textbook", "教材全书 · 分章"), ("lecture", "讲义 · 实验指导"), ("reference/local", "其他中文教材"), ("card · expr", "知识卡 · 课本表述"), ("literature", "14 篇 · DOI 已核")]
     for i, (n, r) in enumerate(kb):
         g.box(990, 198 + i * 52, 176, 46, "orange", n, [r], 14, 12.5)
     g.arrow(940, 364, 980, 364, both=True)
@@ -122,7 +144,7 @@ def architecture():
 
 # ====================================================== 图 2：RAG 管线
 def rag():
-    g = Svg(1200, 560)
+    g = Svg(1200, 576)
     # 语料
     g.text(14, 30, "语料（每个片段带来源标签）", 15, INK, True, "start")
     cs = ["textbook 教材", "lecture 讲义", "local 其他教材", "card 知识卡", "expr 课本表述", "literature 文献"]
@@ -146,21 +168,23 @@ def rag():
             g.text(x + bw / 2, 188 + j * 27, ln, 14, INK, maxw=bw - 10)
         if i < 5:
             g.arrow(x + bw, 192, x + bw + gap, 192)
-    # 公式
-    g.rect(14, 284, 1172, 62, "gray", fill="#fff")
-    g.text(600, 310, "score(q,d) = sum_t idf(t) * f(t,d) * (k1 + 1) / ( f(t,d) + k1 * (1 - b + b * |d| / avgdl) )", 16, INK, True, maxw=1150)
-    g.text(600, 334, "idf(t) = ln( 1 + (N - df + 0.5) / (df + 0.5) )　　k1 = 1.5，b = 0.75", 14, SUB, maxw=1150)
-    g.arrow(600, 346, 600, 374)
+    # 公式（排版图）
+    g.rect(14, 284, 1172, 78, "gray", fill="#fff")
+    b64, fw, fh = formula_png()
+    sc = min(1130 / fw, 58 / fh)
+    g.o.append(f'<image x="{600 - fw * sc / 2:.1f}" y="{284 + (78 - fh * sc) / 2:.1f}" width="{fw * sc:.1f}" height="{fh * sc:.1f}" href="data:image/png;base64,{b64}"/>')
+    g.text(1170, 356, "k1 = 1.5，b = 0.75", 12.5, SUB, anchor="end")
+    g.arrow(600, 362, 600, 388)
     # 返回
-    g.rect(14, 378, 1172, 62, "green")
-    g.text(600, 404, "⑦ 返回　[序号] (语料标签) 来源 · 出处定位 · 片段正文", 16, C["green"][0], True, maxw=1150)
-    g.text(600, 428, "例：[1] (textbook) 教材 · 实验3.1【原理】p.124–125 · ……　引用页码取自这里，不凭记忆", 14, SUB, maxw=1150)
+    g.rect(14, 392, 1172, 62, "green")
+    g.text(600, 418, "⑦ 返回　[序号] (语料标签) 来源 · 出处定位 · 片段正文", 16, C["green"][0], True, maxw=1150)
+    g.text(600, 442, "例：[1] (textbook) 教材 · 实验3.1【原理】p.124–125 · ……　引用页码取自这里，不凭记忆", 14, SUB, maxw=1150)
     # 使用方
-    g.arrow(600, 440, 600, 466)
+    g.arrow(600, 454, 600, 480)
     us = [("rag（skill）", "取术语与句式"), ("stylecheck", "逐句比对教材"), ("refcheck", "对照文献登记表"), ("export", "供 local-rag-cpp 稠密检索")]
     uw = (1172 - 3 * 14) / 4
     for i, (t, d) in enumerate(us):
-        g.box(14 + i * (uw + 14), 470, uw, 78, "blue", t, [d], 16, 14)
+        g.box(14 + i * (uw + 14), 484, uw, 78, "blue", t, [d], 16, 14)
     g.save("rag-pipeline.svg")
 
 

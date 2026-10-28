@@ -17,7 +17,7 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 OUT = ROOT / "templates" / "word" / "reference.docx"
 BLACK, SAGE, GREY = RGBColor(0, 0, 0), RGBColor(0x5F, 0x75, 0x68), RGBColor(0x59, 0x60, 0x6A)
 CN_BODY, CN_HEAD, CN_KAI, LATIN = "宋体", "黑体", "楷体", "Times New Roman"

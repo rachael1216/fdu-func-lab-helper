@@ -1,0 +1,11 @@
+{
+  "name": "fdu-func-lab-helper",
+  "version": "0.4.0",
+  "description": "复旦大学《功能学科综合实验》实验报告写作助手：本地 RAG + 12 个 Skill + MCP 服务",
+  "license": "MIT",
+  "author": "刘瑞琦 <24301050114@m.fudan.edu.cn>",
+  "repository": { "type": "git", "url": "git+https://github.com/rachael1216/fdu-func-lab-helper.git" },
+  "bin": { "fdu-lab": "tools/fdu-lab.js" },
+  "files": ["tools/fdu-lab.js"],
+  "engines": { "node": ">=18" }
+}

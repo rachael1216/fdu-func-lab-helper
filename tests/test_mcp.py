@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def session(msgs):
-    p = subprocess.run([sys.executable, str(ROOT / "mcp_server" / "server.py")], input="\n".join(json.dumps(m) for m in msgs) + "\n",
+    p = subprocess.run([sys.executable, str(ROOT / "tools" / "mcp_server.py")], input="\n".join(json.dumps(m) for m in msgs) + "\n",
                        capture_output=True, text=True, timeout=300, encoding="utf8")
     return [json.loads(x) for x in p.stdout.splitlines() if x.strip()]
 

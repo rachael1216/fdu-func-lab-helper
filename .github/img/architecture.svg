@@ -14,7 +14,7 @@
 <text x="119.0" y="431.94" font-size="14" fill="#3D3D3D" text-anchor="middle">按 skill 流程写作</text>
 <line x1="119" y1="194" x2="119" y2="226" stroke="#1A1A1A" stroke-width="2.6" marker-end="url(#ar)" marker-start="url(#ar)"/>
 <rect x="260" y="74" width="680" height="530" rx="6" fill="#fff" stroke="#0B5C8E" stroke-width="2.8" stroke-dasharray="9 6"/>
-<text x="600" y="104" font-size="17" fill="#0B5C8E" text-anchor="middle" font-weight="700">fdu-lab MCP 服务　mcp_server/server.py</text>
+<text x="600" y="104" font-size="17" fill="#0B5C8E" text-anchor="middle" font-weight="700">fdu-lab MCP 服务　tools/mcp_server.py</text>
 <text x="600" y="124" font-size="13.5" fill="#3D3D3D" text-anchor="middle">stdio · JSON-RPC · prompts / tools / resources</text>
 <rect x="280" y="138" width="640" height="172" rx="6" fill="#E4F0F8" stroke="#0B5C8E" stroke-width="2.8"/>
 <text x="294" y="166" font-size="16" fill="#0B5C8E" text-anchor="start" font-weight="700">Prompts　菜单 + 12 个 Skill</text>
@@ -55,7 +55,7 @@
 <text x="858.3333333333333" y="258.73" font-size="14" fill="#0B5C8E" text-anchor="middle" font-weight="700">format</text>
 <text x="858.3333333333333" y="282.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">排版</text>
 <rect x="280" y="322" width="640" height="84" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
-<text x="294" y="348" font-size="16" fill="#B84A00" text-anchor="start" font-weight="700">本地 RAG　corpus/index/rag.json</text>
+<text x="294" y="348" font-size="16" fill="#B84A00" text-anchor="start" font-weight="700">本地 RAG　reference/index/rag.json</text>
 <text x="600" y="372" font-size="13.5" fill="#3D3D3D" text-anchor="middle">中文字二元组 + 英文词 · BM25（k1 = 1.5，b = 0.75）· 纯 Python</text>
 <text x="600" y="394" font-size="13.5" fill="#3D3D3D" text-anchor="middle">按语料标签 -c、实验编号 --exp 过滤，返回片段与出处页码</text>
 <rect x="280" y="418" width="640" height="172" rx="6" fill="#E2F3EC" stroke="#00704F" stroke-width="2.8"/>
@@ -94,7 +94,7 @@
 <text x="237" y="356" font-size="12.5" fill="#3D3D3D" text-anchor="middle" font-weight="700">MCP</text>
 <rect x="980" y="138" width="196" height="326" rx="6" fill="#fff" stroke="#B84A00" stroke-width="2.8"/>
 <text x="1078" y="166" font-size="17" fill="#B84A00" text-anchor="middle" font-weight="700">知识库</text>
-<text x="1078" y="185" font-size="12.5" fill="#3D3D3D" text-anchor="middle">reference/ · knowledge/</text>
+<text x="1078" y="185" font-size="12.5" fill="#3D3D3D" text-anchor="middle">reference/</text>
 <rect x="990" y="198" width="176" height="46" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
 <text x="1078.0" y="215.73" font-size="14" fill="#B84A00" text-anchor="middle" font-weight="700">textbook</text>
 <text x="1078.0" y="239.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">教材全书 · 分章</text>
@@ -102,7 +102,7 @@
 <text x="1078.0" y="267.73" font-size="14" fill="#B84A00" text-anchor="middle" font-weight="700">lecture</text>
 <text x="1078.0" y="291.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">讲义 · 实验指导</text>
 <rect x="990" y="302" width="176" height="46" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
-<text x="1078.0" y="319.73" font-size="14" fill="#B84A00" text-anchor="middle" font-weight="700">corpus/local</text>
+<text x="1078.0" y="319.73" font-size="14" fill="#B84A00" text-anchor="middle" font-weight="700">reference/local</text>
 <text x="1078.0" y="343.23" font-size="12.5" fill="#3D3D3D" text-anchor="middle">其他中文教材</text>
 <rect x="990" y="354" width="176" height="46" rx="6" fill="#FBEBDD" stroke="#B84A00" stroke-width="2.8"/>
 <text x="1078.0" y="371.73" font-size="14" fill="#B84A00" text-anchor="middle" font-weight="700">card · expr</text>

@@ -1,7 +1,7 @@
 # 重点文献目录
 
 课本之外、优先加入 RAG 的文献。书目均已用 Crossref 核对（见 `verified`）；要点为自述概括，不含原文。
-用法：`python tools/rag.py search 关键词 -c literature`。全文 PDF 请自行下载后放入 `corpus/local/literature/`。
+用法：`python tools/rag.py search 关键词 -c literature`。全文 PDF 请自行下载后放入 `reference/local/literature/`。
 
 | 编号 | 文献（GB/T 7714） | 相关实验 | 关键词 |
 |---|---|---|---|

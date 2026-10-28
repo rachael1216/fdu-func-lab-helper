@@ -1,7 +1,7 @@
 # 学生个人内容与教材索引（含版权/隐私）
 reports/
 *.pdf
-!assets/**/*.pdf
+!templates/**/*.pdf
 !reference/**/*.pdf
 # 构建中间文件
 *.aux
@@ -15,6 +15,6 @@ node_modules/
 # 例外：示例与模板产物可提交
 !examples/sample-report/*.pdf
 prompts/out/
-corpus/local/*
-!corpus/local/.gitkeep
-corpus/index/
+reference/local/*
+!reference/local/.gitkeep
+reference/index/

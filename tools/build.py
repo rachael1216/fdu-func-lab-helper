@@ -37,7 +37,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 REF_DOCX = ROOT / "templates" / "word" / "reference.docx"
 TEX_TEMPLATE = ROOT / "templates" / "latex" / "pandoc-fdulab.latex"
-COVER_DIR = ROOT / "assets" / "cover"
+COVER_DIR = ROOT / "templates" / "cover"
 ANIMALS = ["rabbit", "mouse"]
 DEFAULTS = {"course": "功能学科综合实验", "animal": "rabbit"}
 
@@ -73,8 +73,8 @@ def doctor():
             line(pipname, True)
         except ImportError:
             line(pipname, False, f"pip install {pipname}")
-    line("Word 样式母版 templates/word/reference.docx", REF_DOCX.exists(), "python tools/make_reference_docx.py")
-    line("封面线稿 assets/cover/", any(COVER_DIR.glob("*.png")), "python tools/make_cover.py")
+    line("Word 样式母版 templates/word/reference.docx", REF_DOCX.exists(), "python tools/dev/make_reference_docx.py")
+    line("封面线稿 templates/cover/", any(COVER_DIR.glob("*.png")), "python tools/dev/make_cover.py")
     xe = shutil.which("xelatex")
     print(("✓" if xe else "–"), "xelatex（仅生成 PDF/tex 需要）", "" if xe else "→ 安装 TeX Live/MiKTeX，或用 Overleaf；只要 Word 可忽略")
     print("\n环境 OK，可以开始。" if ok else "\n请先按提示补齐 ✗ 项。")
@@ -107,7 +107,7 @@ def asset(animal: str, kind: str) -> Path:
     name = {"": f"{animal}.png", "pdf": f"{animal}.pdf", "icon": f"{animal}_icon.png"}[kind]
     p = COVER_DIR / name
     if not p.exists():
-        sys.path.insert(0, str(ROOT / "tools"))
+        sys.path.insert(0, str(ROOT / "tools" / "dev"))
         import make_cover  # type: ignore
         make_cover.render(animal)
     return p
@@ -131,7 +131,7 @@ def build_docx(meta: dict, body: str, out: Path, cover: bool = True, src: Path |
     sys.path.insert(0, str(ROOT / "tools"))
     import docx_cover  # type: ignore
     if not REF_DOCX.exists():
-        sys.exit("缺少 templates/word/reference.docx，请先运行 python tools/make_reference_docx.py")
+        sys.exit("缺少 templates/word/reference.docx，请先运行 python tools/dev/make_reference_docx.py")
     with tempfile.TemporaryDirectory() as td:
         md = Path(td) / "body.md"
         md.write_text(body + ai_block(meta), encoding="utf8")
