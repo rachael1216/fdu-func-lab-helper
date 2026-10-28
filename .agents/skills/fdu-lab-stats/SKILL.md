@@ -17,6 +17,7 @@ description: 实验数据的常规统计分析：描述统计、正态性、t �
 | 三组及以上 | `anova --g 对照=… --g 低=… --g 高=…`（含 Tukey） |
 | 明显偏态/等级 | `mannwhitney --a … --b …` |
 | 两个连续量的关系 | `corr`、`linreg` |
+| 质反应（剂量-死亡率，如 LD50） | `python tools/labdose.py --dose … --n … --deaths … --figs 目录`：改良寇氏法 + Probit/Logit 拟合、似然剖面 CI、AIC、拟合优度、bootstrap、留一法、作图 |
 
 ## 约定
 - α = 0.05 双侧。P 值写“P = 0.020”，< 0.001 写“P < 0.001”；不写“P = 0.000”。

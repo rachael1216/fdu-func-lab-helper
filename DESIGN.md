@@ -69,9 +69,11 @@
 | `rag` | 需要课本措辞/页码 | `rag.py` | 片段+出处 | 页码取自检索 |
 | `data` | 计算 | `labcalc.py` | 命令+结果 | 不心算 |
 | `stats` | 多组数据/“显著吗” | `labstats.py` | 统计句 | n=1 不检验；多重比较要校正 |
-| `plot` | 作图 | `labplot.py` | 图+图注 | 误差线含义与 n 入图注 |
+| `plot` | 作图 | `labdose.py` | 质反应完整分析：改良寇氏法 LD50 与 95% CI；Probit/Logit 二项最大似然（x = ln(D/参考剂量)）、似然剖面 CI（LRT 3.841）、AIC、偏差与 Pearson 残差、参数 bootstrap、留一剂量组、LDq 表；可同时作图 | `test_labdose`（对照示例数值） |
+| `labplot.py` | 图+图注 | 误差线含义与 n 入图注 |
 | `analysis` | 写讨论 | `expressions/`、`cards/` | 论证段落 | 偏差写成假设 |
-| `style` | 润色/贴近课本 | `stylecheck.py` | 问题清单 | 不改数据与结论；非规避检测 |
+| `style` | 润色/贴近课本 | `styleprofile.py` | “学术 humanizer”的数据部分：从课本说明性段落（目的/原理/思考题）统计文风画像（句长分布、逗号密度、连接词频率、句首、跨实验高频搭配），`compare` 对照报告并给出该实验可采用的课本搭配；只学表达，不抄内容 | `test_rag_style` |
+| `stylecheck.py` | 问题清单 | 不改数据与结论；非规避检测 |
 | `cite` | 参考文献 | `refcheck.py`、登记表 | 核对清单 | 通过≠支持论点 |
 | `review` | 整份检查 | 以上工具 | 分级清单 | 不直接大改学生文字 |
 | `format` | 出稿/模板 | `build.py` | docx/tex/pdf | 规范见 `docs/FORMAT.md` |
@@ -84,7 +86,9 @@
 | `rag.py` | 词法 BM25，见 §4 | `test_rag_style` |
 | `labcalc.py` | 教材公式：给药体积、稀释还原、改良寇氏法 LD50、治疗指数、MAP、AChE 活力、肺系数、HRV 时域、Fisher 精确检验… | 对照教材例题 |
 | `labstats.py` | SciPy：描述、Shapiro-Wilk、Welch/配对/等方差 t、单因素 ANOVA+Tukey、Mann-Whitney、Pearson/Spearman、线性回归；`advise` 给方法选择；n<2 拒绝 | `test_labstats` |
+| `labdose.py` | 质反应完整分析：改良寇氏法 LD50 与 95% CI；Probit/Logit 二项最大似然（x = ln(D/参考剂量)）、似然剖面 CI（LRT 3.841）、AIC、偏差与 Pearson 残差、参数 bootstrap、留一剂量组、LDq 表；可同时作图 | `test_labdose`（对照示例数值） |
 | `labplot.py` | Okabe-Ito 配色 + 标记/线型/填充区分；刻度朝内、去上右边框；SD/SEM 可选并生成建议图注；剂量-反应+概率单位图 | `test_labplot` |
+| `styleprofile.py` | “学术 humanizer”的数据部分：从课本说明性段落（目的/原理/思考题）统计文风画像（句长分布、逗号密度、连接词频率、句首、跨实验高频搭配），`compare` 对照报告并给出该实验可采用的课本搭配；只学表达，不抄内容 | `test_rag_style` |
 | `stylecheck.py` | ①术语覆盖（`expressions/ex_*.md` 的“术语”）②`avoid.yaml` 口语/模板腔 ③逐句与课本相似度 = 句中字二元组被某片段**包含**的比例（≥0.60 过近；<0.15 缺依据）④数字单位/标点格式 | `test_rag_style` |
 | `refcheck.py` | 有 DOI：Crossref 取书目，比对题名、第一作者、年份、卷、页；无 DOI：检索给候选，不自动采信；中文/图书标人工核对；`--offline` 对照登记表；`fmt` 由 DOI 生成 GB/T 7714 | `test_refcheck`（mock） |
 | `build.py` | Markdown+YAML → pandoc → docx（`reference.docx` 样式母版 + python-docx 后处理：封面分节、罗马/阿拉伯页码、三线表、页眉）或 tex（`fdureport.cls`，基于 ctexart） | `test_build` |

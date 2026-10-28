@@ -41,7 +41,7 @@ def arrow(x1, y1, x2, y2, label="", dash=False, col=SAGE_D):
         text(x1 + 8, (y1 + y2) / 2 + 4, label, 10.5, col, 600, "start")
 
 
-W, H = 1240, 900
+W, H = 1240, 926
 a(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" font-family="\'Noto Sans CJK SC\',\'PingFang SC\',\'Microsoft YaHei\',sans-serif">')
 a(f'''<defs>
 <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="{SAGE_D}"/></marker>
@@ -82,39 +82,39 @@ for (name, items), n in zip(groups, gw):
     text(gx + w / 2, 390, "", 10)
     gx += w + 10
 # ---- 3 tools
-layer(24, 446, 960, 150, "工具层", "TOOLS · tools/*.py（确定性代码，可测试可复现）", SAGE_L, SAGE)
-tools = [("rag.py", "BM25 检索"), ("labcalc.py", "剂量·LD50·MAP"), ("labstats.py", "t·ANOVA·回归"), ("labplot.py", "规范作图"),
-         ("stylecheck.py", "术语·相似度"), ("refcheck.py", "Crossref 核对"), ("build.py", "docx/tex/pdf"), ("kb.py", "教材切分")]
-tw = (WD - 24 - 7 * 8) / 8
+layer(24, 446, 960, 176, "工具层", "TOOLS · tools/*.py（确定性代码，可测试可复现）", SAGE_L, SAGE)
+tools = [("rag.py", "BM25 检索"), ("labcalc.py", "剂量·LD50·MAP"), ("labstats.py", "t·ANOVA·回归"), ("labdose.py", "LD50·Probit·稳健性"), ("labplot.py", "规范作图"),
+         ("stylecheck.py", "术语·相似度"), ("styleprofile.py", "课本文风画像"), ("refcheck.py", "Crossref 核对"), ("build.py", "docx/tex/pdf"), ("kb.py", "教材切分")]
+tw = (WD - 24 - 4 * 8) / 5
 for i, (t, s) in enumerate(tools):
-    chip(X0 + 12 + i * (tw + 8), 474, tw, 54, t, s, "#fff", SAGE)
-text(X0 + WD / 2, 556, "模型负责理解与组织；数字、检验、引用、相似度、排版全部由工具产出并可复核", 11.5, SAGE_D, 600)
-text(X0 + WD / 2, 576, "单元测试：labcalc · labstats · labplot · refcheck(mock) · rag/stylecheck · build（30 项）", 10.5, GREY)
+    chip(X0 + 12 + (i % 5) * (tw + 8), 470 + (i // 5) * 52, tw, 46, t, s, "#fff", SAGE)
+text(X0 + WD / 2, 582, "模型负责理解与组织；数字、检验、引用、相似度、排版全部由工具产出并可复核", 11.5, SAGE_D, 600)
+text(X0 + WD / 2, 602, "单元测试：labcalc · labstats · labplot · refcheck(mock) · rag/stylecheck · build（30 项）", 10.5, GREY)
 # ---- 4 knowledge
-layer(24, 622, 960, 150, "知识层", "KNOWLEDGE · reference/ + knowledge/（RAG 语料，每片段带来源标签）", SAND_L, SAND)
+layer(24, 648, 960, 150, "知识层", "KNOWLEDGE · reference/ + knowledge/（RAG 语料，每片段带来源标签）", SAND_L, SAND)
 ks = [("textbook", "教材 PDF + 分章文本"), ("lecture", "讲义 / 实验指导"), ("corpus/local", "其他中文教材"), ("card", "知识卡 33 · AI 草稿"),
       ("expr", "课本表述 · 术语句式"), ("literature", "14 篇 · DOI 已核对")]
 kw = (WD - 24 - 5 * 8) / 6
 for i, (t, s) in enumerate(ks):
-    chip(X0 + 12 + i * (kw + 8), 650, kw, 54, t, s, "#fff", SAND)
-rect(X0 + 12, 716, WD - 24, 40, "#fff", SAND, 7, 1, 'stroke-dasharray="5 4"')
-text(X0 + WD / 2, 733, "corpus/index/rag.json　中文字二元组 + 英文词 · BM25 · 纯 Python（无服务器、无嵌入模型）", 11.5, SAND, 700)
-text(X0 + WD / 2, 749, "标签：textbook / lecture / card / expr / literature / 本地目录名　·　rag.py export → 可选稠密检索 local-rag-cpp", 10.5, GREY)
+    chip(X0 + 12 + i * (kw + 8), 676, kw, 54, t, s, "#fff", SAND)
+rect(X0 + 12, 742, WD - 24, 40, "#fff", SAND, 7, 1, 'stroke-dasharray="5 4"')
+text(X0 + WD / 2, 759, "corpus/index/rag.json　中文字二元组 + 英文词 · BM25 · 纯 Python（无服务器、无嵌入模型）", 11.5, SAND, 700)
+text(X0 + WD / 2, 775, "标签：textbook / lecture / card / expr / literature / 本地目录名　·　rag.py export → 可选稠密检索 local-rag-cpp", 10.5, GREY)
 # ---- 5 output
-layer(24, 798, 960, 80, "产出", "OUTPUT · 与外部", ROSE_L, ROSE)
-chip(X0 + 12, 820, 170, 48, "report.md", "YAML 头 + 正文", "#fff", ROSE)
-chip(X0 + 196, 820, 170, 48, "Word / PDF / tex", "封面·目录·页眉", "#fff", ROSE)
-chip(X0 + 380, 820, 170, 48, "templates/", "通用模板·格式规范", "#fff", ROSE)
-chip(X0 + 564, 820, 150, 48, "Crossref API", "外部 · 联网核对", "#fff", ROSE)
-chip(X0 + 728, 820, 152, 48, "examples/", "改编自真实作业", "#fff", ROSE)
+layer(24, 824, 960, 80, "产出", "OUTPUT · 与外部", ROSE_L, ROSE)
+chip(X0 + 12, 846, 170, 48, "report.md", "YAML 头 + 正文", "#fff", ROSE)
+chip(X0 + 196, 846, 170, 48, "Word / PDF / tex", "封面·目录·页眉", "#fff", ROSE)
+chip(X0 + 380, 846, 170, 48, "templates/", "通用模板·格式规范", "#fff", ROSE)
+chip(X0 + 564, 846, 150, 48, "Crossref API", "外部 · 联网核对", "#fff", ROSE)
+chip(X0 + 728, 846, 152, 48, "examples/", "LD50 能力示例", "#fff", ROSE)
 # ---- arrows between layers
 arrow(500, 162, 500, 188, "")
 arrow(300, 420, 300, 446, "调用 CLI")
 arrow(700, 446, 700, 420, "返回结果", False)
-arrow(500, 596, 500, 622, "检索")
-arrow(500, 772, 500, 798, "渲染 / 核对")
+arrow(500, 622, 500, 648, "检索")
+arrow(500, 798, 500, 824, "渲染 / 核对")
 # ---- guardrail panel
-rect(1004, 70, 212, 808, "#FBF7F7", ROSE, 12, 1.2)
+rect(1004, 70, 212, 834, "#FBF7F7", ROSE, 12, 1.2)
 text(1110, 96, "治理护栏", 14, ROSE, 700)
 text(1110, 114, "GUARDRAILS", 10, GREY, 400)
 gr = [("不编造", "数据·观察·文献·页码·P 值\n找不到依据写“待核”"), ("n = 1 不推断", "单只动物只描述\nn &lt; 3 工具拒绝检验"), ("偏差=假设", "与预期不符写成可能原因\n并给出验证方式"),
@@ -126,7 +126,7 @@ for t, s in gr:
     text(1110, y + 22, t, 12.5, ROSE, 700)
     for i, ln in enumerate(s.split("\n")):
         text(1110, y + 44 + i * 16, ln, 10.5, GREY)
-    y += 91
+    y += 94
 a('</svg>')
 out = ROOT / "assets/readme/architecture.svg"
 out.write_text("\n".join(o), encoding="utf8")

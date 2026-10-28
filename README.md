@@ -6,16 +6,14 @@
 
 *模型可以组织语言，但数字、检验和引用必须由工具给出，并能回到出处。*
 
-**刘瑞琦 (Rachael Liu)**<sup>1</sup>　·　<a href="mailto:24301050114@m.fudan.edu.cn">24301050114@m.fudan.edu.cn</a>
-
-<sup>1</sup> 复旦大学上海医学院，24 级临床医学五年制
+**刘瑞琦 (Rachael Liu)**<br>复旦大学 华山临床医学院<br>24 级临床医学五年制<br><a href="mailto:24301050114@m.fudan.edu.cn">24301050114@m.fudan.edu.cn</a>
 
 [使用指南](docs/GUIDE.md) · [设计说明](DESIGN.md) · [RAG](#rag-是怎么工作的) · [参考资料库](reference/README.md) · [格式规范](docs/FORMAT.md) · [**模板**](#模板) · [English](README.en.md)
 
 [![license](https://img.shields.io/badge/license-MIT-5F7568)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-5F7568)](requirements.txt)
 [![skills](https://img.shields.io/badge/skills-12-4A6A8A)](.agents/skills)
-[![tools](https://img.shields.io/badge/tools-8-5F7568)](tools)
+[![tools](https://img.shields.io/badge/tools-10-5F7568)](tools)
 [![tests](https://img.shields.io/badge/tests-30%20passing-5F7568)](tests)
 [![literature](https://img.shields.io/badge/literature-14%20Crossref--verified-A67C52)](reference/literature/README.md)
 [![cards](https://img.shields.io/badge/cards%20%26%20wording-AI%20draft-lightgrey)](knowledge)
@@ -47,12 +45,12 @@
 | # | 设计 | 防止了什么 |
 |---|---|---|
 | 1 | **课本对齐检索**：教材全书 + 7 个实验的术语/句式整理 + 本地补充教材，BM25 无服务器 | 通用“医学腔”、术语不一致 |
-| 2 | **语言检查** `stylecheck`：术语覆盖、模板腔、逐句与课本相似度（≥0.60 过近，<0.15 缺依据） | 抄课本、AI 套话、无依据的机制句 |
+| 2 | **中文学术 humanizer（学课本文风）**：`styleprofile` 从课本统计文风画像（句长、逗号密度、连接词、高频搭配）并对照报告；`stylecheck` 查术语覆盖、模板腔、逐句相似度（≥0.60 过近，<0.15 缺依据） | 抄课本、AI 套话、句子冗长、无依据的机制句 |
 | 3 | **文献核对** `refcheck`：DOI/题名/第一作者/年份/卷页逐项对 Crossref；14 篇重点文献预先核对 | 编造文献、张冠李戴、页码年份写错 |
 | 4 | **统计与作图规范** `labstats` / `labplot`：方法选择建议、误差线与 n 写进图注、色盲友好 | 小样本滥用检验、图表不规范 |
 | 5 | **总菜单提示词** `prompts/menu.md`：12 项功能 + 成本分级（L0 工具 / L1 检索 / L2 起草） | 不知从何开始、整篇让模型重写的浪费 |
 | 6 | **分析协议**：观察→预期→机制→偏差作假设→局限→临床联系 | 把偏差硬凑成“符合理论” |
-| 7 | **真实改编示例**：作者本人作业（隐去身份信息，保留 12 张原始记录图） | 示例不真实、不知道写到什么程度 |
+| 7 | **能力示例**：LD50 报告——教材方法复现、Probit/Logit 比较、似然剖面区间、拟合优度、bootstrap、留一法、规范作图、可复现命令附录 | 示例只有原始数据、看不出流程做了什么 |
 
 ## 快速开始
 
@@ -79,13 +77,14 @@ npx @deepseek-ai/dsh web
 ## 示例
 
 <div align="center"><img src="assets/readme/preview.png" alt="示例报告：封面、正文、原始记录图" width="100%"><br>
-<sub>改编自作者本人的《呼吸调节及药物影响》作业：姓名、学号、教师、组别已隐去，保留原始记录图与文字结构（<a href="examples/sample-report/report.md">源文件</a>）</sub></div>
+<sub>《药物半数致死量（LD50）的测定》示例：数字取自作者班级汇总结果，文字与图由工具流程生成，身份信息已隐去（<a href="examples/sample-report/report.md">源文件</a>）</sub></div>
 
 ```bash
-python tools/rag.py search 肺牵张反射 迷走神经 --exp 3.1            # 课本术语与页码
+python tools/rag.py search 半数致死量 改良寇氏法 --exp 8.1 -c expr  # 课本术语与页码
+python tools/labdose.py --dose 110.8 147.7 196.9 262.5 350 --n 22 --deaths 0 1 14 20 22 --figs figs/   # LD50、CI、拟合优度、作图
 python tools/labstats.py ttest --a 5.1 4.8 5.5 --b 6.2 6.0 6.8     # t(4) = -3.82, P = 0.020
 python tools/labplot.py bar data.csv --x 组别 --y 数值 --points -o fig1.png
-python tools/stylecheck.py examples/sample-report/report.md --exp 3.1
+python tools/stylecheck.py examples/sample-report/report.md --exp 8.1
 python tools/refcheck.py reports/某实验/report.md
 ```
 
@@ -97,7 +96,7 @@ python tools/refcheck.py reports/某实验/report.md
 |---|---|---|
 | 入口 | 网页粘贴 / dsh 本地网页 / 仅模板；总菜单 `prompts/menu.md` | 新会话先展示 12 项菜单；按成本分级（L0 纯工具 → L1 检索 → L2 起草） |
 | Skill（12） | `menu` `report` · `intake` `rag` · `data` `stats` `plot` · `analysis` `style` · `cite` `review` · `format` | 每个 skill 只做一件事，写明触发条件、命令、边界；总调度守硬规则 |
-| 工具（8） | `rag` `labcalc` `labstats` `labplot` `stylecheck` `refcheck` `build` `kb` | 命令行、可复现、可单测；**数字、检验、引用、相似度、排版由工具产出** |
+| 工具（10） | `rag` `labcalc` `labstats` `labdose` `labplot` `stylecheck` `styleprofile` `refcheck` `build` `kb` | 命令行、可复现、可单测；**数字、检验、引用、相似度、排版由工具产出** |
 | 知识 | `reference/`（课本、讲义、文献目录）· `knowledge/`（知识卡、课本表述、文献登记）· `corpus/local/` | 每个片段带来源标签与出处定位 |
 | 产出 | `report.md` → Word / LaTeX / PDF；通用模板；示例 | 封面单一极简，目录罗马页码，正文阿拉伯页码 |
 
@@ -116,6 +115,16 @@ python tools/refcheck.py reports/某实验/report.md
 python tools/rag.py search 肺牵张反射 迷走神经 --exp 3.1 -c textbook --full
 python tools/rag.py search 复能剂 -c literature -k 3
 ```
+
+### 语言：从课本学文风的 humanizer
+
+| 步 | 做什么 | 工具 |
+|---|---|---|
+| ① 画像 | 对照课本文风：句长分布、逗号密度、连接词频率、句首多样性、该实验可采用的课本搭配 | `styleprofile.py compare` |
+| ② 改写 | 按规则改**表达**（术语对齐、拆长句、删模板腔与口语、有数据就写数据），不动数据与结论 | skill `fdu-lab-style` |
+| ③ 验证 | 术语覆盖、模板腔、与课本相似度、格式 | `stylecheck.py` |
+
+画像由 `reference/textbook/` 的说明性段落（目的、原理、思考题）生成，只学**怎么说**，不抄**说了什么**。**这不是规避 AI 检测的工具**，AI 使用情况应按课程要求声明。
 
 **分析问题的三道防线**：①计算、统计、作图全部走代码；②机制句来自课本或登记文献，找不到依据写“待核”；③论证协议区分事实与假设（观察 → 预期 → 机制 → 偏差作假设 → 局限 → 临床联系）。
 
@@ -141,6 +150,7 @@ python tools/rag.py search 复能剂 -c literature -k 3
 - dsh 的步骤依据公开文档整理，**作者尚未在 dsh 上完整运行验证**。
 - LaTeX 路径在无 ctex 的环境里只用替身类做过编译冒烟测试；真实排版以 CI 和本机为准。
 - 课本随仓库提供由作者决定；公开分发前请确认版权许可（见 [reference/README.md](reference/README.md)）。
+- 示例报告的 Word 版含公式（OMML），需在 Word 中查看；LibreOffice 预览可能不显示公式。
 - 文献登记表目前 14 篇，偏有机磷、高钾血症、DIC、缺氧与药理定量方法，其余实验需自行补充。
 
 ## 目录结构
@@ -148,13 +158,13 @@ python tools/rag.py search 复能剂 -c literature -k 3
 ```
 .agents/skills/     12 个 skill：menu · report · intake · rag · data · stats · plot · analysis · style · cite · review · format
 prompts/            menu.md（总菜单提示词）· make_prompt 生成的网页粘贴提示词
-tools/              rag · labcalc · labstats · labplot · stylecheck · refcheck · build · kb · make_cover · make_arch …
+tools/              styleprofile · rag · labcalc · labstats · labdose · labplot · stylecheck · refcheck · build · kb · make_cover · make_arch …
 reference/          textbook/（课本）· lecture/（讲义）· literature/（文献目录）· README（资料库说明 + 模板入口）
 knowledge/          cards/ · expressions/ · literature/ · style/
 templates/          word/ · latex/ · report-skeleton.md
 corpus/             local/（自放语料）· index/（检索索引，gitignore）
 docs/               GUIDE.md · FORMAT.md
-examples/           sample-report/（改编自真实作业）
+examples/           sample-report/（LD50 能力示例）
 tests/              30 项单元测试 + LaTeX 替身类
 assets/             cover/（封面线稿）· readme/（架构图、示例预览）
 ```

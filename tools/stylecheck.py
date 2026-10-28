@@ -58,9 +58,11 @@ def load_terms(exp: str) -> list[str]:
     terms = []
     for line in (m.group(1) if m else "").splitlines():
         line = line.strip().lstrip("-*· ").strip()
-        mm = re.match(r"([^（(\s，,；;]+)", line)
-        if mm and re.search(r"[一-鿿]", mm.group(1)):
-            terms.append(mm.group(1))
+        line = re.sub(r"[（(][^）)]*[）)]", "", line)  # 去掉括注（英文名、缩写）
+        for part in re.split(r"[、，,；;]", line):
+            part = part.strip().split(" ")[0]
+            if part and re.search(r"[一-鿿]", part) and len(part) <= 16:
+                terms.append(part)
     return terms
 
 

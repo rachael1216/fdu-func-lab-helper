@@ -6,9 +6,7 @@
 
 **English** · [中文](README.md)
 
-**Ruiqi Liu (刘瑞琦)**<sup>1</sup> · <a href="mailto:24301050114@m.fudan.edu.cn">24301050114@m.fudan.edu.cn</a>
-
-<sup>1</sup> Fudan University Shanghai Medical College, Class of 2024, five-year clinical medicine
+**Ruiqi Liu (刘瑞琦)**<br>Huashan Clinical Medical College, Fudan University<br>Class of 2024, five-year clinical medicine<br><a href="mailto:24301050114@m.fudan.edu.cn">24301050114@m.fudan.edu.cn</a>
 
 [![license](https://img.shields.io/badge/license-MIT-5F7568)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.10%2B-5F7568)](requirements.txt)
