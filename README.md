@@ -2,16 +2,15 @@
 
 # FDU Func Lab Helper
 
-### 复旦大学《功能学科综合实验》实验报告写作助手
+## 复旦大学《功能学科综合实验》实验报告写作助手
 
-**本地 RAG　·　12 个 Skill　·　总菜单　·　MCP 服务**
+### 本地 RAG · 12 个 Skill · 总菜单 · MCP 服务
 
 <br>
 
-**刘瑞琦 (Rachael Liu)**<br>
-复旦大学 华山临床医学院<br>
-24 级临床医学五年制<br>
-<a href="mailto:24301050114@m.fudan.edu.cn">24301050114@m.fudan.edu.cn</a>
+### 刘瑞琦 (Rachael Liu)
+
+#### 复旦大学 华山临床医学院<br>24 级临床医学五年制<br><a href="mailto:24301050114@m.fudan.edu.cn">24301050114@m.fudan.edu.cn</a>
 
 写在前面
 2026年或者之后，使用AI写作实验报告应当成为家常便饭，之所以明目张胆开放这个仓库（其实满可以设置为private），除了希望要一些**star**跟**follow**外（**star** and **follow**,**star** and **follow**,**star** and **follow**,重要的事情说三遍），也是希望帮助同学们解放大脑，以及不要把时间浪费在卷实验报告上，这并非蛊惑大家不去思考，而是希望大家能在AI的引导下更深入地探索，课堂上练习的实验都非常基础，背后的原理远比讲义上提到的深刻，在完成的基础的训练后，如果能帮助同学们在课后就某一个方向找到兴趣以及指引，我想也算是行善积德了。
@@ -26,16 +25,15 @@
 
 <br>
 
-[简介](#1-简介) · [**安装**](#2-安装) · [使用](#3-使用) · [系统设计](#4-系统设计) · [RAG](#5-rag课本对齐的本地检索) · [**参考资料库**](#7-参考资料库) · [示例](#8-示例) · [**模板**](#9-模板与格式规范)
+#### [简介](#1-简介) · [**安装**](#2-安装) · [使用](#3-使用) · [系统设计](#4-系统设计) · [RAG](#5-rag课本对齐的本地检索) · [**参考资料库**](#7-参考资料库) · [示例](#8-示例) · [**模板**](#9-模板与格式规范)
 
-[![license](https://img.shields.io/badge/license-MIT-0B5C8E)](LICENSE)
-[![python](https://img.shields.io/badge/python-%E2%89%A53.10-0B5C8E)](tools/requirements.txt)
-[![npx](https://img.shields.io/badge/npx-github%3Arachael1216%2Ffdu--func--lab--helper-00704F)](#21-npx-安装推荐)
-[![MCP](https://img.shields.io/badge/MCP-stdio-00704F)](tools/mcp_server.py)
-[![skills](https://img.shields.io/badge/skills-12-0B5C8E)](.agents/skills)
-[![literature](https://img.shields.io/badge/literature-14%20Crossref--verified-B84A00)](#72-重点文献)
+[![license](https://img.shields.io/badge/license-MIT-0B5C8E?style=for-the-badge)](LICENSE)
+[![python](https://img.shields.io/badge/python-3.10%2B-0B5C8E?style=for-the-badge)](tools/requirements.txt)
+[![MCP](https://img.shields.io/badge/MCP-stdio-00704F?style=for-the-badge)](tools/mcp_server.py)
+[![skills](https://img.shields.io/badge/skills-12-0B5C8E?style=for-the-badge)](.agents/skills)
+[![literature](https://img.shields.io/badge/literature-14-B84A00?style=for-the-badge)](#72-重点文献)
 
-<img src=".github/img/architecture.svg" alt="系统架构：学生 → MCP 客户端 → fdu-lab MCP 服务（Prompts、本地 RAG、Tools）→ 知识库与产出" width="100%">
+<img src=".github/img/architecture.png" alt="系统架构：学生 → MCP 客户端 → fdu-lab MCP 服务（Prompts、本地 RAG、Tools）→ 知识库与产出" width="100%">
 
 </div>
 
@@ -368,7 +366,7 @@ python3 tools/build.py reports/某实验/report.md --to all
 
 报告的措辞（术语、机制表述、判定标准）应与课本一致，引用的页码应能回到出处。RAG 在写作前取出课本表述，写作后再以同一语料反向检查。
 
-<div align="center"><img src=".github/img/rag-pipeline.svg" alt="RAG 管线：语料 → 读取 → 切片 → 分词 → 索引 → 查询 → 排序 → 返回出处，使用方为 skill、stylecheck、refcheck、export" width="100%"></div>
+<div align="center"><img src=".github/img/rag-pipeline.png" alt="RAG 管线：语料 → 读取 → 切片 → 分词 → 索引 → 查询 → 排序 → 返回出处，使用方为 skill、stylecheck、refcheck、export" width="100%"></div>
 
 ### 5.1 语料
 

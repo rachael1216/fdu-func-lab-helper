@@ -20,6 +20,7 @@ C = {  # 描边色, 底色
     "gray": ("#4A4A4A", "#EFEFEF"),
 }
 SW = 2.8  # 描边
+FS = 1.14  # 全局字号放大系数
 
 
 def tw(s: str, size: float, bold=False) -> float:
@@ -62,21 +63,32 @@ class Svg:
         self.o.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}" fill="{fill or f}" stroke="{s}" stroke-width="{sw}"{d}/>')
 
     def text(self, x, y, s, size=14, col=INK, bold=False, anchor="middle", maxw=None):
+        size = round(size * FS, 1)
         if maxw is not None:
+            while tw(s, size, bold) > maxw and size > 10.5:
+                size = round(size - 0.25, 2)
             assert tw(s, size, bold) <= maxw, f"文字超出：{s!r} {tw(s, size, bold):.0f}>{maxw:.0f}"
         w = ' font-weight="700"' if bold else ""
         s = s.replace("&", "&amp;").replace("<", "&lt;")
         self.o.append(f'<text x="{x}" y="{y}" font-size="{size}" fill="{col}" text-anchor="{anchor}"{w}>{s}</text>')
 
     def box(self, x, y, w, h, hue, title, lines=(), tsize=15, lsize=13, fill=None):
-        """文字整体垂直居中的方框。"""
+        """文字整体垂直居中的方框；文字过宽时自动缩小字号。"""
         self.rect(x, y, w, h, hue, fill=fill)
+
+        def fit(t, size, bold):
+            while tw(t, size * FS, bold) > w - 12 and size > 9:
+                size -= 0.25
+            return size
+
+        tsize = fit(title, tsize, True)
+        lsize = min(fit(ln, lsize, False) for ln in lines) if lines else lsize
         n = len(lines)
-        block = tsize + (n * (lsize + 7) if n else 0)
-        y0 = y + (h - block) / 2 + tsize * 0.82
-        self.text(x + w / 2, y0, title, tsize, C[hue][0], True, maxw=w - 10)
+        block = (tsize + (n * (lsize + 7) if n else 0)) * FS
+        y0 = y + (h - block) / 2 + tsize * FS * 0.82
+        self.text(x + w / 2, y0, title, tsize, C[hue][0], True, maxw=w - 8)
         for i, ln in enumerate(lines):
-            self.text(x + w / 2, y0 + 8 + (i + 1) * (lsize + 7) - 4, ln, lsize, SUB, maxw=w - 10)
+            self.text(x + w / 2, y0 + (8 + (i + 1) * (lsize + 7) - 4) * FS * 0.98, ln, lsize, SUB, maxw=w - 8)
 
     def arrow(self, x1, y1, x2, y2, both=False):
         e = ' marker-start="url(#ar)"' if both else ""
@@ -124,17 +136,17 @@ def architecture():
     g.arrow(214, 370, 260, 370, both=True)
     g.text(237, 356, "MCP", 12.5, SUB, True, maxw=44)
     # 右：知识库与产出
-    g.rect(980, 138, 196, 326, "orange", fill="#fff")
-    g.text(1078, 166, "知识库", 17, C["orange"][0], True, maxw=180)
-    g.text(1078, 185, "reference/", 12.5, SUB, maxw=180)
+    g.rect(980, 130, 196, 354, "orange", fill="#fff")
+    g.text(1078, 158, "知识库", 17, C["orange"][0], True, maxw=180)
+    g.text(1078, 178, "reference/", 12.5, SUB, maxw=180)
     kb = [("textbook", "教材全书 · 分章"), ("lecture", "讲义 · 实验指导"), ("reference/local", "其他中文教材"), ("card · expr", "知识卡 · 课本表述"), ("literature", "14 篇 · DOI 已核")]
     for i, (n, r) in enumerate(kb):
-        g.box(990, 198 + i * 52, 176, 46, "orange", n, [r], 14, 12.5)
+        g.box(990, 190 + i * 57, 176, 51, "orange", n, [r], 14, 12.5)
     g.arrow(940, 364, 980, 364, both=True)
     g.text(960, 350, "检索", 12.5, SUB, True, maxw=36)
-    g.box(980, 478, 196, 126, "gray", "产出", ["report.md", "Word · PDF · tex", "templates/ · examples/"], 17, 14)
-    g.arrow(940, 534, 980, 534)
-    g.text(960, 520, "生成", 12.5, SUB, True, maxw=36)
+    g.box(980, 496, 196, 108, "gray", "产出", ["report.md", "Word · PDF · tex", "templates/ · examples/"], 17, 14)
+    g.arrow(940, 550, 980, 550)
+    g.text(960, 536, "生成", 12.5, SUB, True, maxw=36)
     # 护栏
     g.rect(24, 620, 1152, 36, "gray", fill="#fff")
     g.text(600, 644, "治理护栏：不编造数据与文献　·　n = 1 不推断　·　偏差写成假设　·　文献必核　·　AI 声明　·　数据不出本机", 14, INK, True, maxw=1130)
@@ -188,6 +200,20 @@ def rag():
     g.save("rag-pipeline.svg")
 
 
+def export_png():
+    """另存 2 倍 PNG（README 使用，避免不同系统字体差异）。"""
+    from playwright.sync_api import sync_playwright
+    out = ROOT / ".github" / "img"
+    with sync_playwright() as p:
+        b = p.chromium.launch()
+        for name, vb in (("architecture", (1200, 610)), ("rag-pipeline", (1200, 576))):
+            pg = b.new_page(viewport={"width": vb[0], "height": vb[1]}, device_scale_factor=2)
+            pg.goto((out / f"{name}.svg").as_uri())
+            pg.screenshot(path=str(out / f"{name}.png"))
+        b.close()
+
+
 if __name__ == "__main__":
     architecture()
     rag()
+    export_png()
